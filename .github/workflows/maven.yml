@@ -39,6 +39,15 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         source: "target/*.jar"
         target: "~/"
+    - name: execute shell script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_ID }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script_stop: true
+        script: "./startup.sh"
         rm: false
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
