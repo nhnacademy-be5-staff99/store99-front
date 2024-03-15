@@ -30,6 +30,9 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+    - name: Run SonarQube
+      run: mvn sonar:sonar -Dsonar.projectKey=store99-front -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
     - name : upload file
       uses: appleboy/scp-action@master
       with:
