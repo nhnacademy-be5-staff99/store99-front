@@ -21,8 +21,4 @@ public class WelcomeController {
         model.addAttribute("ip",ip);
         return "index";
     }
-    @GetMapping("/loadbalancer_heath")
-    public ResponseEntity<String> healthcheck(){
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
 }
