@@ -23,6 +23,6 @@ public class WelcomeController {
     }
     @GetMapping("/loadbalancer_heath")
     public ResponseEntity<String> healthcheck(){
-        return new ResponseEntity<>("", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
