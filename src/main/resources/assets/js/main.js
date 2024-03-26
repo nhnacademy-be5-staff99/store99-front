@@ -1,11 +1,3 @@
-/**
-* Template Name: ZenBlog
-* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-* Updated: Mar 17 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https:///bootstrapmade.com/license/
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
 
@@ -111,23 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
       nextEl: ".custom-swiper-button-next",
       prevEl: ".custom-swiper-button-prev",
     },
-  });
-
-  /**
-   * Open and close the search form.
-   */
-  const searchOpen = document.querySelector('.js-search-open');
-  const searchClose = document.querySelector('.js-search-close');
-  const searchWrap = document.querySelector(".js-search-form-wrap");
-
-  searchOpen.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchWrap.classList.add("active");
-  });
-
-  searchClose.addEventListener("click", (e) => {
-    e.preventDefault();
-    searchWrap.classList.remove("active");
   });
 
   /**
