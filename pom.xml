@@ -19,6 +19,13 @@
 		<spring-cloud.version>2021.0.8</spring-cloud.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>logncrash</id>
+			<url>file:\\${project.basedir}\src\main\resources\libs</url>
+		</repository>
+	</repositories>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -30,7 +37,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,7 +76,10 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 
 		<!-- log & crash require dependency -->
 		<dependency>
@@ -95,11 +104,16 @@
 			<groupId>nhn.logncrash</groupId>
 			<artifactId>toast-logncrash-logback-sdk</artifactId>
 			<version>3.0.5</version>
-			<scope>system</scope>
-			<systemPath>
-				${project.basedir}/src/main/resources/libs/toast-logncrash-logback-sdk-3.0.5.jar
-			</systemPath>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>nhn.logncrash</groupId>-->
+<!--			<artifactId>toast-logncrash-logback-sdk</artifactId>-->
+<!--			<version>3.0.5</version>-->
+<!--			<scope>system</scope>-->
+<!--			<systemPath>-->
+<!--				${project.basedir}/src/main/resources/libs/toast-logncrash-logback-sdk-3.0.5.jar-->
+<!--			</systemPath>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
