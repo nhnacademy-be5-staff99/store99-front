@@ -22,7 +22,7 @@
     <repositories>
         <repository>
             <id>logncrash</id>
-            <url>file:\\${project.basedir}\src\main\resources\libs</url>
+            <url>file://${project.basedir}/src/main/resources/libs</url>
         </repository>
     </repositories>
 
