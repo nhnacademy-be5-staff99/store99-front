@@ -31,4 +31,4 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
-<!--java -Dspring.profiles.active=prod -DLOG_N_CRASH_APP_KEY=h98AoVSn5I3rIctz -jar ./target/front.jar-->
+<!--java -Dspring.profiles.active=prod -DLOG_N_CRASH_APP_KEY={secret} -jar ./target/front.jar-->
