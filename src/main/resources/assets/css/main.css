@@ -1099,19 +1099,19 @@ section {
   }
 }
 
-.contact .php-email-form {
+.contact .login-form {
   box-shadow: 0 0 30px rgba(var(--color-black-rgb), 0.1);
   padding: 30px;
   background: var(--color-white);
 }
 
 @media (max-width: 640px) {
-  .contact .php-email-form {
+  .contact .login-form {
     padding: 20px;
   }
 }
 
-.contact .php-email-form .error-message {
+.contact .login-form .error-message {
   display: none;
   color: var(--color-white);
   background: var(--color-red);
@@ -1120,11 +1120,11 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .error-message br+br {
+.contact .login-form .error-message br+br {
   margin-top: 25px;
 }
 
-.contact .php-email-form .sent-message {
+.contact .login-form .sent-message {
   display: none;
   color: var(--color-white);
   background: var(--color-green);
@@ -1133,14 +1133,14 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.contact .login-form .loading {
   display: none;
   background: var(--color-white);
   text-align: center;
   padding: 15px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .login-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1152,24 +1152,28 @@ section {
   animation: animate-loading 1s linear infinite;
 }
 
-.contact .php-email-form .form-group {
+.contact .login-form .form-group {
   margin-bottom: 20px;
 }
 
-.contact .php-email-form input,
-.contact .php-email-form textarea {
+.contact .login-form input,
+.contact .login-form textarea {
   padding: 10px 14px;
   border-radius: 0;
   box-shadow: none;
   font-size: 15px;
 }
 
-.contact .php-email-form input::focus,
-.contact .php-email-form textarea::focus {
+.contact .login-form input::focus,
+.contact .login-form textarea::focus {
   background-color: var(--color-primary);
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .login-form .login-btn {
+  text-align: center;
+}
+
+.contact .login-form button[type=submit] {
   background: var(--color-primary);
   border: 0;
   padding: 10px 30px;
@@ -1178,7 +1182,7 @@ section {
   cursor: pointer;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .login-form button[type=submit]:hover {
   background: rgba(var(--color-primary-rgb), 0.8);
 }
 
@@ -1191,6 +1195,19 @@ section {
     transform: rotate(360deg);
   }
 }
+
+/** ====== oauth login form ======= **/
+.contact .login-form .oauth-form {
+  text-align: center;
+}
+
+.contact .login-form .oauth-form button[type=submit] {
+  background: none;
+  color: black;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
 
 /*--------------------------------------------------------------
 # Footer
