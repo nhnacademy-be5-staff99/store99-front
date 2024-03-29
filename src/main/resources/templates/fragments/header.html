@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+>
+
+<th:block th:fragment="HeaderFragment">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Store99st</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../assets/img/favicon.png" rel="icon">
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS Files -->
+    <link href="../assets/css/variables.css" rel="stylesheet">
+    <link href="../assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1>Store99st</h1>
+        </a>
+
+        <!-- ======= Search Form ======= -->
+        <div class="input-group mb-auto justify-content-center">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">통합검색</button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">국내도서</a></li>
+                <li><a class="dropdown-item" href="#">외국도서</a></li>
+                <li><a class="dropdown-item" href="#">ebook</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+            <form action="search-result.html" class="search-form">
+                <input type="text" placeholder="Search" class="form-control">
+            </form>
+        </div>
+        <!-- End Search Form -->
+
+        <div class="position-relative">
+
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="single-post.html">국내도서</a></li>
+                    <li><a href="about.html">외국도서</a></li>
+                    <li><a href="../../static/assets/contact.html">Ebook</a></li>
+                    <li class="dropdown"><a href="category.html"><span>Events</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <ul>
+                            <li><a href="search-result.html">Search Result</a></li>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 1</a></li>
+                                    <li><a href="#">Deep Drop Down 2</a></li>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    <li class="grid gap-1"><a href="../../static/assets/contact.html" style="font-size: 12px">로그인</a></li>
+                    <li class="grid gap-1"><a href="../../static/assets/contact.html" style="font-size: 12px">회원가입</a></li>
+                    <li class="grid gap-1"><a href="../../static/assets/contact.html" style="font-size: 12px">장바구니</a></li>
+                    <li class="grid gap-1"><a href="../../static/assets/contact.html" style="font-size: 12px">찜목록</a></li>
+                    </li>
+                </ul>
+            </nav>
+            <!-- .navbar -->
+
+        </div>
+
+    </div>
+
+</header><!-- End Header -->
+
+</body>
+</th:block>
+</html>
