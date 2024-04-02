@@ -1,8 +1,10 @@
-package com.nhnacademy.store99.front.common;
+package com.nhnacademy.store99.front.common.response;
 
 import java.util.List;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class CommonListResponse<T> {
     private final CommonHeader header;
     private final List<T> resultList;

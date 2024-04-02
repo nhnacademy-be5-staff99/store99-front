@@ -1,9 +1,11 @@
-package com.nhnacademy.store99.front.common;
+package com.nhnacademy.store99.front.common.response;
 
 import java.util.Objects;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class CommonHeader {
     private final boolean isSuccessful;
     private final HttpStatus httpStatus;
