@@ -16,6 +16,6 @@ public class WelcomeController {
             ip = request.getRemoteAddr();
         }
         model.addAttribute("ip",ip);
-        return "index";
+        return "book/book_sales_page";
     }
 }
