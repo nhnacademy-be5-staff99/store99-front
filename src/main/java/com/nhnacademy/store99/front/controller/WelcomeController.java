@@ -12,10 +12,10 @@ public class WelcomeController {
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
-        if(ip == null ){
+        if (ip == null) {
             ip = request.getRemoteAddr();
         }
-        model.addAttribute("ip",ip);
+        model.addAttribute("ip", ip);
         return "book/book_sales_page";
     }
 }

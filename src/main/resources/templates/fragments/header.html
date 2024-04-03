@@ -3,7 +3,7 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org">
 
-    <th:block th:fragment="HeaderFragment">
+<th:block th:fragment="HeaderFragment">
 
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
@@ -17,12 +17,16 @@
 
             <!-- ======= Search Form ======= -->
             <div class="input-group mb-auto justify-content-center">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">통합검색</button>
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">통합검색
+                </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">국내도서</a></li>
                     <li><a class="dropdown-item" href="#">외국도서</a></li>
                     <li><a class="dropdown-item" href="#">ebook</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
                 <form action="search-result.html" class="search-form">
@@ -41,11 +45,13 @@
                         <li><a href="../single-post.html">국내도서</a></li>
                         <li><a href="../about.html">외국도서</a></li>
                         <li><a href="../contact.html">Ebook</a></li>
-                        <li class="dropdown"><a href="../category.html"><span>Events</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                        <li class="dropdown"><a href="../category.html"><span>Events</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
                             <ul>
                                 <li><a href="../search-result.html">Search Result</a></li>
                                 <li><a href="#">Drop Down 1</a></li>
-                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
                                     <ul>
                                         <li><a href="#">Deep Drop Down 1</a></li>
                                         <li><a href="#">Deep Drop Down 2</a></li>
@@ -71,7 +77,7 @@
         </div>
 
     </header>
-        <!-- End Header -->
+    <!-- End Header -->
 
-    </th:block>
+</th:block>
 </html>

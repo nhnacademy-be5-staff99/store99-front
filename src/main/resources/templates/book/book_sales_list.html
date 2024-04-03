@@ -7,41 +7,41 @@
 >
 
 <div layout:fragment="content">
-<main id="main">
+    <main id="main">
 
-    <!-- ======= Search Results ======= -->
-    <section class="book-sales-list" id="book-sales-list">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>주문</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="1">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="2">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </section> <!-- End Search Result -->
+        <!-- ======= Search Results ======= -->
+        <section class="book-sales-list" id="book-sales-list">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>주문</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
+                    <td>
+                        <form action="/carts" method="post">
+                            <input name="bookId" type="hidden" value="1">
+                            <button type="submit">장바구니에 추가</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
+                    <td>
+                        <form action="/carts" method="post">
+                            <input name="bookId" type="hidden" value="2">
+                            <button type="submit">장바구니에 추가</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section> <!-- End Search Result -->
 
-</main><!-- End #main -->
+    </main><!-- End #main -->
 </div>
 
 
