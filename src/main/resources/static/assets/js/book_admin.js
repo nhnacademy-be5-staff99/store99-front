@@ -1,4 +1,10 @@
 console.log("js start.");
+const dataName = [
+    "bookIsbn13", "bookIsbn10", "bookTitle", "bookContents", "bookDescription"
+    , "bookPublisher", "bookDateTime", "bookPrice", "bookSalePrice",
+    "bookIsPacked", "bookThumbnailUrl", "bookStock"
+
+]
 
 function submitBookClick() {
     const url = "/books/admin";
@@ -16,6 +22,14 @@ function submitBookClick() {
         bookThumbnailUrl: document.getElementById("bookThumbnailUrl").value,
         bookStock: document.getElementById("bookStock").value
     };
+    for (let i = 0; i < dataName.length; i++) {
+        const ele = document.getElementById(dataName[i])
+        // console.log(ele.value)
+        if (ele.value === "") {
+            alert("No data.")
+            return
+        }
+    }
     console.log(data)
     fetch(url, {
         method: "POST",
@@ -40,4 +54,4 @@ function submitBookClick() {
 
 const submitButton = document.getElementById("submitButton");
 
-submitButton.addEventListener("click", submitBookClick)
+// submitButton.addEventListener("click", submitBookClick)
