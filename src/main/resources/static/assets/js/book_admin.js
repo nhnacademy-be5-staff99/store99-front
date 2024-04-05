@@ -3,7 +3,6 @@ const dataName = [
     "bookIsbn13", "bookIsbn10", "bookTitle", "bookContents", "bookDescription"
     , "bookPublisher", "bookDateTime", "bookPrice", "bookSalePrice",
     "bookIsPacked", "bookThumbnailUrl", "bookStock"
-
 ]
 
 function submitBookClick() {
@@ -51,7 +50,3 @@ function submitBookClick() {
             console.error('There was an error!', error);
         });
 }
-
-const submitButton = document.getElementById("submitButton");
-
-// submitButton.addEventListener("click", submitBookClick)
