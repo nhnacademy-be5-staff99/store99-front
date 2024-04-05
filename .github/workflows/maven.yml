@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package -Dskm.authentication-id={{ AUTHENTICATION_ID }} -Dskm.authentication-secret={{ AUTHENTICATION_SECRET }} -Dskm.certificate-password={{ CERTIFICATE_PASSWORD }} -Dskm.app-key={{ APP_KEY }} --file pom.xml
+        run: mvn -B package -Dskm.authentication-id=${{ secrets.AUTHENTICATION_ID }} -Dskm.authentication-secret=${{ secrets.AUTHENTICATION_SECRET }} -Dskm.certificate-password=${{ secrets.CERTIFICATE_PASSWORD }} -Dskm.app-key=${{ secrets.APP_KEY }} --file pom.xml
 
       - name: Run SonarQube
         run: mvn sonar:sonar -Dsonar.projectKey=store99-front -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
@@ -67,7 +67,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package -Dskm.authentication-id={{ AUTHENTICATION_ID }} -Dskm.authentication-secret={{ AUTHENTICATION_SECRET }} -Dskm.certificate-password={{ CERTIFICATE_PASSWORD }} -Dskm.app-key={{ APP_KEY }} --file pom.xml
+        run: mvn -B package -Dskm.authentication-id=${{ secrets.AUTHENTICATION_ID }} -Dskm.authentication-secret=${{ secrets.AUTHENTICATION_SECRET }} -Dskm.certificate-password=${{ secrets.CERTIFICATE_PASSWORD }} -Dskm.app-key=${{ secrets.APP_KEY }} --file pom.xml
 
       - name: Run SonarQube
         run: mvn sonar:sonar -Dsonar.projectKey=store99-front -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
