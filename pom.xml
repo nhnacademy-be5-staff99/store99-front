@@ -52,10 +52,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- spring cloud start -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!-- spring cloud end -->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
