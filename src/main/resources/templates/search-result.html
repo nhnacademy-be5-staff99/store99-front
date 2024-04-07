@@ -10,41 +10,47 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="../assets/img/favicon.png" rel="icon">
-    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="/static/assets/img/favicon.png" rel="icon">
+    <link href="/static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
 
     <!-- Template Main CSS Files -->
-    <link href="../assets/css/variables.css" rel="stylesheet">
-    <link href="../assets/css/main.css" rel="stylesheet">
+    <link href="/static/assets/css/variables.css" rel="stylesheet">
+    <link href="/static/assets/css/main.css" rel="stylesheet">
 
-
+    <!-- =======================================================
+    * Template Name: ZenBlog
+    * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+    * Updated: Mar 17 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https:///bootstrapmade.com/license/
+    ======================================================== -->
 </head>
 
 <body>
 
 <!-- ======= Header ======= -->
-<header id="header" class="header d-flex align-items-center fixed-top">
+<header class="header d-flex align-items-center fixed-top" id="header">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a class="logo d-flex align-items-center" href="index.html">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.png" alt=""> -->
             <h1>ZenBlog</h1>
         </a>
 
-        <nav id="navbar" class="navbar">
+        <nav class="navbar" id="navbar">
             <ul>
                 <li><a href="index.html">Blog</a></li>
                 <li><a href="single-post.html">Single Post</a></li>
@@ -70,23 +76,23 @@
                 </li>
 
                 <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login_form.html">Contact</a></li>
             </ul>
         </nav><!-- .navbar -->
 
         <div class="position-relative">
-            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
-            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+            <a class="mx-2" href="#"><span class="bi-facebook"></span></a>
+            <a class="mx-2" href="#"><span class="bi-twitter"></span></a>
+            <a class="mx-2" href="#"><span class="bi-instagram"></span></a>
 
-            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <a class="mx-2 js-search-open" href="#"><span class="bi-search"></span></a>
             <i class="bi bi-list mobile-nav-toggle"></i>
 
             <!-- ======= Search Form ======= -->
             <div class="search-form-wrap js-search-form-wrap">
                 <form action="search-result.html" class="search-form">
                     <span class="icon bi-search"></span>
-                    <input type="text" placeholder="Search" class="form-control">
+                    <input class="form-control" placeholder="Search" type="text">
                     <button class="btn js-search-close"><span class="bi-x"></span></button>
                 </form>
             </div><!-- End Search Form -->
@@ -100,15 +106,15 @@
 <main id="main">
 
     <!-- ======= Search Results ======= -->
-    <section id="search-result" class="search-result">
+    <section class="search-result" id="search-result">
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
                     <h3 class="category-title">Search Results</h3>
 
                     <div class="d-md-flex post-entry-2 small-img">
-                        <a href="single-post.html" class="me-4 thumbnail">
-                            <img src="../assets/img/post-landscape-6.jpg" alt="" class="img-fluid">
+                        <a class="me-4 thumbnail" href="single-post.html">
+                            <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-6.jpg">
                         </a>
                         <div>
                             <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
@@ -118,7 +124,8 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
                                 exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
                             <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="../assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                                <div class="photo"><img alt="" class="img-fluid" src="/static/assets/img/person-2.jpg">
+                                </div>
                                 <div class="name">
                                     <h3 class="m-0 p-0">Wade Warren</h3>
                                 </div>
@@ -127,8 +134,8 @@
                     </div>
 
                     <div class="d-md-flex post-entry-2 small-img">
-                        <a href="single-post.html" class="me-4 thumbnail">
-                            <img src="../assets/img/post-landscape-1.jpg" alt="" class="img-fluid">
+                        <a class="me-4 thumbnail" href="single-post.html">
+                            <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-1.jpg">
                         </a>
                         <div>
                             <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
@@ -138,7 +145,8 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
                                 exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
                             <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="../assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                                <div class="photo"><img alt="" class="img-fluid" src="/static/assets/img/person-2.jpg">
+                                </div>
                                 <div class="name">
                                     <h3 class="m-0 p-0">Wade Warren</h3>
                                 </div>
@@ -147,8 +155,8 @@
                     </div>
 
                     <div class="d-md-flex post-entry-2 small-img">
-                        <a href="single-post.html" class="me-4 thumbnail">
-                            <img src="../assets/img/post-landscape-2.jpg" alt="" class="img-fluid">
+                        <a class="me-4 thumbnail" href="single-post.html">
+                            <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-2.jpg">
                         </a>
                         <div>
                             <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
@@ -158,7 +166,8 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
                                 exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
                             <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="../assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                                <div class="photo"><img alt="" class="img-fluid" src="/static/assets/img/person-2.jpg">
+                                </div>
                                 <div class="name">
                                     <h3 class="m-0 p-0">Wade Warren</h3>
                                 </div>
@@ -167,8 +176,8 @@
                     </div>
 
                     <div class="d-md-flex post-entry-2 small-img">
-                        <a href="single-post.html" class="me-4 thumbnail">
-                            <img src="../assets/img/post-landscape-3.jpg" alt="" class="img-fluid">
+                        <a class="me-4 thumbnail" href="single-post.html">
+                            <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-3.jpg">
                         </a>
                         <div>
                             <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
@@ -177,7 +186,8 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
                                 exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
                             <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="../assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                                <div class="photo"><img alt="" class="img-fluid" src="/static/assets/img/person-2.jpg">
+                                </div>
                                 <div class="name">
                                     <h3 class="m-0 p-0">Wade Warren</h3>
                                 </div>
@@ -186,8 +196,8 @@
                     </div>
 
                     <div class="d-md-flex post-entry-2 small-img">
-                        <a href="single-post.html" class="me-4 thumbnail">
-                            <img src="../assets/img/post-landscape-4.jpg" alt="" class="img-fluid">
+                        <a class="me-4 thumbnail" href="single-post.html">
+                            <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-4.jpg">
                         </a>
                         <div>
                             <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
@@ -197,7 +207,8 @@
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
                                 exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas.</p>
                             <div class="d-flex align-items-center author">
-                                <div class="photo"><img src="../assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+                                <div class="photo"><img alt="" class="img-fluid" src="/static/assets/img/person-2.jpg">
+                                </div>
                                 <div class="name">
                                     <h3 class="m-0 p-0">Wade Warren</h3>
                                 </div>
@@ -208,13 +219,13 @@
                     <!-- Paging -->
                     <div class="text-start py-4">
                         <div class="custom-pagination">
-                            <a href="#" class="prev">Prevous</a>
-                            <a href="#" class="active">1</a>
+                            <a class="prev" href="#">Prevous</a>
+                            <a class="active" href="#">1</a>
                             <a href="#">2</a>
                             <a href="#">3</a>
                             <a href="#">4</a>
                             <a href="#">5</a>
-                            <a href="#" class="next">Next</a>
+                            <a class="next" href="#">Next</a>
                         </div>
                     </div><!-- End Paging -->
 
@@ -226,21 +237,21 @@
 
                         <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-popular" type="button" role="tab"
-                                        aria-controls="pills-popular" aria-selected="true">Popular
+                                <button aria-controls="pills-popular" aria-selected="true" class="nav-link active"
+                                        data-bs-target="#pills-popular" data-bs-toggle="pill" id="pills-popular-tab"
+                                        role="tab" type="button">Popular
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-trending" type="button" role="tab"
-                                        aria-controls="pills-trending" aria-selected="false">Trending
+                                <button aria-controls="pills-trending" aria-selected="false" class="nav-link"
+                                        data-bs-target="#pills-trending" data-bs-toggle="pill" id="pills-trending-tab"
+                                        role="tab" type="button">Trending
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-latest" type="button" role="tab"
-                                        aria-controls="pills-latest" aria-selected="false">Latest
+                                <button aria-controls="pills-latest" aria-selected="false" class="nav-link"
+                                        data-bs-target="#pills-latest" data-bs-toggle="pill" id="pills-latest-tab"
+                                        role="tab" type="button">Latest
                                 </button>
                             </li>
                         </ul>
@@ -248,8 +259,9 @@
                         <div class="tab-content" id="pills-tabContent">
 
                             <!-- Popular -->
-                            <div class="tab-pane fade show active" id="pills-popular" role="tabpanel"
-                                 aria-labelledby="pills-popular-tab">
+                            <div aria-labelledby="pills-popular-tab" class="tab-pane fade show active"
+                                 id="pills-popular"
+                                 role="tabpanel">
                                 <div class="post-entry-1 border-bottom">
                                     <div class="post-meta"><span class="date">Sport</span> <span
                                             class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
@@ -300,8 +312,8 @@
                             </div> <!-- End Popular -->
 
                             <!-- Trending -->
-                            <div class="tab-pane fade" id="pills-trending" role="tabpanel"
-                                 aria-labelledby="pills-trending-tab">
+                            <div aria-labelledby="pills-trending-tab" class="tab-pane fade" id="pills-trending"
+                                 role="tabpanel">
                                 <div class="post-entry-1 border-bottom">
                                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -351,8 +363,8 @@
                             </div> <!-- End Trending -->
 
                             <!-- Latest -->
-                            <div class="tab-pane fade" id="pills-latest" role="tabpanel"
-                                 aria-labelledby="pills-latest-tab">
+                            <div aria-labelledby="pills-latest-tab" class="tab-pane fade" id="pills-latest"
+                                 role="tabpanel">
                                 <div class="post-entry-1 border-bottom">
                                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -409,9 +421,9 @@
                     <div class="aside-block">
                         <h3 class="aside-title">Video</h3>
                         <div class="video-post">
-                            <a href="https://www.youtube.com/watch?v=AiFfDjmd0jU" class="glightbox link-video">
+                            <a class="glightbox link-video" href="https://www.youtube.com/watch?v=AiFfDjmd0jU">
                                 <span class="bi-play-fill"></span>
-                                <img src="../assets/img/post-landscape-5.jpg" alt="" class="img-fluid">
+                                <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-5.jpg">
                             </a>
                         </div>
                     </div><!-- End Video -->
@@ -453,7 +465,7 @@
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
-<footer id="footer" class="footer">
+<footer class="footer" id="footer">
 
     <div class="footer-content">
         <div class="container">
@@ -464,7 +476,7 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem
                         deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis
                         qui aliquid blanditiis omnis quae. Explicabo?</p>
-                    <p><a href="about.html" class="footer-link-more">Learn More</a></p>
+                    <p><a class="footer-link-more" href="about.html">Learn More</a></p>
                 </div>
                 <div class="col-6 col-lg-2">
                     <h3 class="footer-heading">Navigation</h3>
@@ -474,7 +486,7 @@
                         <li><a href="category.html"><i class="bi bi-chevron-right"></i> Categories</a></li>
                         <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> Single Post</a></li>
                         <li><a href="about.html"><i class="bi bi-chevron-right"></i> About us</a></li>
-                        <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
+                        <li><a href="login_form.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-lg-2">
@@ -497,8 +509,8 @@
 
                     <ul class="footer-links footer-blog-entry list-unstyled">
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-1.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="/static/assets/img/post-sq-1.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -508,8 +520,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-2.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="/static/assets/img/post-sq-2.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -519,8 +531,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-3.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="/static/assets/img/post-sq-3.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -530,8 +542,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-4.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="/static/assets/img/post-sq-4.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -549,17 +561,17 @@
 
 </footer>
 
-<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
-<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="../assets/vendor/aos/aos.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
+<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="/static/assets/vendor/aos/aos.js"></script>
+<script src="/static/assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-<script src="../assets/js/main.js"></script>
+<script src="/static/assets/js/main.js"></script>
 
 </body>
 

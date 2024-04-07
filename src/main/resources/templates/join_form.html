@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>ZenBlog Bootstrap Template - Contact</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+  <title>Store99st</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
     <!-- Favicons -->
     <link href="../assets/img/favicon.png" rel="icon">
@@ -68,10 +68,10 @@
                     </ul>
                 </li>
 
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav><!-- .navbar -->
+          <li><a href="about.html">About</a></li>
+          <li><a href="login_form.html">Contact</a></li>
+        </ul>
+      </nav><!-- .navbar -->
 
         <div class="position-relative">
             <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
@@ -100,70 +100,64 @@
     <section id="contact" class="contact mb-5">
         <div class="container" data-aos="fade-up">
 
+        <div class="row">
+          <div class="col-lg-12 text-center mb-5">
+            <h1 class="page-title">Log In</h1>
+          </div>
+        </div>
+
+<!--        <div class="row gy-4">-->
+
+<!--          <div class="col-md-4">-->
+<!--            <div class="info-item">-->
+<!--              <i class="bi bi-geo-alt"></i>-->
+<!--              <h3>Address</h3>-->
+<!--              <address>A108 Adam Street, NY 535022, USA</address>-->
+<!--            </div>-->
+<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+<!--          <div class="col-md-4">-->
+<!--            <div class="info-item info-item-borders">-->
+<!--              <i class="bi bi-phone"></i>-->
+<!--              <h3>Phone Number</h3>-->
+<!--              <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>-->
+<!--            </div>-->
+<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+<!--          <div class="col-md-4">-->
+<!--            <div class="info-item">-->
+<!--              <i class="bi bi-envelope"></i>-->
+<!--              <h3>Email</h3>-->
+<!--              <p><a href="mailto:info@example.com">info@example.com</a></p>-->
+<!--            </div>-->
+<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+<!--        </div>-->
+
+        <div class="form mt-5">
+          <form action="forms/contact.php" method="post" role="form" class="login-form">
             <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h1 class="page-title">Contact us</h1>
-                </div>
+              <div class="form-group col-md-6">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+              </div>
             </div>
-
-            <div class="row gy-4">
-
-                <div class="col-md-4">
-                    <div class="info-item">
-                        <i class="bi bi-geo-alt"></i>
-                        <h3>Address</h3>
-                        <address>A108 Adam Street, NY 535022, USA</address>
-                    </div>
-                </div><!-- End Info Item -->
-
-                <div class="col-md-4">
-                    <div class="info-item info-item-borders">
-                        <i class="bi bi-phone"></i>
-                        <h3>Phone Number</h3>
-                        <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>
-                    </div>
-                </div><!-- End Info Item -->
-
-                <div class="col-md-4">
-                    <div class="info-item">
-                        <i class="bi bi-envelope"></i>
-                        <h3>Email</h3>
-                        <p><a href="mailto:info@example.com">info@example.com</a></p>
-                    </div>
-                </div><!-- End Info Item -->
-
+            <div class="form-group">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
             </div>
-
-            <div class="form mt-5">
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
-                                   required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
-                                   required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
-                               required>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" name="message" rows="5" placeholder="Message"
-                                  required></textarea>
-                    </div>
-                    <div class="my-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit">Send Message</button>
-                    </div>
-                </form>
-            </div><!-- End Contact Form -->
+            <div class="form-group">
+              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+        </div><!-- End Contact Form -->
 
         </div>
     </section>
@@ -176,36 +170,34 @@
     <div class="footer-content">
         <div class="container">
 
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <h3 class="footer-heading">About ZenBlog</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem
-                        deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis
-                        qui aliquid blanditiis omnis quae. Explicabo?</p>
-                    <p><a href="about.html" class="footer-link-more">Learn More</a></p>
-                </div>
-                <div class="col-6 col-lg-2">
-                    <h3 class="footer-heading">Navigation</h3>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
-                        <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Categories</a></li>
-                        <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> Single Post</a></li>
-                        <li><a href="about.html"><i class="bi bi-chevron-right"></i> About us</a></li>
-                        <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-lg-2">
-                    <h3 class="footer-heading">Categories</h3>
-                    <ul class="footer-links list-unstyled">
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Sport</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Food</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Politics</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Celebrity</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Startups</a></li>
-                        <li><a href="category.html"><i class="bi bi-chevron-right"></i> Travel</a></li>
+        <div class="row g-5">
+          <div class="col-lg-4">
+            <h3 class="footer-heading">About ZenBlog</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis qui aliquid blanditiis omnis quae. Explicabo?</p>
+            <p><a href="about.html" class="footer-link-more">Learn More</a></p>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h3 class="footer-heading">Navigation</h3>
+            <ul class="footer-links list-unstyled">
+              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
+              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Categories</a></li>
+              <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> Single Post</a></li>
+              <li><a href="about.html"><i class="bi bi-chevron-right"></i> About us</a></li>
+              <li><a href="login_form.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h3 class="footer-heading">Categories</h3>
+            <ul class="footer-links list-unstyled">
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Sport</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Food</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Politics</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Celebrity</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Startups</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Travel</a></li>
 
                     </ul>
                 </div>

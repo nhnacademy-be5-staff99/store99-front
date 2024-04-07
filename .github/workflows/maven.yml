@@ -15,13 +15,9 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_instance_1:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        instance: [ 1, 2 ]
 
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package -Dskm.authentication-id=${{ secrets.AUTHENTICATION_ID }} -Dskm.authentication-secret=${{ secrets.AUTHENTICATION_SECRET }} -Dskm.certificate-password=${{ secrets.CERTIFICATE_PASSWORD }} -Dskm.app-key=${{ secrets.APP_KEY }} --file pom.xml
 
       - name: Run SonarQube
         run: mvn sonar:sonar -Dsonar.projectKey=store99-front -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
@@ -40,7 +36,7 @@ jobs:
       - name: upload file
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets["SSH_IP_" + matrix.instance] }}
+          host: ${{ secrets.SSH_IP_1 }}
           username: ${{ secrets.SSH_ID }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
@@ -49,7 +45,46 @@ jobs:
       - name: execute shell script
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets["SSH_IP_" + matrix.instance] }}
+          host: ${{ secrets.SSH_IP_1 }}
+          username: ${{ secrets.SSH_ID }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script_stop: true
+          script: "./startup.sh"
+          rm: false
+
+
+  build_instance_2:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package -Dskm.authentication-id=${{ secrets.AUTHENTICATION_ID }} -Dskm.authentication-secret=${{ secrets.AUTHENTICATION_SECRET }} -Dskm.certificate-password=${{ secrets.CERTIFICATE_PASSWORD }} -Dskm.app-key=${{ secrets.APP_KEY }} --file pom.xml
+
+      - name: Run SonarQube
+        run: mvn sonar:sonar -Dsonar.projectKey=store99-front -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name : upload file
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_IP_2 }}
+          username: ${{ secrets.SSH_ID }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "target/*.jar"
+          target: "~/"
+      - name: execute shell script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_IP_2 }}
           username: ${{ secrets.SSH_ID }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
