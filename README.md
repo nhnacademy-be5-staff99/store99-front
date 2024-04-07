@@ -209,11 +209,11 @@ public class WelcomeController {
 </html>
 ```
 
-이 예제에서는 장바구니 페이지를 구현했습니다. 사용자는 체크박스를 통해 주문할 항목을 선택할 수 있고, 수량을 변경할 수 있습니다. 체크된 항목의 총 금액이 자동으로 계산되어 표시됩니다.
 
 ### 5. 실행 결과
 
 ![pj_적용후예시2](https://github.com/nhnacademy-be5-staff99/store99-front/assets/138862600/c489726f-b842-42f5-9688-aad7cae46ebf)
+이 예제에서는 장바구니 페이지를 구현했습니다. 사용자는 체크박스를 통해 주문할 항목을 선택할 수 있고, 수량을 변경할 수 있습니다. 체크된 항목의 총 금액이 자동으로 계산되어 표시됩니다.
 
 위 코드는 Thymeleaf Layout Dialect를 사용하여 웹 애플리케이션의 공통 레이아웃을 정의하고, 개별 페이지에서 해당 레이아웃을 가져와 사용하는 방법을 보여줍니다. 공통 레이아웃은 `layout.html`에 정의되어 있으며, 여기에는 `header`, `footer`, `script` 등의 공통 요소가 포함됩니다. 개별 페이지인 `cart.html`은 `layout:decorate`를 사용하여 `layout.html`을 가져오고, `layout:fragment="content"`를 통해 본문 내용을 삽입합니다.
 
