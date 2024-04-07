@@ -122,12 +122,13 @@
                                 <div class="auth-form-light text-left py-5 px-4 px-sm-5 login-form">
 
                                     <!-- === login form === -->
-                                    <form class="pt-3" method="post" th:action="@{/login}">
+                                    <form class="pt-3" id="loginForm" method="post" th:action="@{/login}">
                                         <div class="form-group">
-                                            <label for="id">ID</label><input autofocus
-                                                                             class="form-control form-control-lg"
-                                                                             id="id" name="id"
-                                                                             placeholder="이메일" required type="email">
+                                            <label for="email">Email</label><input autofocus
+                                                                                   class="form-control form-control-lg"
+                                                                                   id="email" name="email"
+                                                                                   placeholder="이메일" required
+                                                                                   type="email">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label><input
@@ -143,6 +144,37 @@
                                             </button>
                                         </div>
                                     </form> <!-- === login form end ===-->
+
+                                    <!-- === login javascript ===-->
+                                    <script>
+                                        document.getElementById('loginForm').addEventListener('submit', function (event) {
+                                            event.preventDefault();
+
+                                            var email = document.getElementById('email').value;
+                                            var password = document.getElementById('password').value;
+
+                                            fetch('/login', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    email: email,
+                                                    password: password
+                                                })
+                                            }).then(function (response) {
+                                                if (!response.ok) {
+                                                    throw new Error('HTTP error ' + response.status);
+                                                }
+                                                return response.json();
+                                            }).then(function (response) {
+                                                console.log(response);
+                                            }).catch(function (error) {
+                                                console.log(error);
+                                            });
+                                        });
+                                    </script> <!-- === login javascript end ===-->
+
                                     <hr>
 
                                     <!-- === payco login form === -->
