@@ -7,6 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * 관리자 페이지 뷰 컨트롤러
+ *
+ * @author seunggyu-kim
+ */
 @RequiredArgsConstructor
 @Controller
 public class AdminViewController {

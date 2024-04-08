@@ -1,194 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        lang="en"
+        layout:decorate="~{layouts/layout}"
+        xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+>
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="UTF-8">
 
-    <title>Store99st</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+<div layout:fragment="content">
+    <main id="main">
+        <section class="cart mb-5" id="cart">
+            <div class="container" data-aos="fade-down">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS Files -->
-    <link href="/static/assets/css/variables.css" rel="stylesheet">
-    <link href="/static/assets/css/main.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-<main id="main">
-    <section class="cart mb-5" id="cart">
-        <div class="container" data-aos="fade-up">
-
-            <div class="row">
-                <div class="col-lg-12 text-center mb-5">
-                    <h1 class="page-title">장바구니</h1>
+                <div class="row">
+                    <div class="col-lg-12 text-center mb-5">
+                        <h1 class="page-title">장바구니</h1>
+                    </div>
                 </div>
+
+                <form action="#" method="post">
+                    <div class="table-responsive table-bordered">
+                        <table class="table align-middle text-center">
+                            <thead>
+                            <tr>
+                                <th class="col-1" scope="col">선택</th>
+                                <th colspan="2" scope="col">상품정보</th>
+                                <th class="col-1" scope="col">수량</th>
+                                <th class="col-2" scope="col">상품금액</th>
+                                <th class="col-2" scope="col">배송 정보</th>
+                                <th class="col-1" scope="col">주문</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 각 책의 정보를 표시하는 행을 추가합니다. -->
+                            <tr>
+                                <td><input class="order-check" name="cart-id" type="checkbox" value="1"/></td>
+                                <td class="col-1"><img alt="책 이미지"
+                                                       src="https://via.placeholder.com/82x116"></td>
+                                <td style="text-align: left;">
+                                    책 제목<br>
+                                    <del>15000원</del>
+                                    <span>10000원</span>
+                                </td>
+                                <td>
+                                    <form action="#" method="post">
+                                        <input type="hidden" value="1"/>
+                                        <input class="form-control" maxlength="4" type="number" value="2"/>
+                                        <input class="btn btn-outline-secondary btn-sm mt-1" type="submit" value="변경">
+                                    </form>
+                                </td>
+                                <td>
+                                    <strong class="order-per-price">20000원</strong>
+                                </td>
+                                <td>
+                                    <strong>내일</strong>
+                                    <br>
+                                    (4/2, 화)
+                                    <br>
+                                    도착예정
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">주문</button>
+                                    <br>
+                                    <button class="btn btn-outline-secondary btn-sm mt-1">삭제</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input class="order-check" name="cart-id" type="checkbox" value="2"></td>
+                                <td class="col-1"><img alt="책 이미지"
+                                                       src="https://via.placeholder.com/82x116"></td>
+                                <td style="text-align: left;">
+                                    책 제목<br>
+                                    <del>15000원</del>
+                                    <span>10000원</span>
+                                </td>
+                                <td>
+                                    <form action="#" method="post">
+                                        <input type="hidden" value="2"/>
+                                        <input class="form-control" maxlength="4" type="number" value="2"/>
+                                        <input class="btn btn-outline-secondary btn-sm mt-1" type="submit" value="변경">
+                                    </form>
+                                </td>
+                                <td>
+                                    <strong class="order-per-price">20000원</strong>
+                                </td>
+                                <td>
+                                    <strong>내일</strong>
+                                    <br>
+                                    (4/2, 화)
+                                    <br>
+                                    도착예정
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">주문</button>
+                                    <br>
+                                    <button class="btn btn-outline-secondary btn-sm mt-1">삭제</button>
+                                </td>
+                            </tr>
+                            <!-- 추가적인 책 정보 행을 필요한 만큼 더 추가할 수 있습니다. -->
+                            <tr class="table-secondary" style="text-align: right;">
+                                <td colspan="7">
+                                    <span>총 금액 : </span><strong id="order-total-price"></strong><span>원</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="text-center w-25 btn btn-primary btn-lg" type="submit">주문하기</button>
+                    </div>
+                </form>
+
             </div>
+        </section>
 
-            <form action="#" method="post">
-                <div class="table-responsive table-bordered">
-                    <table class="table align-middle text-center">
-                        <thead>
-                        <tr>
-                            <th class="col-1" scope="col">선택</th>
-                            <th colspan="2" scope="col">상품정보</th>
-                            <th class="col-1" scope="col">수량</th>
-                            <th class="col-2" scope="col">상품금액</th>
-                            <th class="col-2" scope="col">배송 정보</th>
-                            <th class="col-1" scope="col">주문</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 각 책의 정보를 표시하는 행을 추가합니다. -->
-                        <tr>
-                            <td><input class="order-check" name="cart-id" type="checkbox" value="1"/></td>
-                            <td class="col-1"><img alt="책 이미지"
-                                                   src="https://via.placeholder.com/82x116"></td>
-                            <td style="text-align: left;">
-                                책 제목<br>
-                                <del>15000원</del>
-                                <span>10000원</span>
-                            </td>
-                            <td>
-                                <form action="#" method="post">
-                                    <input type="hidden" value="1"/>
-                                    <input class="form-control" maxlength="4" type="number" value="2"/>
-                                    <input class="btn btn-outline-secondary btn-sm mt-1" type="submit" value="변경">
-                                </form>
-                            </td>
-                            <td>
-                                <strong class="order-per-price">20000원</strong>
-                            </td>
-                            <td>
-                                <strong>내일</strong>
-                                <br>
-                                (4/2, 화)
-                                <br>
-                                도착예정
-                            </td>
-                            <td>
-                                <button class="btn btn-primary btn-sm">주문</button>
-                                <br>
-                                <button class="btn btn-outline-secondary btn-sm mt-1">삭제</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input class="order-check" name="cart-id" type="checkbox" value="2"></td>
-                            <td class="col-1"><img alt="책 이미지"
-                                                   src="https://via.placeholder.com/82x116"></td>
-                            <td style="text-align: left;">
-                                책 제목<br>
-                                <del>15000원</del>
-                                <span>10000원</span>
-                            </td>
-                            <td>
-                                <form action="#" method="post">
-                                    <input type="hidden" value="2"/>
-                                    <input class="form-control" maxlength="4" type="number" value="2"/>
-                                    <input class="btn btn-outline-secondary btn-sm mt-1" type="submit" value="변경">
-                                </form>
-                            </td>
-                            <td>
-                                <strong class="order-per-price">20000원</strong>
-                            </td>
-                            <td>
-                                <strong>내일</strong>
-                                <br>
-                                (4/2, 화)
-                                <br>
-                                도착예정
-                            </td>
-                            <td>
-                                <button class="btn btn-primary btn-sm">주문</button>
-                                <br>
-                                <button class="btn btn-outline-secondary btn-sm mt-1">삭제</button>
-                            </td>
-                        </tr>
-                        <!-- 추가적인 책 정보 행을 필요한 만큼 더 추가할 수 있습니다. -->
-                        <tr class="table-secondary" style="text-align: right;">
-                            <td colspan="7">
-                                <span>총 금액 : </span><strong id="order-total-price"></strong><span>원</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    </main>
 
-                <div class="text-center">
-                    <button class="text-center w-25 btn btn-primary btn-lg" type="submit">주문하기</button>
-                </div>
-            </form>
 
-        </div>
-    </section>
+    <script>
+        // 체크박스의 체크 상태가 변경될 때마다 이벤트를 감지합니다.
+        document.querySelectorAll('.order-check').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                // 체크된 체크박스를 모두 찾습니다.
+                var checkedBoxes = document.querySelectorAll('.order-check:checked');
+                var total = 0;
 
-</main>
-
-<a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-<!-- Template Main JS File -->
-<script src="/static/assets/js/main.js"></script>
-
-<script>
-    // 체크박스의 체크 상태가 변경될 때마다 이벤트를 감지합니다.
-    document.querySelectorAll('.order-check').forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            // 체크된 체크박스를 모두 찾습니다.
-            var checkedBoxes = document.querySelectorAll('.order-check:checked');
-            var total = 0;
-
-            // 각 체크박스가 속한 행의 orderPerPrice 값을 가져와 합산합니다.
-            checkedBoxes.forEach(function (box) {
-                var row = box.closest('tr');
-                var priceElement = row.querySelector('.order-per-price');
-                var price = Number(priceElement.textContent.replace(/[^0-9.-]+/g, ""));
-                total += price;
-            });
-
-            // 합산된 값을 orderPrice 요소에 설정합니다.
-            document.getElementById('order-total-price').textContent = total.toLocaleString();
-        });
-        checkbox.addEventListener('change', function () {
-            var isChecked = this.checked;
-            var cartId = this.value;
-
-            // API 호출
-            fetch('#', {
-                method: 'UPDATE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    cartId: cartId,
-                    isChecked: isChecked
-                }),
-            })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch((error) => {
-                    console.error('Error:', error);
+                // 각 체크박스가 속한 행의 orderPerPrice 값을 가져와 합산합니다.
+                checkedBoxes.forEach(function (box) {
+                    var row = box.closest('tr');
+                    var priceElement = row.querySelector('.order-per-price');
+                    var price = Number(priceElement.textContent.replace(/[^0-9.-]+/g, ""));
+                    total += price;
                 });
+
+                // 합산된 값을 orderPrice 요소에 설정합니다.
+                document.getElementById('order-total-price').textContent = total.toLocaleString();
+            });
+            checkbox.addEventListener('change', function () {
+                var isChecked = this.checked;
+                var cartId = this.value;
+
+                // API 호출
+                fetch('#', {
+                    method: 'UPDATE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cartId: cartId,
+                        isChecked: isChecked
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            });
         });
-    });
-</script>
-</body>
+    </script>
+
+</div>
 
 </html>
