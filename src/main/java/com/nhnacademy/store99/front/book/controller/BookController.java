@@ -39,4 +39,9 @@ public class BookController {
         System.out.println(bookRequest);
         return "index";
     }
+
+    @GetMapping("/books/list")
+    public String viewBookList() {
+        return "book/book_sales_list";
+    }
 }
