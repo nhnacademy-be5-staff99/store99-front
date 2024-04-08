@@ -7,6 +7,10 @@
 >
 
 <div layout:fragment="content">
+
+
+    <body>
+
     <main id="main">
 
         <!-- ======= Search Results ======= -->
@@ -27,6 +31,18 @@
                             <button type="submit">장바구니에 추가</button>
                         </form>
                     </td>
+                    <td>
+                        <div class="container mt-5">
+                            <!-- 좋아요 버튼 -->
+                            <button class="btn btn-primary" id="likeButton" type="button">
+                            <span id="likeIcon">
+                                <!-- 하트 아이콘 -->
+                                <i class="far fa-heart"></i>
+                            </span>
+                                <span id="likeCount">0</span>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
@@ -42,85 +58,30 @@
         </section> <!-- End Search Result -->
 
     </main><!-- End #main -->
+
+    <script th:inline="javascript">
+        document.getElementById('likeButton').addEventListener('click', function () {
+            var currentCount = parseInt(document.getElementById('likeCount').innerText);
+            var newCount;
+
+            if (this.dataset.liked === 'true') {
+                // 좋아요 취소
+                newCount = currentCount - 1;
+                this.dataset.liked = 'false'; // 좋아요 상태 변경
+                document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
+            } else {
+                // 좋아요 올라감
+                newCount = currentCount + 1;
+                this.dataset.liked = 'true'; // 좋아요 상태 변경
+                document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
+            }
+
+            // 좋아요 수 업데이트
+            document.getElementById('likeCount').innerText = newCount;
+        });
+    </script>
+    </body>
+
+
 </div>
-
-
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-</head>
-
-<body>
-
-<main id="main">
-
-    <!-- ======= Search Results ======= -->
-    <section class="book-sales-list" id="book-sales-list">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>주문</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="1">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-                <td>
-                    <div class="container mt-5">
-                        <!-- 좋아요 버튼 -->
-                        <button class="btn btn-primary" id="likeButton" type="button">
-                            <span id="likeIcon">
-                                <!-- 하트 아이콘 -->
-                                <i class="far fa-heart"></i>
-                            </span>
-                            <span id="likeCount">0</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="2">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </section> <!-- End Search Result -->
-
-</main><!-- End #main -->
-
-<script th:inline="javascript">
-    document.getElementById('likeButton').addEventListener('click', function () {
-        var currentCount = parseInt(document.getElementById('likeCount').innerText);
-        var newCount;
-
-        if (this.dataset.liked === 'true') {
-            // 좋아요 취소
-            newCount = currentCount - 1;
-            this.dataset.liked = 'false'; // 좋아요 상태 변경
-            document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
-        } else {
-            // 좋아요 올라감
-            newCount = currentCount + 1;
-            this.dataset.liked = 'true'; // 좋아요 상태 변경
-            document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
-        }
-
-        // 좋아요 수 업데이트
-        document.getElementById('likeCount').innerText = newCount;
-    });
-</script>
-</body>
-
-
 </html>
