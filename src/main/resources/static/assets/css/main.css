@@ -1,33 +1,22 @@
-/**
-* Template Name: ZenBlog
-* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-* Updated: Mar 17 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https:///bootstrapmade.com/license/
-*/
-
-/**
-* Check out variables.css for easy customization of colors, typography, and other repetitive properties
-*/
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
 :root {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  color: rgba(var(--color-primary-rgb), 1);
+    color: rgba(var(--color-primary-rgb), 1);
 }
 
 a {
-  color: var(--color-links);
-  text-decoration: none;
+    color: var(--color-links);
+    text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-links-hover);
-  text-decoration: none;
+    color: var(--color-links-hover);
+    text-decoration: none;
 }
 
 h1,
