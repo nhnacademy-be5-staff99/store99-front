@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/layout}"
+>
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<div layout:fragment="content">
 
-    <title>Store99st</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <main id="main">
+        <form action="/carts" method="post">
+            <input disabled name="bookId" th:value="${bookId}" type="number">
+            <button type="submit">장바구니에 추가</button>
+        </form>
+    </main>
 
-    <!-- Vendor CSS Files -->
-    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
-    <!-- Template Main CSS Files -->
-    <link href="/static/assets/css/variables.css" rel="stylesheet">
-    <link href="/static/assets/css/main.css" rel="stylesheet">
 
+   
 </head>
 
 <body>
@@ -37,17 +32,12 @@
 
 <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
-<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-<!-- Template Main JS File -->
-<script src="/static/assets/js/main.js"></script>
-
 <script>
 
 </script>
 </body>
+
+</div>
+
 
 </html>
