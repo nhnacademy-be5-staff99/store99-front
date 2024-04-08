@@ -1,16 +1,5 @@
-/*!
-  * Bootstrap v5.3.3 (https://getbootstrap.com/)
-  * Copyright 2011-2024 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
-  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-  */
 import * as Popper from '@popperjs/core';
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap dom/data.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 /**
  * Constants
@@ -53,12 +42,6 @@ const Data = {
   }
 };
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/index.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 const MAX_UID = 1000000;
 const MILLISECONDS_MULTIPLIER = 1000;
@@ -521,12 +504,6 @@ function hydrateObj(obj, meta = {}) {
   return obj;
 }
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap dom/manipulator.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 function normalizeData(value) {
   if (value === 'true') {
@@ -578,12 +555,6 @@ const Manipulator = {
   }
 };
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/config.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -630,13 +601,6 @@ class Config {
     }
   }
 }
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap base-component.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -699,13 +663,6 @@ class BaseComponent extends Config {
     return `${name}${this.EVENT_KEY}`;
   }
 }
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap dom/selector-engine.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 const getSelector = element => {
   let selector = element.getAttribute('data-bs-target');
@@ -814,12 +771,6 @@ const enableDismissTrigger = (component, method = 'hide') => {
   });
 };
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap alert.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -888,13 +839,6 @@ enableDismissTrigger(Alert, 'close');
  */
 
 defineJQueryPlugin(Alert);
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap button.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -1073,12 +1017,6 @@ class Swipe extends Config {
   }
 }
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap carousel.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -1446,12 +1384,6 @@ EventHandler.on(window, EVENT_LOAD_DATA_API$3, () => {
 
 defineJQueryPlugin(Carousel);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap collapse.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -1680,12 +1612,6 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, functi
 
 defineJQueryPlugin(Collapse);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap dropdown.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -2048,13 +1974,6 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$3, SELECTOR_DATA_TOGGLE$3, functi
 
 defineJQueryPlugin(Dropdown);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/backdrop.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
-
 
 /**
  * Constants
@@ -2172,13 +2091,6 @@ class Backdrop extends Config {
   }
 }
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/focustrap.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
-
 
 /**
  * Constants
@@ -2270,12 +2182,7 @@ class FocusTrap extends Config {
   }
 }
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/scrollBar.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
+
 
 
 /**
@@ -2367,13 +2274,6 @@ class ScrollBarHelper {
     }
   }
 }
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap modal.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -2673,12 +2573,6 @@ enableDismissTrigger(Modal);
 
 defineJQueryPlugin(Modal);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap offcanvas.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -2904,12 +2798,6 @@ enableDismissTrigger(Offcanvas);
 
 defineJQueryPlugin(Offcanvas);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/sanitizer.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 // js-docs-start allow-list
 const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
@@ -2999,13 +2887,6 @@ function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
   }
   return createdDocument.body.innerHTML;
 }
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap util/template-factory.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -3135,13 +3016,6 @@ class TemplateFactory extends Config {
     templateElement.textContent = element.textContent;
   }
 }
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap tooltip.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -3648,13 +3522,6 @@ class Tooltip extends BaseComponent {
 
 defineJQueryPlugin(Tooltip);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap popover.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
-
 
 /**
  * Constants
@@ -3729,12 +3596,6 @@ class Popover extends Tooltip {
 
 defineJQueryPlugin(Popover);
 
-/**
- * --------------------------------------------------------------------------
- * Bootstrap scrollspy.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
@@ -3988,13 +3849,6 @@ EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
  */
 
 defineJQueryPlugin(ScrollSpy);
-
-/**
- * --------------------------------------------------------------------------
- * Bootstrap tab.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
 
 
 /**
