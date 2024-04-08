@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html
         lang="ko"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org">
 
 
 <head th:replace="fragments/config :: ConfigFragment"></head>
@@ -11,7 +11,7 @@
 
 <th:block th:replace="fragments/header :: HeaderFragment"></th:block>
 
-<section layout:fragment="content" data-aos="fade-down" data-aos-delay="0"></section>
+<section data-aos="fade-down" data-aos-delay="0" layout:fragment="content"></section>
 
 <th:block th:replace="/fragments/footer :: FooterFragment"></th:block>
 
