@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout">
+
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <br><br><br><br><br>
+    <!-- cart content here -->
+    <head>
+        <title>도서 등록</title>
+
+        <!-- TUI 에디터 CSS CDN -->
+        <link href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" rel="stylesheet"/>
+    </head>
+    <body>
+    <div>
+        <h2>도서등록</h2>
+        <form id="valid_form">
+            <table>
+                <tbody id="tableBody">
+                <tr>
+                    <th>isbn13</th>
+                    <td><input id="bookIsbn13" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>isbn10</th>
+                    <td><input id="bookIsbn10" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>title</th>
+                    <td><input id="bookTitle" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>contents</th>
+                    <td><input id="bookContents" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>description</th>
+                    <td><input id="bookDescription" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>publisher</th>
+                    <td><input id="bookPublisher" required type="text"></td>
+                </tr>
+                <tr>
+                    <th>datetime</th>
+                    <td><input id="bookDateTime" required type="datetime-local"></td>
+                </tr>
+                <tr>
+                    <th>price</th>
+                    <td><input id="bookPrice" required type="number"></td>
+                </tr>
+                <tr>
+                    <th>saleprice</th>
+                    <td><input id="bookSalePrice" required type="number"></td>
+                </tr>
+                <tr>
+                    <th>packed</th>
+                    <td><input checked="true" id="bookIsPacked" required type="checkbox"></td>
+                </tr>
+                <tr>
+                    <th> ThumbnailUrl</th>
+                    <td><input id="bookThumbnailUrl" required type="text"></td>
+                </tr>
+                <tr>
+                    <th> stock</th>
+                    <td><input id="bookStock" required type="number"></td>
+                </tr>
+                </tbody>
+            </table>
+            <input id="submitButton" onclick="submitBookClick()" type="button" value="button">
+        </form>
+    </div>
+    <!-- 에디터를 적용할 요소 (컨테이너) -->
+    <div id="content">
+
+    </div>
+
+    <!-- TUI 에디터 JS CDN -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+        const editor = new toastui.Editor({
+            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+            height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+            initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+            previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+        });
+    </script>
+
+    <script src="/static/assets/js/book_admin.js"></script>
+    </body>
+</div>
+</html>

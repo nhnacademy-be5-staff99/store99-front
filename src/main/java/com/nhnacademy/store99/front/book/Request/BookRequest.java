@@ -1,11 +1,12 @@
-package com.nhnacademy.store99.front.book.entity;
+package com.nhnacademy.store99.front.book.Request;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class BookResponse {
-    private Long id;
+@Setter
+public class BookRequest {
     private String bookIsbn13;
     private String bookIsbn10;
     private String bookTitle;
@@ -18,10 +19,4 @@ public class BookResponse {
     private Boolean bookIsPacked;
     private String bookThumbnailUrl;
     private Integer bookStock;
-    private Integer bookViewCount;
-    private Integer bookCntOfReview;
-    private Integer bookAvgOfRate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
 }

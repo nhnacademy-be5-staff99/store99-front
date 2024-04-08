@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.book.service;
 
-import com.nhnacademy.store99.front.book.entity.BookRequest;
-import com.nhnacademy.store99.front.book.entity.BookResponse;
+import com.nhnacademy.store99.front.book.Request.BookRequest;
+import com.nhnacademy.store99.front.book.Response.BookResponse;
 import org.springframework.http.ResponseEntity;
 
 public interface BookService {
