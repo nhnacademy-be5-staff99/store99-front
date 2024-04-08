@@ -17,6 +17,6 @@ public class AdminViewController {
         if (adminCheckService.checkAdmin(xUserToken)) {
             return "admin/admin_index";
         }
-        return "error/admin_forbidden";
+        return "admin/error/forbidden";
     }
 }
