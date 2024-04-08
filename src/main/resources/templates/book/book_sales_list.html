@@ -34,7 +34,7 @@
                     <td>
                         <div class="container mt-5">
                             <!-- 좋아요 버튼 -->
-                            <button class="btn btn-primary" id="likeButton" type="button">
+                            <button id="likeButton" type="button" class="btn btn-primary">
                             <span id="likeIcon">
                                 <!-- 하트 아이콘 -->
                                 <i class="far fa-heart"></i>
@@ -59,8 +59,14 @@
 
     </main><!-- End #main -->
 
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+
+
     <script th:inline="javascript">
-        document.getElementById('likeButton').addEventListener('click', function () {
+        document.getElementById('likeButton').addEventListener('click', function() {
             var currentCount = parseInt(document.getElementById('likeCount').innerText);
             var newCount;
 
@@ -80,8 +86,6 @@
             document.getElementById('likeCount').innerText = newCount;
         });
     </script>
-    </body>
-
 
 </div>
 </html>
