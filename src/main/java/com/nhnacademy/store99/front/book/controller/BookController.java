@@ -5,6 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * 도서 뷰 컨트롤러
+ * <p>도서 페이지를 보여주는 컨트롤러
+ *
+ * @author seunggyu-kim
+ */
 @Controller
 public class BookController {
     @GetMapping("/books")
