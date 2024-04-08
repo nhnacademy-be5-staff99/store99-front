@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<head th:replace="fragments/config :: ConfigFragment"></head>
+
+<body>
+
+<th:block th:replace="fragments/header :: HeaderFragment"></th:block>
+
+<section layout:fragment="content" data-aos="fade-down" data-aos-delay="0"></section>
+
+<th:block th:replace="/fragments/footer :: FooterFragment"></th:block>
+
+<th:block th:replace="/fragments/script :: ScriptFragment"></th:block>
+
+<script>
+    AOS.init();
+</script>
+</body>
+</html>
