@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "LoginOpenFeign", url = "${store99.gateway.url.auth}")
+@FeignClient(name = "LoginOpenFeign", url = "${gateway.url}/auth")
 public interface LoginOpenFeign {
 
     @PostMapping(value = "/v1/auth/login")
