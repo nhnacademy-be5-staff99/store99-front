@@ -30,6 +30,8 @@
     <link href="/static/assets/css/variables.css" rel="stylesheet">
     <link href="/static/assets/css/main.css" rel="stylesheet">
 
+    <!--  ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -138,35 +140,32 @@
                                         </div>
                                     </form> <!-- === login form end ===-->
 
-                                    <!-- === login javascript ===-->
-                                    <script>
-                                        document.getElementById('loginForm').addEventListener('submit', function (event) {
+                                    <script> <!-- === login script ===-->
+                                        $("#loginForm").submit(function(event) {
                                             event.preventDefault();
 
-                                            var email = document.getElementById('email').value;
-                                            var password = document.getElementById('password').value;
+                                            var email = $("#email").val();
+                                            var password = $("#password").val();
 
-                                            fetch('/login', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify({
+                                            $.ajax({
+                                                url: '/login',
+                                                type: 'POST',
+                                                data: {
                                                     email: email,
                                                     password: password
-                                                })
-                                            }).then(function (response) {
-                                                if (!response.ok) {
-                                                    throw new Error('HTTP error ' + response.status);
+                                                },
+                                                success: function(data, textStatus, request) {
+                                                    // 서버로부터 받은 쿠키를 저장
+                                                    document.cookie = request.getResponseHeader('Set-Cookie');
+                                                    // index 페이지로 리다이렉트
+                                                    window.location.href = request.getResponseHeader('Location');
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    window.location.href = "/error/login_fail.html";
                                                 }
-                                                return response.json();
-                                            }).then(function (response) {
-                                                console.log(response);
-                                            }).catch(function (error) {
-                                                console.log(error);
                                             });
                                         });
-                                    </script> <!-- === login javascript end ===-->
+                                    </script> <!-- === login script end ===-->
 
                                     <hr>
 
