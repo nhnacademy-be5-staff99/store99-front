@@ -19,11 +19,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
+                <tr th:each="book : ${books}">
+                    <td onclick="location.href=`/books/${book.id}`" style="cursor:pointer;">1</td>
                     <td>
                         <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="1">
+                            <input name="bookId" type="hidden" value="${book.id}">
                             <button type="submit">장바구니에 추가</button>
                         </form>
                     </td>
@@ -38,15 +38,6 @@
                                 <span id="likeCount">0</span>
                             </button>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
-                    <td>
-                        <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="2">
-                            <button type="submit">장바구니에 추가</button>
-                        </form>
                     </td>
                 </tr>
                 </tbody>
