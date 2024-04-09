@@ -1,6 +1,6 @@
 package com.nhnacademy.store99.front.auth.service;
 
-import com.nhnacademy.store99.front.auth.adapter.LoginOpenFeign;
+import com.nhnacademy.store99.front.auth.adapter.LoginAdapter;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.dto.LoginResponse;
 import com.nhnacademy.store99.front.auth.exception.LoginFailException;
@@ -9,19 +9,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+/**
+ * @author Ahyeon Song
+ */
 @Service
 @Slf4j
 public class LoginService {
-    private final LoginOpenFeign loginOpenFeign;
+    private final LoginAdapter loginAdapter;
 
-    public LoginService(LoginOpenFeign loginOpenFeign) {
-        this.loginOpenFeign = loginOpenFeign;
+    public LoginService(LoginAdapter loginAdapter) {
+        this.loginAdapter = loginAdapter;
     }
 
     /**
      * auth server 로 email, password 를 보내 로그인 및 JWT 발급 요청
-     * <p>
-     * header 에서 X-USER-TOKEN 를 통해 access token 을 전달받는다
+     * <p>header 에서 X-USER-TOKEN 를 통해 access token 을 전달받는다
      *
      * @param request
      * @return LoginResponse
@@ -30,7 +32,7 @@ public class LoginService {
         ResponseEntity<LoginResponse> loginResponse;
 
         try {
-            loginResponse = loginOpenFeign.userLogin(request);
+            loginResponse = loginAdapter.userLogin(request);
         } catch (HttpClientErrorException e) {
             throw new LoginFailException("로그인 실패", e);
         }

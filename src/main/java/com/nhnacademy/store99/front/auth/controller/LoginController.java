@@ -43,9 +43,13 @@ public class LoginController {
     }
 
     /**
+     * 로그인 요청을 보내는 메소드
+     * <p>요청의 return 은 json 형태로, login_form 의 java script ajax 로 넘겨진다
+     * <p>로그인 성공 시 : header 에 cookie 를 담아 index 로 redirect 된다
+     * <p>로그인 실패 시 : alert 로 로그인 실패 메세지를 띄운다
      *
      * @param request (email, password)
-     * @return
+     * @return cookie 를 포함한 response
      */
     @PostMapping("/login")
     public ResponseEntity<CommonResponse<String>> doLogin(@ModelAttribute LoginRequest request) {
