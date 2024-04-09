@@ -1,6 +1,11 @@
 package com.nhnacademy.store99.front.book.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.store99.front.book.Request.BookRequest;
+import com.nhnacademy.store99.front.book.Response.BookResponse;
+import com.nhnacademy.store99.front.book.service.BookService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +20,23 @@ import org.springframework.web.bind.annotation.RequestBody;
  *
  * @author seunggyu-kim
  */
+@RequiredArgsConstructor
 @Controller
 public class BookController {
+    private final BookService bookService;
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @GetMapping("/books")
-    public String viewBookSalesList() {
+    public String viewBookSalesList(Model model) {
+        List<BookResponse> books = objectMapper.convertValue(bookService.getBooks(), List.class);
+        List<BookResponse> books2 = objectMapper.convertValue(bookService.getBooks(), List.class);
+        model.addAttribute("books", books);
         return "book/book_sales_list";
     }
+//    private ObjectMapper mapper = new ObjectMapper();
+//    PremierDriverInfoVariationDTO premierDriverInfoDTO =
+//            mapper.convertValue(json, PremierDriverInfoVariationDTO.class);
+//log.debug("premierDriverInfoDTO : {}", premierDriverInfoDTO);
 
     @GetMapping("/books/{id}")
     public String viewBookSalesPage(@PathVariable Long id, Model model) {
@@ -30,7 +46,7 @@ public class BookController {
 
     @GetMapping("/books/admin")
     public String viewManageBookDetail() {
-        return "admin/book/book_admin";
+        return "book/book_admin";
     }
 
 
@@ -38,10 +54,5 @@ public class BookController {
     public String postBook(@RequestBody BookRequest bookRequest) {
         System.out.println(bookRequest);
         return "index";
-    }
-
-    @GetMapping("/books/list")
-    public String viewBookList() {
-        return "book/book_sales_list";
     }
 }
