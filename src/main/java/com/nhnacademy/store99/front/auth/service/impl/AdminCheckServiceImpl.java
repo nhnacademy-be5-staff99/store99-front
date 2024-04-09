@@ -8,12 +8,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 관리자 권한 체크 서비스 구현체
+ *
+ * @author seunggyu-kim
+ */
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
 public class AdminCheckServiceImpl implements AdminCheckService {
     private final AuthAdaptor authAdaptor;
 
+    /**
+     * 관리자 권한 체크
+     *
+     * @param xUserToken 사용자 토큰
+     * @return 관리자 여부
+     */
     @Override
     public Boolean checkAdmin(final String xUserToken) {
         CommonResponse<AdminCheckResponse> response = authAdaptor.checkAdmin(xUserToken).getBody();

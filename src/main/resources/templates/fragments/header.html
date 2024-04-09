@@ -6,10 +6,10 @@
 <th:block th:fragment="HeaderFragment">
 
     <!-- ======= Header ======= -->
-    <header id="header" class="header d-flex align-items-center fixed-top">
+    <header class="header d-flex align-items-center fixed-top" id="header">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a class="logo d-flex align-items-center" href="index.html">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1>Store99st</h1>
@@ -17,8 +17,9 @@
 
             <!-- ======= Search Form ======= -->
             <div class="input-group mb-auto justify-content-center">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">통합검색
+                <button aria-expanded="false" class="btn btn-outline-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        type="button">통합검색
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">국내도서</a></li>
@@ -30,7 +31,7 @@
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
                 <form action="search-result.html" class="search-form">
-                    <input type="text" placeholder="Search" class="form-control">
+                    <input class="form-control" placeholder="Search" type="text">
                 </form>
             </div>
             <!-- End Search Form -->
@@ -39,7 +40,7 @@
 
                 <i class="bi bi-list mobile-nav-toggle"></i>
 
-                <nav id="navbar" class="navbar">
+                <nav class="navbar" id="navbar">
                     <ul>
                         <li><a href="../index.html">Home</a></li>
                         <li><a href="../single-post.html">국내도서</a></li>

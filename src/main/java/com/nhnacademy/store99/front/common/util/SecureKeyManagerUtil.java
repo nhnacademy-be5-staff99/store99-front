@@ -29,6 +29,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Secure key manager를 사용한 기밀 데이터 조회 유틸리티
+ *
+ * @author seunggyu-kim
+ */
 @Component
 public class SecureKeyManagerUtil {
     private final SecureKeyManagerProperties secureKeyManagerProperties;

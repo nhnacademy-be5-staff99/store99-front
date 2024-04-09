@@ -14,8 +14,8 @@
     <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
@@ -34,16 +34,16 @@
 <body>
 
 <!-- ======= Header ======= -->
-<header id="header" class="header d-flex align-items-center fixed-top">
+<header class="header d-flex align-items-center fixed-top" id="header">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a class="logo d-flex align-items-center" href="index.html">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.png" alt=""> -->
             <h1>ZenBlog</h1>
         </a>
 
-        <nav id="navbar" class="navbar">
+        <nav class="navbar" id="navbar">
             <ul>
                 <li><a href="index.html">Blog</a></li>
                 <li><a href="single-post.html">Single Post</a></li>
@@ -68,24 +68,24 @@
                     </ul>
                 </li>
 
-          <li><a href="about.html">About</a></li>
-          <li><a href="login_form.html">Contact</a></li>
-        </ul>
-      </nav><!-- .navbar -->
+                <li><a href="about.html">About</a></li>
+                <li><a href="login_form.html">Contact</a></li>
+            </ul>
+        </nav><!-- .navbar -->
 
         <div class="position-relative">
-            <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
-            <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-            <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+            <a class="mx-2" href="#"><span class="bi-facebook"></span></a>
+            <a class="mx-2" href="#"><span class="bi-twitter"></span></a>
+            <a class="mx-2" href="#"><span class="bi-instagram"></span></a>
 
-            <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+            <a class="mx-2 js-search-open" href="#"><span class="bi-search"></span></a>
             <i class="bi bi-list mobile-nav-toggle"></i>
 
             <!-- ======= Search Form ======= -->
             <div class="search-form-wrap js-search-form-wrap">
                 <form action="search-result.html" class="search-form">
                     <span class="icon bi-search"></span>
-                    <input type="text" placeholder="Search" class="form-control">
+                    <input class="form-control" placeholder="Search" type="text">
                     <button class="btn js-search-close"><span class="bi-x"></span></button>
                 </form>
             </div><!-- End Search Form -->
@@ -97,7 +97,7 @@
 </header><!-- End Header -->
 
 <main id="main">
-    <section id="contact" class="contact mb-5">
+    <section class="contact mb-5" id="contact">
         <div class="container" data-aos="fade-up">
 
             <div class="row">
@@ -106,58 +106,64 @@
                 </div>
             </div>
 
-<!--        <div class="row gy-4">-->
+            <!--        <div class="row gy-4">-->
 
-<!--          <div class="col-md-4">-->
-<!--            <div class="info-item">-->
-<!--              <i class="bi bi-geo-alt"></i>-->
-<!--              <h3>Address</h3>-->
-<!--              <address>A108 Adam Street, NY 535022, USA</address>-->
-<!--            </div>-->
-<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+            <!--          <div class="col-md-4">-->
+            <!--            <div class="info-item">-->
+            <!--              <i class="bi bi-geo-alt"></i>-->
+            <!--              <h3>Address</h3>-->
+            <!--              <address>A108 Adam Street, NY 535022, USA</address>-->
+            <!--            </div>-->
+            <!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
 
-<!--          <div class="col-md-4">-->
-<!--            <div class="info-item info-item-borders">-->
-<!--              <i class="bi bi-phone"></i>-->
-<!--              <h3>Phone Number</h3>-->
-<!--              <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>-->
-<!--            </div>-->
-<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+            <!--          <div class="col-md-4">-->
+            <!--            <div class="info-item info-item-borders">-->
+            <!--              <i class="bi bi-phone"></i>-->
+            <!--              <h3>Phone Number</h3>-->
+            <!--              <p><a href="tel:+155895548855">+1 5589 55488 55</a></p>-->
+            <!--            </div>-->
+            <!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
 
-<!--          <div class="col-md-4">-->
-<!--            <div class="info-item">-->
-<!--              <i class="bi bi-envelope"></i>-->
-<!--              <h3>Email</h3>-->
-<!--              <p><a href="mailto:info@example.com">info@example.com</a></p>-->
-<!--            </div>-->
-<!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+            <!--          <div class="col-md-4">-->
+            <!--            <div class="info-item">-->
+            <!--              <i class="bi bi-envelope"></i>-->
+            <!--              <h3>Email</h3>-->
+            <!--              <p><a href="mailto:info@example.com">info@example.com</a></p>-->
+            <!--            </div>-->
+            <!--          </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
 
-<!--        </div>-->
+            <!--        </div>-->
 
-        <div class="form mt-5">
-          <form action="forms/contact.php" method="post" role="form" class="login-form">
-            <div class="row">
-              <div class="form-group col-md-6">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-              </div>
-              <div class="form-group col-md-6">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-            </div>
-            <div class="form-group">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-            </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
-          </form>
-        </div><!-- End Contact Form -->
+            <div class="form mt-5">
+                <form action="forms/contact.php" class="login-form" method="post" role="form">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="name" name="name" placeholder="Your Name" required
+                                   type="text">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="email" name="email" placeholder="Your Email" required
+                                   type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="subject" name="subject" placeholder="Subject" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" placeholder="Message" required
+                                  rows="5"></textarea>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your message has been sent. Thank you!</div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit">Send Message</button>
+                    </div>
+                </form>
+            </div><!-- End Contact Form -->
 
         </div>
     </section>
@@ -165,7 +171,7 @@
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
-<footer id="footer" class="footer">
+<footer class="footer" id="footer">
 
     <div class="footer-content">
         <div class="container">
@@ -209,8 +215,8 @@
 
                     <ul class="footer-links footer-blog-entry list-unstyled">
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-1.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="../assets/img/post-sq-1.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -220,8 +226,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-2.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="../assets/img/post-sq-2.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -231,8 +237,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-3.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="../assets/img/post-sq-3.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -242,8 +248,8 @@
                         </li>
 
                         <li>
-                            <a href="single-post.html" class="d-flex align-items-center">
-                                <img src="../assets/img/post-sq-4.jpg" alt="" class="img-fluid me-3">
+                            <a class="d-flex align-items-center" href="single-post.html">
+                                <img alt="" class="img-fluid me-3" src="../assets/img/post-sq-4.jpg">
                                 <div>
                                     <div class="post-meta d-block"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                         <span>Jul 5th '22</span></div>
@@ -261,7 +267,7 @@
 
 </footer>
 
-<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
