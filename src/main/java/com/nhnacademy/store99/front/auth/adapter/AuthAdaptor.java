@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.auth.adaptor;
+package com.nhnacademy.store99.front.auth.adapter;
 
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
