@@ -32,8 +32,6 @@
                             </button>
                         </td>
                     </form>
-                    <td class="text-danger" colspan="5" th:if="${error ne null and category.id eq error.id}"
-                        th:text="${error.message}"></td>
                 </tr>
                 <tr class="table-primary">
                     <form action="/admin/categories" th:method="post">
