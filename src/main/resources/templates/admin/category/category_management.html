@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       layout:decorate="~{admin/layouts/layout}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 
 <th:block layout:fragment="css"></th:block>
 
@@ -39,16 +40,26 @@
                         <input class="form-control" disabled name="categoryId" th:value="*{id}" type="number">
                     </div>
                     <div class="col">
-                        <input class="form-control" name="categoryName" th:value="*{categoryName}" type="text">
+                        <input class="form-control" name="categoryName" th:disabled="*{deletedAt}"
+                               th:value="*{categoryName}"
+                               type="text">
                     </div>
                     <div class="col">
-                        <input class="form-control" name="parentCategoryId" th:value="*{parentCategoryId}"
+                        <input class="form-control" name="parentCategoryId" th:disabled="*{deletedAt}"
+                               th:value="*{parentCategoryId}"
                                type="number">
                     </div>
-                    <div class="col" th:text="*{#temporals.format(deletedAt, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                    <div class="col align-self-center">
+                        <span th:text="*{#temporals.format(deletedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </div>
                     <div class="col">
-                        <button class="btn btn-danger" th:if="*{deletedAt}" type="submit">삭제</button>
-                        <button class="btn btn-secondary" th:unless="*{deletedAt}" type="submit">수정</button>
+                        <th:block th:if="*{deletedAt}">
+                            <button class="btn btn-secondary" type="submit">복구</button>
+                        </th:block>
+                        <th:block th:unless="*{deletedAt}">
+                            <button class="btn btn-secondary" type="submit">수정</button>
+                            <button class="btn btn-danger" type="submit">삭제</button>
+                        </th:block>
                     </div>
                 </div>
             </form>
