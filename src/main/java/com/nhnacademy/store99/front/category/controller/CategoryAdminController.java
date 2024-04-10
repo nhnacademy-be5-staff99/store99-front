@@ -1,5 +1,8 @@
 package com.nhnacademy.store99.front.category.controller;
 
+import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
+import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
+import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
 import java.util.List;
@@ -7,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,17 +37,17 @@ public class CategoryAdminController {
     }
 
     @PostMapping
-    public ModelAndView addCategory() {
+    public ModelAndView addCategory(@ModelAttribute AddCategoryRequest request) {
         return new ModelAndView("redirect:/admin/categories");
     }
 
     @PutMapping
-    public ModelAndView modifyCategory() {
+    public ModelAndView modifyCategory(@ModelAttribute ModifyCategoryRequest request) {
         return new ModelAndView("redirect:/admin/categories");
     }
 
     @DeleteMapping
-    public ModelAndView removeCategory() {
+    public ModelAndView removeCategory(@ModelAttribute RemoveCategoryRequest request) {
         return new ModelAndView("redirect:/admin/categories");
     }
 }

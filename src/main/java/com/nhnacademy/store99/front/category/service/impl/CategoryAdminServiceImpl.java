@@ -5,6 +5,7 @@ import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
         List<CategoryForAdminResponse> categories = new ArrayList<>();
         categories.add(new CategoryForAdminResponse(1L, "카테고리", null, null));
         categories.add(new CategoryForAdminResponse(2L, "카테고리", 1L, null));
-        categories.add(new CategoryForAdminResponse(3L, "카테고리", 2L, null));
+        categories.add(new CategoryForAdminResponse(3L, "카테고리", 2L, LocalDateTime.now()));
         return categories;
     }
 
