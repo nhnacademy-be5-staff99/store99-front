@@ -10,6 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 관리자 카테고리 관리 서비스 구현체
+ *
+ * @author seunggyu-kim
+ */
 @Slf4j
 @Service
 @Transactional(readOnly = true)
