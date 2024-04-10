@@ -6,8 +6,47 @@
 <th:block layout:fragment="css"></th:block>
 
 <div layout:fragment="content">
-    <div>
-
+    <div class="container py-3">
+        <h1>Category Management</h1>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col">parent id</th>
+                    <th scope="col">deleted at</th>
+                    <th scope="col">#</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category, status: ${categories}" th:object="${category}">
+                    <form action="/admin/categories" th:method="put">
+                        <th scope="row"><input disabled name="categoryId" type="number" value="*{id}"></th>
+                        <td><input name="categoryName" type="text" value="*{categoryName}"></td>
+                        <td><input name="parentCategoryId" type="number" value="*{parentCategory.id}"></td>
+                        <td th:text="*{#temporals.format(deletedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td>
+                            <button class="btn btn-secondary" type="submit">수정</button>
+                            <button class="btn btn-danger " th:if="*{deletedAt == null}" type="submit">삭제
+                            </button>
+                        </td>
+                    </form>
+                </tr>
+                <tr class="table-primary">
+                    <form action="/admin/categories" th:method="post">
+                        <th></th>
+                        <td><input name="categoryName" type="text"></td>
+                        <td><input name="parentCategoryId" type="number"></td>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-primary" type="submit">생성</button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
