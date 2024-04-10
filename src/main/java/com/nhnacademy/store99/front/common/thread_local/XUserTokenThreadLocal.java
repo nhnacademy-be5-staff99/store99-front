@@ -8,6 +8,10 @@ package com.nhnacademy.store99.front.common.thread_local;
 public class XUserTokenThreadLocal {
     private static final ThreadLocal<String> X_USER_TOKEN = new ThreadLocal<>();
 
+    private XUserTokenThreadLocal() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String getXUserToken() {
         return X_USER_TOKEN.get();
     }
