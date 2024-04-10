@@ -22,9 +22,9 @@
                 <tbody>
                 <tr th:each="category, status: ${categories}" th:object="${category}">
                     <form action="/admin/categories" th:method="put">
-                        <th scope="row"><input disabled name="categoryId" type="number" value="*{id}"></th>
-                        <td><input name="categoryName" type="text" value="*{categoryName}"></td>
-                        <td><input name="parentCategoryId" type="number" value="*{parentCategoryId}"></td>
+                        <th scope="row"><input disabled name="categoryId" th:value="*{id}" type="number"></th>
+                        <td><input name="categoryName" th:value="*{categoryName}" type="text"></td>
+                        <td><input name="parentCategoryId" th:value="*{parentCategoryId}" type="number"></td>
                         <td th:text="*{#temporals.format(deletedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td>
                             <button class="btn btn-secondary" type="submit">수정</button>

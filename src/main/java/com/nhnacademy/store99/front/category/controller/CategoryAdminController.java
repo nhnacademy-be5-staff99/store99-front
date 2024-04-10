@@ -5,8 +5,10 @@ import com.nhnacademy.store99.front.category.service.CategoryAdminService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,12 +37,12 @@ public class CategoryAdminController {
         return new ModelAndView("redirect:/admin/categories");
     }
 
-    @PostMapping
+    @PutMapping
     public ModelAndView modifyCategory() {
         return new ModelAndView("redirect:/admin/categories");
     }
 
-    @PostMapping
+    @DeleteMapping
     public ModelAndView removeCategory() {
         return new ModelAndView("redirect:/admin/categories");
     }
