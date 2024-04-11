@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.book.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nhnacademy.store99.front.book.Request.BookRequest;
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
@@ -28,8 +29,8 @@ public class BookController {
 
     @GetMapping("/books")
     public String viewBookSalesList(Model model) {
-        List<BookResponse> books = objectMapper.convertValue(bookService.getBooks(), List.class);
-        List<BookResponse> books2 = objectMapper.convertValue(bookService.getBooks(), List.class);
+        List<BookResponse> books =
+                objectMapper.registerModule(new JavaTimeModule()).convertValue(bookService.getBooks(), List.class);
         model.addAttribute("books", books);
         return "book/book_sales_list";
     }
