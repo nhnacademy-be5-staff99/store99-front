@@ -14,8 +14,13 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>번호</th>
+                    <th>제목</th>
+                    <th>이미지</th>
+                    <th>가격</th>
+                    <th>리뷰 갯수</th>
+                    <th>평점</th>
                     <th>주문</th>
+                    <th>좋아요</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,6 +28,18 @@
                     <td>
                         <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"
                            th:text="${book.bookTitle}">bookTitle</a>
+                    </td>
+                    <td>
+                        <img alt="missing image" th:src="${book.bookThumbnailUrl}">
+                    </td>
+                    <td>
+                        <span th:text="${book.bookPrice}">bookPrice</span>
+                    </td>
+                    <td>
+                        <span th:text="${book.bookCntOfReview}">bookCntOfReview</span>
+                    </td>
+                    <td>
+                        <span th:text="${book.bookAvgOfRate}">bookAvgOfRate</span>
                     </td>
                     <td>
                         <form action="/carts" method="post">
@@ -51,6 +68,7 @@
 
 
     <head>
+        <title>Store99</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     </head>
     <script src="/static/assets/js/book_sales_list.js"></script>
