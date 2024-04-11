@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * @author yrrho2
  */
-@FeignClient(value = "bookstore-book", url = "localhost:8760/open/bookstore/v1/books", decode404 = true)
+@FeignClient(value = "bookstore-book", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
 public interface BookAdaptor {
     @GetMapping()
     ResponseEntity<CommonListResponse<BookResponse>> getBooks();

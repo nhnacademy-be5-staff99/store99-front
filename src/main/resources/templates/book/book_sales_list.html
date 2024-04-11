@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}" th:object="${book}">
+                <tr th:each="book : ${books}">
                     <td>
                         <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"
                            th:text="${book.bookTitle}">bookTitle</a>
