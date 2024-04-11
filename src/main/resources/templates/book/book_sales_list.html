@@ -19,8 +19,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}">
-                    <td onclick="location.href=`/books/${book.id}`" style="cursor:pointer;">1</td>
+                <tr th:each="book : ${books}" th:object="${book}">
+                    <td>
+                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"
+                           th:text="${book.bookTitle}">bookTitle</a>
+                    </td>
                     <td>
                         <form action="/carts" method="post">
                             <input name="bookId" type="hidden" value="${book.id}">
