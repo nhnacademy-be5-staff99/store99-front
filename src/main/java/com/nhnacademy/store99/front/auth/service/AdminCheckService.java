@@ -6,5 +6,5 @@ package com.nhnacademy.store99.front.auth.service;
  * @author seunggyu-kim
  */
 public interface AdminCheckService {
-    Boolean checkAdmin(String xUserToken);
+    Boolean checkAdmin();
 }
