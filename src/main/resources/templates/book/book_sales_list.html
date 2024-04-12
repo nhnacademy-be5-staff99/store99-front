@@ -1,83 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+        lang="en"
+        layout:decorate="~{layouts/layout}"
+        xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+>
 
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<div layout:fragment="content">
 
-    <title>Store99st</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <body>
 
-    <!-- Vendor CSS Files -->
-    <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="/static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <main id="main">
 
-    <!-- Template Main CSS Files -->
-    <link href="/static/assets/css/variables.css" rel="stylesheet">
-    <link href="/static/assets/css/main.css" rel="stylesheet">
+        <!-- ======= Search Results ======= -->
+        <section class="book-sales-list" id="book-sales-list">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>주문</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
+                    <td>
+                        <form action="/carts" method="post">
+                            <input name="bookId" type="hidden" value="1">
+                            <button type="submit">장바구니에 추가</button>
+                        </form>
+                    </td>
+                    <td>
+                        <div class="container mt-5">
+                            <!-- 좋아요 버튼 -->
+                            <button class="btn btn-primary" id="likeButton" type="button">
+                            <span id="likeIcon">
+                                <!-- 하트 아이콘 -->
+                                <i class="far fa-heart"></i>
+                            </span>
+                                <span id="likeCount">0</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
+                    <td>
+                        <form action="/carts" method="post">
+                            <input name="bookId" type="hidden" value="2">
+                            <button type="submit">장바구니에 추가</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section> <!-- End Search Result -->
 
-</head>
+    </main><!-- End #main -->
 
-<body>
 
-<main id="main">
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    </head>
 
-    <!-- ======= Search Results ======= -->
-    <section class="book-sales-list" id="book-sales-list">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>번호</th>
-                <th>주문</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="1">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
-                <td>
-                    <form action="/carts" method="post">
-                        <input name="bookId" type="hidden" value="2">
-                        <button type="submit">장바구니에 추가</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </section> <!-- End Search Result -->
 
-</main><!-- End #main -->
+    <script th:inline="javascript">
+        document.getElementById('likeButton').addEventListener('click', function () {
+            var currentCount = parseInt(document.getElementById('likeCount').innerText);
+            var newCount;
 
-<!-- Vendor JS Files -->
-<script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="/static/assets/vendor/aos/aos.js"></script>
-<script src="/static/assets/vendor/php-email-form/validate.js"></script>
+            if (this.dataset.liked === 'true') {
+                // 좋아요 취소
+                newCount = currentCount - 1;
+                this.dataset.liked = 'false'; // 좋아요 상태 변경
+                document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
+            } else {
+                // 좋아요 올라감
+                newCount = currentCount + 1;
+                this.dataset.liked = 'true'; // 좋아요 상태 변경
+                document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
+            }
 
-<!-- Template Main JS File -->
-<script src="/static/assets/js/main.js"></script>
+            // 좋아요 수 업데이트
+            document.getElementById('likeCount').innerText = newCount;
+        });
+    </script>
 
-<script>
-
-</script>
-</body>
-
+</div>
 </html>

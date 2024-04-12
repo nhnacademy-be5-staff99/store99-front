@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="HeaderFragment">
+
+    <!-- ======= Header ======= -->
+    <header class="header d-flex align-items-center fixed-top" id="header">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a class="logo d-flex align-items-center" href="index.html">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1>Store99st</h1>
+            </a>
+
+            <!-- ======= Search Form ======= -->
+            <div class="input-group mb-auto justify-content-center">
+                <button aria-expanded="false" class="btn btn-outline-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        type="button">통합검색
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">국내도서</a></li>
+                    <li><a class="dropdown-item" href="#">외국도서</a></li>
+                    <li><a class="dropdown-item" href="#">ebook</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+                <form action="search-result.html" class="search-form">
+                    <input class="form-control" placeholder="Search" type="text">
+                </form>
+            </div>
+            <!-- End Search Form -->
+
+            <div class="position-relative">
+
+                <i class="bi bi-list mobile-nav-toggle"></i>
+
+                <nav class="navbar" id="navbar">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../single-post.html">국내도서</a></li>
+                        <li><a href="../about.html">외국도서</a></li>
+                        <li><a href="../contact.html">Ebook</a></li>
+                        <li class="dropdown"><a href="../category.html"><span>Events</span> <i
+                                class="bi bi-chevron-down dropdown-indicator"></i></a>
+                            <ul>
+                                <li><a href="../search-result.html">Search Result</a></li>
+                                <li><a href="#">Drop Down 1</a></li>
+                                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                                    <ul>
+                                        <li><a href="#">Deep Drop Down 1</a></li>
+                                        <li><a href="#">Deep Drop Down 2</a></li>
+                                        <li><a href="#">Deep Drop Down 3</a></li>
+                                        <li><a href="#">Deep Drop Down 4</a></li>
+                                        <li><a href="#">Deep Drop Down 5</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Drop Down 2</a></li>
+                                <li><a href="#">Drop Down 3</a></li>
+                                <li><a href="#">Drop Down 4</a></li>
+                            </ul>
+                        <li class="grid gap-1"><a href="/login_form" style="font-size: 12px">로그인</a></li>
+                        <li class="grid gap-1"><a href="../contact.html" style="font-size: 12px">회원가입</a></li>
+                        <li class="grid gap-1"><a href="../contact.html" style="font-size: 12px">장바구니</a></li>
+                        <li class="grid gap-1"><a href="../contact.html" style="font-size: 12px">찜목록</a></li>
+                    </ul>
+                </nav>
+                <!-- .navbar -->
+
+            </div>
+
+        </div>
+
+    </header>
+    <!-- End Header -->
+
+</th:block>
+</html>
