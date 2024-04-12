@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" layout:decorate="~{layouts/layout}"
       xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <div layout:fragment="content"><!-- ==== fragment:content === -->
 
@@ -49,30 +49,30 @@
                                         </form> <!-- === login form end ===-->
 
                                         <script> <!-- === login script ===-->
-                                            $("#loginForm").submit(function(event) {
-                                                event.preventDefault();
+                                        $("#loginForm").submit(function (event) {
+                                            event.preventDefault();
 
-                                                var email = $("#email").val();
-                                                var password = $("#password").val();
+                                            var email = $("#email").val();
+                                            var password = $("#password").val();
 
-                                                $.ajax({
-                                                    url: '/login',
-                                                    type: 'POST',
-                                                    data: {
-                                                        email: email,
-                                                        password: password
-                                                    },
-                                                    success: function(data, textStatus, request) {
-                                                        // 서버로부터 받은 쿠키를 저장
-                                                        document.cookie = request.getResponseHeader('Set-Cookie');
-                                                        // index 페이지로 리다이렉트
-                                                        window.location.href = request.getResponseHeader('Location');
-                                                    },
-                                                    error: function (jqXHR, textStatus, errorThrown) {
-                                                        window.alert("로그인에 실패하였습니다.\n이메일과 비밀번호를 다시 확인해주세요!")
-                                                    }
-                                                });
+                                            $.ajax({
+                                                url: '/login',
+                                                type: 'POST',
+                                                data: {
+                                                    email: email,
+                                                    password: password
+                                                },
+                                                success: function (data, textStatus, request) {
+                                                    // 서버로부터 받은 쿠키를 저장
+                                                    document.cookie = request.getResponseHeader('Set-Cookie');
+                                                    // index 페이지로 리다이렉트
+                                                    window.location.href = request.getResponseHeader('Location');
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    window.alert("로그인에 실패하였습니다.\n이메일과 비밀번호를 다시 확인해주세요!")
+                                                }
                                             });
+                                        });
                                         </script> <!-- === login script end ===-->
 
                                         <hr>
