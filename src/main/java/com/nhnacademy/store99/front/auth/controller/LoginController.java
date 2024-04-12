@@ -1,11 +1,11 @@
 package com.nhnacademy.store99.front.auth.controller;
 
+import com.nhnacademy.store99.front.auth.cookie.CookieSecurityConfig;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.service.LoginService;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.net.URI;
-import java.time.Duration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,14 +23,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     private final LoginService loginService;
+    private final CookieSecurityConfig cookieSecurityConfig;
 
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, CookieSecurityConfig cookieSecurityConfig) {
         this.loginService = loginService;
+        this.cookieSecurityConfig = cookieSecurityConfig;
     }
 
 
     /**
      * 로그인 페이지 진입
+     *
      * @return login_form.html
      */
     @GetMapping("/login_form")
@@ -67,8 +69,7 @@ public class LoginController {
                 .build();
         ResponseCookie cookie = ResponseCookie.from("X-USER-TOKEN", accessToken)
                 .httpOnly(true)
-                .secure(false)
-                .maxAge(Duration.ofDays(30L))
+                .secure(cookieSecurityConfig.isSecure())
                 .path("/")
                 .build();
 
