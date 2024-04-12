@@ -14,6 +14,7 @@
             <table class="table">
                 <thead>
                 <tr>
+                    <th>번호</th>
                     <th>제목</th>
                     <th>이미지</th>
                     <th>가격</th>
@@ -24,43 +25,43 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--                <tr th:each="bookList, loop : ${paging}">-->
-                <!--                    <td th:text="${loop.count}"></td>-->
-                <!--                    <td>-->
-                <!--                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"-->
-                <!--                           th:text="${book.bookTitle}">bookTitle</a>-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <img alt="missing image" th:src="${book.bookThumbnailUrl}">-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <span th:text="${book.bookPrice}">bookPrice</span>-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <span th:text="${book.bookCntOfReview}">bookCntOfReview</span>-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <span th:text="${book.bookAvgOfRate}">bookAvgOfRate</span>-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <form action="/carts" method="post">-->
-                <!--                            <input name="bookId" type="hidden" value="${book.id}">-->
-                <!--                            <button type="submit">장바구니에 추가</button>-->
-                <!--                        </form>-->
-                <!--                    </td>-->
-                <!--                    <td>-->
-                <!--                        <div class="container mt-5">-->
-                <!--                            &lt;!&ndash; 좋아요 버튼 &ndash;&gt;-->
-                <!--                            <button class="btn btn-primary" id="likeButton" type="button">-->
-                <!--                            <span id="likeIcon">-->
-                <!--                                &lt;!&ndash; 하트 아이콘 &ndash;&gt;-->
-                <!--                                <i class="far fa-heart"></i>-->
-                <!--                            </span>-->
-                <!--                                <span id="likeCount">0</span>-->
-                <!--                            </button>-->
-                <!--                        </div>-->
-                <!--                    </td>-->
-                <!--                </tr>-->
+                <tr th:each="bookList, loop : ${booksPage}">
+                    <td th:text="${loop.count}"></td>
+                    <td>
+                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${bookList.id})}"
+                           th:text="${bookList.bookTitle}">bookTitle</a>
+                    </td>
+                    <td>
+                        <img alt="missing image" th:src="${bookList.bookThumbnailUrl}">
+                    </td>
+                    <td>
+                        <span th:text="${bookList.bookPrice}">bookPrice</span>
+                    </td>
+                    <td>
+                        <span th:text="${bookList.bookCntOfReview}">bookCntOfReview</span>
+                    </td>
+                    <td>
+                        <span th:text="${bookList.bookAvgOfRate}">bookAvgOfRate</span>
+                    </td>
+                    <td>
+                        <form action="/carts" method="post">
+                            <input name="bookId" type="hidden" value="${bookList.id}">
+                            <button type="submit">장바구니에 추가</button>
+                        </form>
+                    </td>
+                    <td>
+                        <div class="container mt-5">
+                            <!-- 좋아요 버튼 -->
+                            <button class="btn btn-primary" id="likeButton" type="button">
+                            <span id="likeIcon">
+                                <!-- 하트 아이콘 -->
+                                <i class="far fa-heart"></i>
+                            </span>
+                                <span id="likeCount">0</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </section> <!-- End Search Result -->
@@ -72,7 +73,7 @@
         <title>Store99</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     </head>
-    <script src="/static/assets/js/book_sales_list.js"></script>
+    <!--    <script src="/static/assets/js/book_sales_list.js"></script>-->
     </body>
 </div>
 </html>

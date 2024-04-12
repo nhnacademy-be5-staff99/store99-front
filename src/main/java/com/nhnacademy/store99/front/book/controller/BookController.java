@@ -57,7 +57,7 @@ public class BookController {
 
     @PostMapping(value = "/books/admin")
     public String postBook(@RequestBody BookRequest bookRequest) {
-        System.out.println(bookRequest);
-        return "index";
+        bookService.postBook();
+        return "/books/";
     }
 }
