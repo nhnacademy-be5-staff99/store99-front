@@ -1,6 +1,6 @@
 package com.nhnacademy.store99.front.auth.controller;
 
-import com.nhnacademy.store99.front.auth.cookie.CookieSecurityConfig;
+import com.nhnacademy.store99.front.auth.cookie.CookieSecurityProperties;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.service.LoginService;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
@@ -23,11 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     private final LoginService loginService;
-    private final CookieSecurityConfig cookieSecurityConfig;
+    private final CookieSecurityProperties cookieSecurityProperties;
 
-    public LoginController(LoginService loginService, CookieSecurityConfig cookieSecurityConfig) {
+    public LoginController(LoginService loginService, CookieSecurityProperties cookieSecurityProperties) {
         this.loginService = loginService;
-        this.cookieSecurityConfig = cookieSecurityConfig;
+        this.cookieSecurityProperties = cookieSecurityProperties;
     }
 
 
@@ -69,7 +69,7 @@ public class LoginController {
                 .build();
         ResponseCookie cookie = ResponseCookie.from("X-USER-TOKEN", accessToken)
                 .httpOnly(true)
-                .secure(cookieSecurityConfig.isSecure())
+                .secure(cookieSecurityProperties.isSecure())
                 .path("/")
                 .build();
 

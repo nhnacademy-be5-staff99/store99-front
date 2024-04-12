@@ -1,11 +1,11 @@
 package com.nhnacademy.store99.front.auth.cookie;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
-@Profile("dev")
-@Configuration
-public class DevCookieSecurityConfig implements CookieSecurityConfig {
+@Profile("!prod")
+@Component
+public class DevCookieSecurityProperties implements CookieSecurityProperties {
     @Override
     public boolean isSecure() {
         return false;
