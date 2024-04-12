@@ -6,12 +6,14 @@ import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -32,6 +34,13 @@ public class BookController {
         List<BookResponse> books = bookService.getBooks();
         model.addAttribute("books", books);
         return "book/book_sales_list";
+    }
+
+    @GetMapping("/books/paging")
+    public String viewBookSalesPage(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<BookResponse> paging = bookService.getBooks(page);
+        model.addAttribute("booksPage", paging);
+        return "book/book_sales_paging";
     }
 
     @GetMapping("/books/{id}")

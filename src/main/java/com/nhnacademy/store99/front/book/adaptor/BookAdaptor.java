@@ -2,9 +2,12 @@ package com.nhnacademy.store99.front.book.adaptor;
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.common.response.CommonListResponse;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.util.CustomPage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 도서 관리 어댑터
@@ -16,4 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface BookAdaptor {
     @GetMapping()
     ResponseEntity<CommonListResponse<BookResponse>> getBooks();
+
+    @GetMapping(value = "/page")
+    ResponseEntity<CommonResponse<CustomPage<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
 }

@@ -4,8 +4,10 @@ package com.nhnacademy.store99.front.book.service;
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.adaptor.BookAdaptor;
 import com.nhnacademy.store99.front.common.response.CommonListResponse;
+import com.nhnacademy.store99.front.common.util.CustomPage;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,5 +42,11 @@ public class BookServiceImpl implements BookService {
         CommonListResponse<BookResponse> books = bookAdaptor.getBooks().getBody();
         assert books != null;
         return books.getResultList();
+    }
+
+    @Override
+    public CustomPage<BookResponse> getBooks(int page) {
+        Page<BookResponse> books = bookAdaptor.getBooks(page).getBody().getResult();
+        return (CustomPage<BookResponse>) books;
     }
 }

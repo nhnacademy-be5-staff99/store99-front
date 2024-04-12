@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        layout:decorate="~{layouts/layout}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<div layout:fragment="content">
+    <body>
+
+    <main id="main">
+
+        <!-- ======= Search Results ======= -->
+        <section class="book-sales-list" id="book-sales-list">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>이미지</th>
+                    <th>가격</th>
+                    <th>리뷰 갯수</th>
+                    <th>평점</th>
+                    <th>주문</th>
+                    <th>좋아요</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--                <tr th:each="bookList, loop : ${paging}">-->
+                <!--                    <td th:text="${loop.count}"></td>-->
+                <!--                    <td>-->
+                <!--                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"-->
+                <!--                           th:text="${book.bookTitle}">bookTitle</a>-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <img alt="missing image" th:src="${book.bookThumbnailUrl}">-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <span th:text="${book.bookPrice}">bookPrice</span>-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <span th:text="${book.bookCntOfReview}">bookCntOfReview</span>-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <span th:text="${book.bookAvgOfRate}">bookAvgOfRate</span>-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <form action="/carts" method="post">-->
+                <!--                            <input name="bookId" type="hidden" value="${book.id}">-->
+                <!--                            <button type="submit">장바구니에 추가</button>-->
+                <!--                        </form>-->
+                <!--                    </td>-->
+                <!--                    <td>-->
+                <!--                        <div class="container mt-5">-->
+                <!--                            &lt;!&ndash; 좋아요 버튼 &ndash;&gt;-->
+                <!--                            <button class="btn btn-primary" id="likeButton" type="button">-->
+                <!--                            <span id="likeIcon">-->
+                <!--                                &lt;!&ndash; 하트 아이콘 &ndash;&gt;-->
+                <!--                                <i class="far fa-heart"></i>-->
+                <!--                            </span>-->
+                <!--                                <span id="likeCount">0</span>-->
+                <!--                            </button>-->
+                <!--                        </div>-->
+                <!--                    </td>-->
+                <!--                </tr>-->
+                </tbody>
+            </table>
+        </section> <!-- End Search Result -->
+
+    </main><!-- End #main -->
+
+
+    <head>
+        <title>Store99</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    </head>
+    <script src="/static/assets/js/book_sales_list.js"></script>
+    </body>
+</div>
+</html>

@@ -2,8 +2,10 @@ package com.nhnacademy.store99.front.book.Response;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class BookResponse {
     private Long id;
     private String bookIsbn13;
