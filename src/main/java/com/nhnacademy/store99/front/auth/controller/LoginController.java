@@ -68,7 +68,7 @@ public class LoginController {
         ResponseCookie cookie = ResponseCookie.from("X-USER-TOKEN", accessToken)
                 .httpOnly(true)
                 .secure(false)
-                .maxAge(Duration.ofHours(1))
+                .maxAge(Duration.ofDays(30L))
                 .path("/")
                 .build();
 
