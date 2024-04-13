@@ -14,7 +14,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>번호</th>
                     <th>제목</th>
                     <th>이미지</th>
                     <th>가격</th>
@@ -26,7 +25,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="bookList, loop : ${booksPage}">
-                    <td th:text="${loop.count}"></td>
                     <td>
                         <a style="cursor:pointer;" th:href="@{books/{id}(id=${bookList.id})}"
                            th:text="${bookList.bookTitle}">bookTitle</a>
@@ -73,7 +71,7 @@
         <title>Store99</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     </head>
-    <!--    <script src="/static/assets/js/book_sales_list.js"></script>-->
+    <script src="/static/assets/js/book_sales_list.js"></script>
     </body>
 </div>
 </html>
