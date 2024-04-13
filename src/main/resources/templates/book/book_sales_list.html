@@ -24,26 +24,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}">
+                <tr th:each="bookList, loop : ${booksPage}">
                     <td>
-                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${book.id})}"
-                           th:text="${book.bookTitle}">bookTitle</a>
+                        <a style="cursor:pointer;" th:href="@{/books/{id}(id=${bookList.id})}"
+                           th:text="${bookList.bookTitle}">bookTitle</a>
                     </td>
                     <td>
-                        <img alt="missing image" th:src="${book.bookThumbnailUrl}">
+                        <img alt="missing image" th:src="${bookList.bookThumbnailUrl}">
                     </td>
                     <td>
-                        <span th:text="${book.bookPrice}">bookPrice</span>
+                        <span th:text="${bookList.bookPrice}">bookPrice</span>
                     </td>
                     <td>
-                        <span th:text="${book.bookCntOfReview}">bookCntOfReview</span>
+                        <span th:text="${bookList.bookCntOfReview}">bookCntOfReview</span>
                     </td>
                     <td>
-                        <span th:text="${book.bookAvgOfRate}">bookAvgOfRate</span>
+                        <span th:text="${bookList.bookAvgOfRate}">bookAvgOfRate</span>
                     </td>
                     <td>
                         <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="${book.id}">
+                            <input name="bookId" type="hidden" value="${bookList.id}">
                             <button type="submit">장바구니에 추가</button>
                         </form>
                     </td>

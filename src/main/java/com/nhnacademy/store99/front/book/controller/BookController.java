@@ -1,10 +1,8 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.store99.front.book.Request.BookRequest;
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,20 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BookController {
     private final BookService bookService;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/books")
-    public String viewBookSalesList(Model model) {
-        List<BookResponse> books = bookService.getBooks();
-        model.addAttribute("books", books);
-        return "book/book_sales_list";
-    }
-
-    @GetMapping("/books/paging")
     public String viewBookSalesPage(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<BookResponse> paging = bookService.getBooks(page);
         model.addAttribute("booksPage", paging);
-        return "book/book_sales_paging";
+        return "book/book_sales_list";
     }
 
     @GetMapping("/books/{id}")
