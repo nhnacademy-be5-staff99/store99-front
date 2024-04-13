@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author seunggyu-kim
  */
-@Component
 public class XUserTokenCheckInterceptor implements HandlerInterceptor {
 
     @Override
@@ -26,7 +24,7 @@ public class XUserTokenCheckInterceptor implements HandlerInterceptor {
         Cookie xUserToken = CookieUtils.getCookie(request, "X-USER-TOKEN");
 
         if (Objects.isNull(xUserToken)) {
-            response.sendRedirect("/admin/error/forbidden");
+            request.getRequestDispatcher("/admin/error/forbidden").forward(request, response);
             return false;
         }
 

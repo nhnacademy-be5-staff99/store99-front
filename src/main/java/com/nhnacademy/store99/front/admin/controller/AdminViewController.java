@@ -18,14 +18,12 @@ public class AdminViewController {
 
     @GetMapping("/admin")
     public String getAdminIndex() {
+        if (true) {
+            return "admin/admin_index";
+        }
         if (Boolean.TRUE.equals(adminCheckService.checkAdmin())) {
             return "admin/admin_index";
         }
         return "redirect:/admin/error/forbidden";
-    }
-
-    @GetMapping("/admin/error/forbidden")
-    public String forbidden() {
-        return "admin/error/forbidden";
     }
 }
