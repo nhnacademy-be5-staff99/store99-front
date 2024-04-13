@@ -49,13 +49,13 @@ public class BookController {
         return "book/book_sales_page";
     }
 
-    @GetMapping("/books/admin")
+    @GetMapping("/admin/books")
     public String viewManageBookDetail() {
         return "book/book_admin";
     }
 
 
-    @PostMapping(value = "/books/admin")
+    @PostMapping(value = "/admin/books")
     public String postBook(@RequestBody BookRequest bookRequest) {
         bookService.postBook();
         return "/books/";

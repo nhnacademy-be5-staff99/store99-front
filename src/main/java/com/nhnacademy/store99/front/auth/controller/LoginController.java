@@ -1,11 +1,11 @@
 package com.nhnacademy.store99.front.auth.controller;
 
+import com.nhnacademy.store99.front.auth.cookie.CookieSecurityProperties;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.service.LoginService;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.net.URI;
-import java.time.Duration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -23,9 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     private final LoginService loginService;
+    private final CookieSecurityProperties cookieSecurityProperties;
 
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, CookieSecurityProperties cookieSecurityProperties) {
         this.loginService = loginService;
+        this.cookieSecurityProperties = cookieSecurityProperties;
     }
 
 
@@ -67,8 +69,7 @@ public class LoginController {
                 .build();
         ResponseCookie cookie = ResponseCookie.from("X-USER-TOKEN", accessToken)
                 .httpOnly(true)
-                .secure(false)
-                .maxAge(Duration.ofHours(1))
+                .secure(cookieSecurityProperties.isSecure())
                 .path("/")
                 .build();
 

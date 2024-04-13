@@ -4,7 +4,6 @@ package com.nhnacademy.store99.front.admin.controller;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -18,10 +17,15 @@ public class AdminViewController {
     private final AdminCheckService adminCheckService;
 
     @GetMapping("/admin")
-    public String getAdminIndex(@CookieValue("X-USER-TOKEN") String xUserToken) {
-        if (adminCheckService.checkAdmin(xUserToken)) {
+    public String getAdminIndex() {
+        if (Boolean.TRUE.equals(adminCheckService.checkAdmin())) {
             return "admin/admin_index";
         }
-        return "error/admin_forbidden";
+        return "redirect:/admin/error/forbidden";
+    }
+
+    @GetMapping("/admin/error/forbidden")
+    public String forbidden() {
+        return "admin/error/forbidden";
     }
 }
