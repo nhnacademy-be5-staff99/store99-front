@@ -26,7 +26,7 @@
                 <tbody>
                 <tr th:each="bookList, loop : ${booksPage}">
                     <td>
-                        <a style="cursor:pointer;" th:href="@{books/{id}(id=${bookList.id})}"
+                        <a style="cursor:pointer;" th:href="@{/books/{id}(id=${bookList.id})}"
                            th:text="${bookList.bookTitle}">bookTitle</a>
                     </td>
                     <td>
