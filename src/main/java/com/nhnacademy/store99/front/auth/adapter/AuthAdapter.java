@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
  *
  * @author seunggyu-kim
  */
-@FeignClient(value = "store99-gateway-service", url = "${gateway.url}/api/bookstore/v1/admin", decode404 = true)
-public interface AuthAdaptor {
+@FeignClient(value = "auth-admin-adapter", url = "${gateway.url}/api/bookstore/v1/admin", decode404 = true)
+public interface AuthAdapter {
     @GetMapping("/check")
     ResponseEntity<CommonResponse<AdminCheckResponse>> checkAdmin(@RequestHeader("X-USER-TOKEN") String xUserToken);
 }
