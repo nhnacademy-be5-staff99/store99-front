@@ -1,15 +1,18 @@
 package com.nhnacademy.store99.front.category.service.impl;
 
+import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
 import com.nhnacademy.store99.front.category.adapter.CategoryAdminAdapter;
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import feign.FeignException;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author seunggyu-kim
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -35,9 +39,13 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     @Override
     public void addCategory(final AddCategoryRequest category) {
         try {
-            categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), category);
+            CommonResponse<Void> response =
+                    categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), category);
+            log.debug("categoryAdminAdapter.addCategory response: {}", response);
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
         } catch (FeignException ex) {
-            throw new RuntimeException(ex);
+            log.error("addCategory error", ex);
         }
     }
 
