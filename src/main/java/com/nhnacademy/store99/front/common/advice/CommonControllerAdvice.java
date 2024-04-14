@@ -19,7 +19,7 @@ public class CommonControllerAdvice {
      * <p>403 FORBIDDEN 에러를 반환할 경우 AdminPermissionDeniedException을 상속받아서 사용
      *
      * @param ex NotFoundException
-     * @return 404 NOT_FOUND
+     * @return 403 FORBIDDEN 에러 페이지
      */
     @ExceptionHandler(AdminPermissionDeniedException.class)
     public String notFoundExceptionHandler(AdminPermissionDeniedException ex) {
