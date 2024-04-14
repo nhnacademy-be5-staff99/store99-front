@@ -39,7 +39,7 @@ public class CategoryAdminController {
     }
 
     @PostMapping
-    public ModelAndView addCategory(@ModelAttribute @Valid AddCategoryRequest request) {
+    public ModelAndView addCategory(@ModelAttribute AddCategoryRequest request) {
         categoryAdminService.addCategory(request);
         return new ModelAndView("redirect:/admin/categories");
     }
