@@ -1,14 +1,21 @@
 package com.nhnacademy.store99.front.category.service.impl;
 
+import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
+import com.nhnacademy.store99.front.category.adapter.CategoryAdminAdapter;
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
+import feign.FeignException;
+import java.util.Collections;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,27 +25,35 @@ import org.springframework.transaction.annotation.Transactional;
  * @author seunggyu-kim
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class CategoryAdminServiceImpl implements CategoryAdminService {
+    private final CategoryAdminAdapter categoryAdminAdapter;
+
     @Override
-    public List<CategoryForAdminResponse> getCategories() {
-        List<CategoryForAdminResponse> categories = new ArrayList<>();
-        categories.add(new CategoryForAdminResponse(1L, "카테고리", null, null));
-        categories.add(new CategoryForAdminResponse(2L, "카테고리", 1L, null));
-        categories.add(new CategoryForAdminResponse(3L, "카테고리", 2L, LocalDateTime.now()));
-        return categories;
+    public Page<CategoryForAdminResponse> getCategories(Pageable pageable) {
+        return new PageImpl<>(Collections.emptyList(), pageable, 0);
     }
 
     @Override
-    public void addCategory(final AddCategoryRequest category) {
+    public void addCategory(final AddCategoryRequest request) {
+        try {
+            CommonResponse<Void> response =
+                    categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), request);
+            log.debug("categoryAdminAdapter.addCategory response: {}", response);
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
+        } catch (FeignException ex) {
+            log.error("addCategory error", ex);
+        }
     }
 
     @Override
-    public void modifyCategory(final ModifyCategoryRequest category) {
+    public void modifyCategory(final ModifyCategoryRequest request) {
     }
 
     @Override
-    public void removeCategory(final RemoveCategoryRequest categoryId) {
+    public void removeCategory(final RemoveCategoryRequest request) {
     }
 }

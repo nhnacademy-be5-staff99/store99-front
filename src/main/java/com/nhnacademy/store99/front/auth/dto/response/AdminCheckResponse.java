@@ -9,9 +9,9 @@ public class AdminCheckResponse {
     /**
      * 관리자 여부
      */
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
-    public Boolean getIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 }
