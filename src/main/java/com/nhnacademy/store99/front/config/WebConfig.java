@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * WebMvcConfigurer 설정
  *
  * @author seunggyu-kim
+ * @author Ahyeon Song
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -17,6 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**");
         registry.addInterceptor(new XUserTokenCheckForUserInterceptor())
-                .addPathPatterns("/books/**", "/mypage/**, /logout");
+                .addPathPatterns("/mypage/**, /logout");
     }
 }
