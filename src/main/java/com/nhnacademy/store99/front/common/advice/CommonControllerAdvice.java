@@ -1,5 +1,6 @@
 package com.nhnacademy.store99.front.common.advice;
 
+import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
 import feign.FeignException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,14 @@ public class CommonControllerAdvice {
     public ModelAndView unauthorizedExceptionHandler(FeignException.Unauthorized ex) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/unauthorized");
+
+        return mv;
+    }
+
+    @ExceptionHandler(value = {LoginRequiredException.class})
+    public ModelAndView loginRequiredException(LoginRequiredException ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("login_form");
 
         return mv;
     }
