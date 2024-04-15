@@ -1,5 +1,6 @@
 package com.nhnacademy.store99.front.common.interceptor;
 
+import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.common.util.CookieUtils;
 import java.util.Objects;
@@ -24,8 +25,7 @@ public class XUserTokenCheckInterceptor implements HandlerInterceptor {
         Cookie xUserToken = CookieUtils.getCookie(request, "X-USER-TOKEN");
 
         if (Objects.isNull(xUserToken)) {
-            request.getRequestDispatcher("/admin/error/forbidden").forward(request, response);
-            return false;
+            throw new AdminPermissionDeniedException();
         }
 
         XUserTokenThreadLocal.setXUserToken(xUserToken.getValue());

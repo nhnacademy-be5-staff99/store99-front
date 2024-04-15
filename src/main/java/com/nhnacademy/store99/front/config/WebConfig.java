@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(new XUserTokenCheckInterceptor()).addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/error/forbidden");
+        registry.addInterceptor(new XUserTokenCheckInterceptor()).addPathPatterns("/admin/**");
     }
 }
