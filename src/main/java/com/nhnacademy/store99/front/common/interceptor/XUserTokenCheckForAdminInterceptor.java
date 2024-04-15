@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author seunggyu-kim
  */
-public class XUserTokenCheckInterceptor implements HandlerInterceptor {
+public class XUserTokenCheckForAdminInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler)
