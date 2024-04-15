@@ -23,7 +23,7 @@ public class FeignConfig {
     public RequestInterceptor requestInterceptor() {
         return template -> {
             String url = template.url();
-            if (url.startsWith(gatewayUrl + "/api/bookstore") || url.startsWith(gatewayUrl + "/api/coupon")) {
+            if (url.startsWith(gatewayUrl + "/api")) {
                 String xUserToken = getXUserToken();
                 template.header("X-USER-TOKEN", xUserToken);
             }
