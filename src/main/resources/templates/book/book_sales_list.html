@@ -19,7 +19,6 @@
                     <th>가격</th>
                     <th>리뷰 갯수</th>
                     <th>평점</th>
-                    <th>주문</th>
                     <th>좋아요</th>
                 </tr>
                 </thead>
@@ -41,12 +40,7 @@
                     <td>
                         <span th:text="${bookList.bookAvgOfRate}">bookAvgOfRate</span>
                     </td>
-                    <td>
-                        <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="${bookList.id}">
-                            <button type="submit">장바구니에 추가</button>
-                        </form>
-                    </td>
+
                     <td>
                         <div class="container mt-5">
                             <!-- 좋아요 버튼 -->
@@ -93,6 +87,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     </head>
     <script src="/static/assets/js/book_sales_list.js"></script>
+    <link href="/static/assets/css/book_sales_list.css" rel="stylesheet"/>
     </body>
 </div>
 </html>
