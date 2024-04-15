@@ -2,7 +2,7 @@ package com.nhnacademy.store99.front.book.adaptor;
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
-import com.nhnacademy.store99.front.common.util.CustomPage;
+import com.nhnacademy.store99.front.common.response.CustomPageResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,5 +17,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "bookstore-book", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
 public interface BookAdaptor {
     @GetMapping()
-    ResponseEntity<CommonResponse<CustomPage<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
+    ResponseEntity<CommonResponse<CustomPageResponse<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
 }
