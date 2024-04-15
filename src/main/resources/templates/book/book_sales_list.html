@@ -62,6 +62,27 @@
                 </tr>
                 </tbody>
             </table>
+            <div th:if="${!booksPage.isEmpty()}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!booksPage.hasPrevious} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{|?page=${booksPage.number-1}|}">
+                            <span>이전</span>
+                        </a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${page == booksPage.number} ? 'active'"
+                        th:each="page: ${#numbers.sequence(0, booksPage.totalPages-1)}"
+                        th:if="${page >= booksPage.number-5 and page <= booksPage.number+5}">
+                        <a class="page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${!booksPage.hasNext} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${booksPage.number+1}|}">
+                            <span>다음</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </section> <!-- End Search Result -->
 
     </main><!-- End #main -->
