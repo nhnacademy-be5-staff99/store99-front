@@ -37,10 +37,10 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
-    public void addCategory(final AddCategoryRequest category) {
+    public void addCategory(final AddCategoryRequest request) {
         try {
             CommonResponse<Void> response =
-                    categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), category);
+                    categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), request);
             log.debug("categoryAdminAdapter.addCategory response: {}", response);
         } catch (FeignException.Forbidden ex) {
             throw new AdminPermissionDeniedException();
@@ -50,10 +50,10 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
-    public void modifyCategory(final ModifyCategoryRequest category) {
+    public void modifyCategory(final ModifyCategoryRequest request) {
     }
 
     @Override
-    public void removeCategory(final RemoveCategoryRequest categoryId) {
+    public void removeCategory(final RemoveCategoryRequest request) {
     }
 }

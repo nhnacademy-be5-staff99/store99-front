@@ -15,9 +15,9 @@ import org.springframework.data.domain.Pageable;
 public interface CategoryAdminService {
     Page<CategoryForAdminResponse> getCategories(Pageable pageable);
 
-    void addCategory(AddCategoryRequest category);
+    void addCategory(AddCategoryRequest request);
 
-    void modifyCategory(ModifyCategoryRequest category);
+    void modifyCategory(ModifyCategoryRequest request);
 
-    void removeCategory(RemoveCategoryRequest categoryId);
+    void removeCategory(RemoveCategoryRequest request);
 }
