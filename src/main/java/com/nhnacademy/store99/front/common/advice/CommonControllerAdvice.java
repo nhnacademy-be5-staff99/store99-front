@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.common.advice;
 
 import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
+import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
 import feign.FeignException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,13 +30,27 @@ public class CommonControllerAdvice {
     /**
      * gateway server 에서 401 error 를 받았을 때 처리
      *
-     * @param ex
+     * @param ex FeignException.Unauthorized
      * @return error/unauthorized.html
      */
     @ExceptionHandler(value = {FeignException.Unauthorized.class})
     public ModelAndView unauthorizedExceptionHandler(FeignException.Unauthorized ex) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/unauthorized");
+
+        return mv;
+    }
+
+    /**
+     * 로그인 필요시 로그인 화면으로 이동
+     *
+     * @param ex LoginRequiredException
+     * @return login_form.html
+     */
+    @ExceptionHandler(value = {LoginRequiredException.class})
+    public ModelAndView loginRequiredException(LoginRequiredException ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("login_form");
 
         return mv;
     }

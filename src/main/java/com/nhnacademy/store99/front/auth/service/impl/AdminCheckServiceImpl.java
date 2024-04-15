@@ -1,9 +1,9 @@
 package com.nhnacademy.store99.front.auth.service.impl;
 
-import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
-import com.nhnacademy.store99.front.auth.adapter.AuthAdapter;
+import com.nhnacademy.store99.front.auth.adapter.AuthAdaptor;
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
