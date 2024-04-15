@@ -4,7 +4,6 @@ import com.nhnacademy.store99.front.auth.adapter.AuthAdaptor;
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
-import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ public class AdminCheckServiceImpl implements AdminCheckService {
     @Override
     public Boolean checkAdmin() {
         CommonResponse<AdminCheckResponse> response =
-                authAdaptor.checkAdmin(XUserTokenThreadLocal.getXUserToken()).getBody();
+                authAdaptor.checkAdmin().getBody();
         assert response != null;
         if (!response.getHeader().isSuccessful()) {
             return false;
