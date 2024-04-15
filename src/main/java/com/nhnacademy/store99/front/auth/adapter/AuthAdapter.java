@@ -1,9 +1,8 @@
 package com.nhnacademy.store99.front.auth.adapter;
 
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
-import com.nhnacademy.store99.front.common.response.CommonResponse;
+import java.util.Optional;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
  *
  * @author seunggyu-kim
  */
-@FeignClient(value = "store99-gateway-service", url = "${gateway.url}/api/bookstore/v1/admin", decode404 = true)
-public interface AuthAdaptor {
+@FeignClient(value = "auth-admin-adapter", url = "${gateway.url}/api/bookstore/v1/admin")
+public interface AuthAdapter {
     @GetMapping("/check")
-    ResponseEntity<CommonResponse<AdminCheckResponse>> checkAdmin(@RequestHeader("X-USER-TOKEN") String xUserToken);
+    Optional<AdminCheckResponse> checkAdmin(@RequestHeader("X-USER-TOKEN") String xUserToken);
 }
