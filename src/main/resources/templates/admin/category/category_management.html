@@ -77,24 +77,24 @@
 
     <div class="d-flex gap-2 justify-content-center py-5">
         <th:block th:with="link = '/admin/categories',
-                           items = ${categories},
-                           pageRange = 10, startPage=${(items.number / pageRange) * pageRange},
-                           endPage=(${startPage + pageRange < items.totalPages ? startPage + (pageRange - 1) : items.totalPages})">
-            <nav aria-label="Page navigation example">
+                           items = ${categories}">
+            <nav aria-label="Page navigation example"
+                 th:with="pageRange = 10, startPage=${(items.number / pageRange) * pageRange},
+                           endPage=(${startPage + pageRange <= items.totalPages ? startPage + pageRange : items.totalPages})">
                 <ul class="pagination">
-                    <li class="page-item" th:classappend="${start <= 1} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link" href="#">
+                    <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage -1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
-                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage - 1)}">
                         <a class="page-link"
                            th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
                            th:text="${pageNumber + 1}"></a>
                     </li>
                     <li class="page-item" th:classappend="${endPage >= items.totalPages} ? 'disabled'">
-                        <a aria-label="Next" class="page-link" href="#">
+                        <a aria-label="Next" class="page-link" th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

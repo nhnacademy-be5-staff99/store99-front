@@ -8,13 +8,10 @@ import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
-import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import feign.FeignException;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,14 +30,14 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     @Override
     public Page<CategoryForAdminResponse> getCategories(Pageable pageable) {
-        return new PageImpl<>(Collections.emptyList(), pageable, 0);
+        return categoryAdminAdapter.getCategories(pageable).getResult();
     }
 
     @Override
     public void addCategory(final AddCategoryRequest request) {
         try {
             CommonResponse<Void> response =
-                    categoryAdminAdapter.addCategory(XUserTokenThreadLocal.getXUserToken(), request);
+                    categoryAdminAdapter.addCategory(request);
             log.debug("categoryAdminAdapter.addCategory response: {}", response);
         } catch (FeignException.Forbidden ex) {
             throw new AdminPermissionDeniedException();
