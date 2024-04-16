@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@EnableFeignClients
+@EnableFeignClients(basePackages = "**.adapter")
 public class FeignConfig {
 
     @Value("${gateway.url}")
