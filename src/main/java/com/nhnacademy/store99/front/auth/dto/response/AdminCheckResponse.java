@@ -14,4 +14,8 @@ public class AdminCheckResponse {
     public boolean isAdmin() {
         return isAdmin;
     }
+
+    public void setAdmin(final boolean admin) {
+        isAdmin = admin;
+    }
 }
