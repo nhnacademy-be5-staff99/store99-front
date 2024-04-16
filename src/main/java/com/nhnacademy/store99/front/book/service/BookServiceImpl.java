@@ -3,7 +3,7 @@ package com.nhnacademy.store99.front.book.service;
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.adaptor.BookAdaptor;
-import com.nhnacademy.store99.front.common.response.CustomPageResponse;
+import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
      * @return Book Page
      */
     @Override
-    public CustomPageResponse<BookResponse> getBooks(int page) {
+    public CustomPageImpl<BookResponse> getBooks(int page) {
         return bookAdaptor.getBooks(page).getBody().getResult();
     }
 }
