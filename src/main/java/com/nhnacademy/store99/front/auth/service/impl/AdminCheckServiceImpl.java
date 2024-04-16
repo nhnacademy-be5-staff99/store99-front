@@ -1,6 +1,5 @@
 package com.nhnacademy.store99.front.auth.service.impl;
 
-import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
 import com.nhnacademy.store99.front.auth.adapter.AuthAdapter;
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
@@ -27,8 +26,7 @@ public class AdminCheckServiceImpl implements AdminCheckService {
      */
     @Override
     public Boolean checkAdmin() {
-        AdminCheckResponse response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken()).orElseThrow(
-                AdminPermissionDeniedException::new);
+        AdminCheckResponse response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken()).getResult();
         return response.isAdmin();
     }
 }
