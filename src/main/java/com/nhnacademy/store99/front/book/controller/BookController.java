@@ -3,9 +3,8 @@ package com.nhnacademy.store99.front.book.controller;
 import com.nhnacademy.store99.front.book.Request.BookRequest;
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
-import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.book_author.service.BookAuthorService;
-import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -33,9 +32,9 @@ public class BookController {
     @GetMapping("/books")
     public String viewBookSalesPage(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<BookResponse> paging = bookService.getBooks(page);
-        List<BookAuthorResponse> bookAuthorList = bookAuthorService.bookAuthorList(paging.getContent());
+        Map<Long, String> bookAuthorMap = bookAuthorService.bookAuthorMap(paging.getContent());
         model.addAttribute("booksPage", paging);
-        model.addAttribute("bookAuthor", bookAuthorList);
+        model.addAttribute("bookAuthor", bookAuthorMap);
         return "book/book_sales_list";
     }
 
