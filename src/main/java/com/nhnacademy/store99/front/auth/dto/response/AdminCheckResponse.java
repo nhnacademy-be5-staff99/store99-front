@@ -9,9 +9,13 @@ public class AdminCheckResponse {
     /**
      * 관리자 여부
      */
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     public boolean isAdmin() {
         return isAdmin;
+    }
+
+    public void setAdmin(final boolean admin) {
+        isAdmin = admin;
     }
 }
