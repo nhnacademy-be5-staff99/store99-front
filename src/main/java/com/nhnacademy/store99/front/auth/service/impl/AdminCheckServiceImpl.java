@@ -3,7 +3,6 @@ package com.nhnacademy.store99.front.auth.service.impl;
 import com.nhnacademy.store99.front.auth.adapter.AuthAdapter;
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
-import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,7 @@ public class AdminCheckServiceImpl implements AdminCheckService {
      */
     @Override
     public Boolean checkAdmin() {
-//        AdminCheckResponse response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken()).orElseThrow(
-//                AdminPermissionDeniedException::new);
-        CommonResponse<AdminCheckResponse> response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken());
-        return response.getResult().isAdmin();
+        AdminCheckResponse response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken()).getResult();
+        return response.isAdmin();
     }
 }
