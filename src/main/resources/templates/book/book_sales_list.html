@@ -29,8 +29,8 @@
                         <a style="cursor:pointer;" th:href="@{/books/{id}(id=${bookList.id})}"
                            th:text="${bookList.bookTitle}">bookTitle</a>
                     </td>
-                    <td>
-
+                    <td th:with="bookId=${bookList.getId()}">
+                        <span th:text="${bookAuthor.get(bookId)}"></span>
                     </td>
                     <td>
                         <img alt="missing image" th:src="${bookList.bookThumbnailUrl}">

@@ -43,6 +43,7 @@ public class BookAuthorService {
                 AuthorName += "";
             }
             bookAuthorMap.put(bookAuthorResponse.getBookId(), AuthorName);
+            AuthorName = "";
         }
         return bookAuthorMap;
     }
