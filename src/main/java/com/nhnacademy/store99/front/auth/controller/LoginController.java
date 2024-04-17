@@ -82,7 +82,7 @@ public class LoginController {
         return new ResponseEntity<>(commonResponse, responseHeaders, HttpStatus.OK);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ModelAndView doLogout(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView();
         loginService.doLogout(request, response);

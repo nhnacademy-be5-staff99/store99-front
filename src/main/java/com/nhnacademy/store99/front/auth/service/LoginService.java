@@ -60,7 +60,7 @@ public class LoginService {
         CommonResponse<String> logoutResponse;
 
         try {
-            logoutResponse = loginAdapter.userLogout();
+            logoutResponse = loginAdapter.userLogout(XUserTokenThreadLocal.getXUserToken());
         } catch (HttpClientErrorException e) {
             throw new LogoutFailException("로그아웃 실패");
         }

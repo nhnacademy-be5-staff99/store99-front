@@ -21,5 +21,5 @@ public interface LoginAdapter {
     ResponseEntity<LoginResponse> userLogin(@RequestBody LoginRequest request);
 
     @PostMapping(value = "/v1/auth/logout")
-    CommonResponse<String> userLogout();
+    CommonResponse<String> userLogout(@RequestHeader("X-USER-TOKEN") String xUserToken);
 }

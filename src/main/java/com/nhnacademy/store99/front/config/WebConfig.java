@@ -18,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**");
         registry.addInterceptor(new XUserTokenCheckForUserInterceptor())
-                .addPathPatterns("/mypage/**, /logout");
+                .addPathPatterns("/mypage/**")
+                .addPathPatterns("/logout");
     }
 }
