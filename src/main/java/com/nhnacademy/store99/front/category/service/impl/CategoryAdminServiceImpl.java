@@ -30,7 +30,14 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
 
     @Override
     public Page<CategoryForAdminResponse> getCategories(Pageable pageable) {
-        return categoryAdminAdapter.getCategories(pageable).getResult();
+        try {
+            return categoryAdminAdapter.getCategories(pageable).getResult();
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
+        } catch (FeignException ex) {
+            log.error("addCategory error", ex);
+            return Page.empty();
+        }
     }
 
     @Override
