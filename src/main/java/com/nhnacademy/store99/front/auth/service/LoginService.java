@@ -53,6 +53,7 @@ public class LoginService {
      * <p>auth server 로 요청을 보내 uuid 삭제, security 관련 객체 삭제
      * <p>client 의 X-USER-TOKEN Cookie 삭제
      * <p>thread local 의 X-USER-TOKEN 삭제
+     *
      * @param request
      * @param response
      */
