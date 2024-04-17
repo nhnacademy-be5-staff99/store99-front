@@ -9,6 +9,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * Page를 반환받을 때 뜨는 Jackson parsing 오류를 해결하기 위한 커스텀 객체
+ *
+ * @param <T> 페이지 안에 들어가는 객체 타입
+ * @author seunggyu-kim
+ * @author yrrho2
+ */
 public class CustomPageImpl<T> extends PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public CustomPageImpl(@JsonProperty("content") List<T> content, @JsonProperty("number") int number,
