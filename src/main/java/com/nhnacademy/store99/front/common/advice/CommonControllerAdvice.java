@@ -1,8 +1,10 @@
 package com.nhnacademy.store99.front.common.advice;
 
 import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
+import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
 import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
-import feign.FeignException;
+import com.nhnacademy.store99.front.auth.exception.UnauthorizedFromGatewayException;
+import com.nhnacademy.store99.front.common.exception.DefaultFeignClientError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,13 +30,13 @@ public class CommonControllerAdvice {
     }
 
     /**
-     * gateway server 에서 401 error 를 받았을 때 처리
+     * 권한이 필요하나, gateway server 에서 401 error 를 받았을 때 처리
      *
      * @param ex FeignException.Unauthorized
      * @return error/unauthorized.html
      */
-    @ExceptionHandler(value = {FeignException.Unauthorized.class})
-    public ModelAndView unauthorizedExceptionHandler(FeignException.Unauthorized ex) {
+    @ExceptionHandler(value = {UnauthorizedFromGatewayException.class})
+    public ModelAndView unauthorizedExceptionHandler(UnauthorizedFromGatewayException ex) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error/unauthorized");
 
@@ -51,6 +53,31 @@ public class CommonControllerAdvice {
     public ModelAndView loginRequiredException(LoginRequiredException ex) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("login_form");
+
+        return mv;
+    }
+
+    /**
+     * LoginStatusCheckInterceptor 처리 중 로그인 상태를 확인할 수 없음
+     *
+     * <p>토큰은 존재하나 토큰에 문제가 있어 Gateway 에서 401 Error 받음
+     * <p>모든 요청 실행 전에 토큰에 문제가 있다고 해서 로그인이 필요하거나 접근 권한이 없는 것은 아니므로 index 반환
+     *
+     * @param ex LoginCheckException
+     * @return index.html
+     */
+    @ExceptionHandler(value = {LoginCheckException.class})
+    public ModelAndView loginCheckFailException(LoginCheckException ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+
+        return mv;
+    }
+
+    @ExceptionHandler(value = {DefaultFeignClientError.class})
+    public ModelAndView defaultFeignClientExceptionHandler(DefaultFeignClientError ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("error/default_feignclient_error");
 
         return mv;
     }

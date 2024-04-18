@@ -1,7 +1,10 @@
 package com.nhnacademy.store99.front.config;
 
-import com.nhnacademy.store99.front.common.interceptor.XUserTokenCheckForAdminInterceptor;
-import com.nhnacademy.store99.front.common.interceptor.XUserTokenCheckForUserInterceptor;
+import com.nhnacademy.store99.front.auth.service.AdminCheckService;
+import com.nhnacademy.store99.front.common.interceptor.LoginStatusCheckInterceptor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,12 +16,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Ahyeon Song
  */
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
+
+    private final ObjectProvider<AdminCheckService> adminCheckServices;
+
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**");
-        registry.addInterceptor(new XUserTokenCheckForUserInterceptor())
-                .addPathPatterns("/mypage/**")
-                .addPathPatterns("/logout");
+        registry.addInterceptor(loginStatusCheckInterceptor())
+                .addPathPatterns("/**").order(1);
+//        registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**").order(2);
+//        registry.addInterceptor(new XUserTokenCheckForUserInterceptor())
+//                .addPathPatterns("/mypage/**")
+//                .addPathPatterns("/logout")
+//                .order(2);
+    }
+
+    @Bean
+    public LoginStatusCheckInterceptor loginStatusCheckInterceptor() {
+        return new LoginStatusCheckInterceptor(adminCheckServices);
     }
 }

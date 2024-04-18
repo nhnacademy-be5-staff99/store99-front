@@ -1,5 +1,6 @@
 package com.nhnacademy.store99.front.config;
 
+import com.nhnacademy.store99.front.common.FeignClientErrorDecoder;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,11 @@ public class FeignConfig {
                 template.header("X-USER-TOKEN", xUserToken);
             }
         };
+    }
+
+    @Bean
+    public FeignClientErrorDecoder feignClientErrorDecoder() {
+        return new FeignClientErrorDecoder();
     }
 
     private String getXUserToken() {

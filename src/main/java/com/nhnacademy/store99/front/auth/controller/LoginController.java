@@ -87,7 +87,7 @@ public class LoginController {
         ModelAndView mv = new ModelAndView();
         loginService.doLogout(request, response);
 
-        mv.setViewName("index");
+        mv.setViewName("redirect:");
         return mv;
     }
 
