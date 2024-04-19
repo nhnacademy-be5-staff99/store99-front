@@ -1,0 +1,79 @@
+package com.nhnacademy.store99.front.common.interceptor;
+
+import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
+import com.nhnacademy.store99.front.auth.service.AdminCheckService;
+import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
+import com.nhnacademy.store99.front.common.util.CookieUtils;
+import feign.FeignException;
+import java.util.Objects;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * 모든 Controller 실행 전에 Cookie 유무를 확인하고 로그인 상태를 판단하는 Interceptor
+ *
+ * @author Ahyeon Song
+ * @author seunggyu-kim
+ */
+@Slf4j
+public class LoginStatusCheckInterceptor implements HandlerInterceptor {
+
+    private final AdminCheckService adminCheckService;
+
+    public LoginStatusCheckInterceptor(ObjectProvider<AdminCheckService> objectProvider) {
+        this.adminCheckService = objectProvider.getIfUnique();
+    }
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        Cookie xUserTokenCookie = CookieUtils.getCookie(request, "X-USER-TOKEN");
+
+        if (Objects.nonNull(xUserTokenCookie)) {
+            log.debug("X-USER-TOKEN Cookie : {}", xUserTokenCookie);
+            XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
+
+            Boolean isAdmin;
+            try {
+                isAdmin = adminCheckService.checkAdmin();
+
+            } catch (FeignException.Unauthorized ex) {
+                log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 401 Error 받음 (Token 문제)");
+                request.setAttribute("isLogin", false);
+                throw new LoginCheckException("로그인 상태 확인 불가");
+            }
+
+            log.debug("로그인 상태 확인 성공");
+            request.setAttribute("isLogin", true);
+
+            if (!isAdmin) {
+                log.debug("사용자 권한 : USER");
+                request.setAttribute("isAdmin", false);
+
+            } else {
+                log.debug("사용자 권한 : ADMIN");
+                request.setAttribute("isAdmin", true);
+            }
+
+        } else {
+            log.debug("로그아웃 상태 : X-USER-TOKEN Cookie 가 존재하지 않음");
+            request.setAttribute("isLogin", false);
+            request.setAttribute("isAdmin", false);
+        }
+
+        return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+        XUserTokenThreadLocal.reset();
+
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+    }
+}

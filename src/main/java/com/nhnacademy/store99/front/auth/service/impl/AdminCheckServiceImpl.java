@@ -1,9 +1,8 @@
 package com.nhnacademy.store99.front.auth.service.impl;
 
-import com.nhnacademy.store99.front.auth.adapter.AuthAdaptor;
+import com.nhnacademy.store99.front.auth.adapter.AuthAdapter;
 import com.nhnacademy.store99.front.auth.dto.response.AdminCheckResponse;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
-import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @Service
 public class AdminCheckServiceImpl implements AdminCheckService {
-    private final AuthAdaptor authAdaptor;
+    private final AuthAdapter authAdapter;
 
     /**
      * 관리자 권한 체크
@@ -27,12 +26,7 @@ public class AdminCheckServiceImpl implements AdminCheckService {
      */
     @Override
     public Boolean checkAdmin() {
-        CommonResponse<AdminCheckResponse> response =
-                authAdaptor.checkAdmin(XUserTokenThreadLocal.getXUserToken()).getBody();
-        assert response != null;
-        if (!response.getHeader().isSuccessful()) {
-            return false;
-        }
-        return response.getResult().getIsAdmin();
+        AdminCheckResponse response = authAdapter.checkAdmin(XUserTokenThreadLocal.getXUserToken()).getResult();
+        return response.isAdmin();
     }
 }
