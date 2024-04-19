@@ -24,9 +24,7 @@
                     <div class="col">
                         <input class="form-control" name="categoryName" required type="text">
                     </div>
-                    <div class="col">
-                        <input class="form-control" name="categoryDepth" type="number" value="1">
-                    </div>
+                    <div class="col"></div>
                     <div class="col">
                         <input class="form-control" name="parentCategoryId" type="number">
                     </div>
@@ -49,7 +47,7 @@
                                type="text">
                     </div>
                     <div class="col">
-                        <input class="form-control" name="categoryDepth" th:disabled="*{deletedAt}"
+                        <input class="form-control" disabled name="categoryDepth"
                                th:value="*{categoryDepth}"
                                type="number">
                     </div>
@@ -77,13 +75,13 @@
 
     <div class="d-flex gap-2 justify-content-center py-5">
         <th:block th:with="link = '/admin/categories',
-                           items = ${categories},
-                           pageRange = 10, startPage=${(items.number / pageRange) * pageRange},
-                           endPage=(${startPage + pageRange < items.totalPages ? startPage + (pageRange - 1) : items.totalPages})">
-            <nav aria-label="Page navigation example">
+                           items = ${categories}">
+            <nav aria-label="Page navigation example"
+                 th:with="pageRange = 10, startPage=${(items.number / pageRange) * pageRange},
+                           endPage=(${startPage + pageRange <= items.totalPages ? startPage + pageRange - 1 : items.totalPages - 1})">
                 <ul class="pagination">
-                    <li class="page-item" th:classappend="${start <= 1} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link" href="#">
+                    <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage - pageRange}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -93,8 +91,8 @@
                            th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
                            th:text="${pageNumber + 1}"></a>
                     </li>
-                    <li class="page-item" th:classappend="${endPage >= items.totalPages} ? 'disabled'">
-                        <a aria-label="Next" class="page-link" href="#">
+                    <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                        <a aria-label="Next" class="page-link" th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
