@@ -4,7 +4,6 @@ import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedExcepti
 import com.nhnacademy.store99.front.category.adapter.CategoryAdminAdapter;
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
-import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
@@ -34,7 +33,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
             return categoryAdminAdapter.getCategories(pageable).getResult();
         } catch (FeignException.Forbidden ex) {
             throw new AdminPermissionDeniedException();
-        } catch (FeignException ex) {
+        } catch (Exception ex) {
             log.error("addCategory error", ex);
             return Page.empty();
         }
@@ -48,16 +47,41 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
             log.debug("categoryAdminAdapter.addCategory response: {}", response);
         } catch (FeignException.Forbidden ex) {
             throw new AdminPermissionDeniedException();
-        } catch (FeignException ex) {
+        } catch (Exception ex) {
             log.error("addCategory error", ex);
         }
     }
 
     @Override
-    public void modifyCategory(final ModifyCategoryRequest request) {
+    public void modifyCategory(final Long categoryId, final ModifyCategoryRequest request) {
+        try {
+            categoryAdminAdapter.modifyCategory(categoryId, request);
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
+        } catch (Exception ex) {
+            log.error("modifyCategory error", ex);
+        }
     }
 
     @Override
-    public void removeCategory(final RemoveCategoryRequest request) {
+    public void removeCategory(final Long categoryId) {
+        try {
+            categoryAdminAdapter.removeCategory(categoryId);
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
+        } catch (Exception ex) {
+            log.error("removeCategory error", ex);
+        }
+    }
+
+    @Override
+    public void restoreCategory(final Long categoryId) {
+        try {
+            categoryAdminAdapter.restoreCategory(categoryId);
+        } catch (FeignException.Forbidden ex) {
+            throw new AdminPermissionDeniedException();
+        } catch (Exception ex) {
+            log.error("restoreCategory error", ex);
+        }
     }
 }
