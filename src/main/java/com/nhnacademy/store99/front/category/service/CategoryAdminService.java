@@ -2,7 +2,6 @@ package com.nhnacademy.store99.front.category.service;
 
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
-import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,9 @@ public interface CategoryAdminService {
 
     void addCategory(AddCategoryRequest request);
 
-    void modifyCategory(ModifyCategoryRequest request);
+    void modifyCategory(final Long categoryId, final ModifyCategoryRequest request);
 
-    void removeCategory(RemoveCategoryRequest request);
+    void removeCategory(final Long categoryId);
+
+    void restoreCategory(final Long categoryId);
 }
