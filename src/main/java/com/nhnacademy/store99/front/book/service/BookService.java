@@ -8,5 +8,5 @@ public interface BookService {
 
     public BookResponse postBook();
 
-    public CustomPageImpl<BookResponse> getBooks(int page);
+    public CustomPageImpl<BookResponse> getBooks(int page, String query);
 }

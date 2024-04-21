@@ -29,8 +29,11 @@ public class BookController {
     private final BookAuthorService bookAuthorService;
 
     @GetMapping("/books")
-    public String viewBookSalesPage(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<BookResponse> paging = bookService.getBooks(page);
+    public String viewBookSalesPage(Model model,
+                                    @RequestParam(value = "page", defaultValue = "0") int page,
+                                    @RequestParam(value = "query", defaultValue = " ") String query
+    ) {
+        Page<BookResponse> paging = bookService.getBooks(page, query);
 
         // 도서목록 싹다 바꾸는동안 저자는 사용안함
         // Map<Long, String> bookAuthorMap = bookAuthorService.bookAuthorMap(paging.getContent());
