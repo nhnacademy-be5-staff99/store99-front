@@ -3,7 +3,6 @@ package com.nhnacademy.store99.front.category.service.impl;
 import com.nhnacademy.store99.front.category.adapter.CategoryAdapter;
 import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
 import com.nhnacademy.store99.front.category.service.CategoryService;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryChildrenListAndRouteResponse getChildrenListAndRoute(final Long categoryId) {
         CategoryChildrenListAndRouteResponse response =
                 categoryAdapter.getCategoryChildrenListAndRoute(categoryId).getResult();
-        Collections.reverse(response.getNowCategoryRoute());
         return response;
     }
 }
