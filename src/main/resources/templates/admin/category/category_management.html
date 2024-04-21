@@ -81,7 +81,7 @@
                            endPage=(${startPage + pageRange <= items.totalPages ? startPage + pageRange - 1 : items.totalPages - 1})">
                 <ul class="pagination">
                     <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage - pageRange}, size=${#request.getParameter('size')})}">
+                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage - 1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
