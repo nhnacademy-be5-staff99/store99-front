@@ -1,12 +1,12 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.nhnacademy.store99.front.book.Request.BookRequest;
+import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
+import com.nhnacademy.store99.front.category.service.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author seunggyu-kim
  */
 @Controller
+@RequiredArgsConstructor
 public class BookController {
+    private final CategoryService categoryService;
+
     @GetMapping("/books")
     public String viewBookSalesList() {
         return "book/book_sales_list";
@@ -28,15 +31,10 @@ public class BookController {
         return "book/book_sales_page";
     }
 
-    @GetMapping("/admin/books")
-    public String viewManageBookDetail() {
-        return "admin/book/book_admin";
-    }
-
-
-    @PostMapping(value = "/admin/books")
-    public String postBook(@RequestBody BookRequest bookRequest) {
-        System.out.println(bookRequest);
-        return "index";
+    @GetMapping("/categories/{categoryId}/books")
+    public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model) {
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute = categoryService.getChildrenListAndRoute(categoryId);
+        model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
+        return "book/book_sales_list";
     }
 }

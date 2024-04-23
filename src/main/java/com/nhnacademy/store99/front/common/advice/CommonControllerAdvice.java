@@ -77,6 +77,7 @@ public class CommonControllerAdvice {
     @ExceptionHandler(value = {DefaultFeignClientError.class})
     public ModelAndView defaultFeignClientExceptionHandler(DefaultFeignClientError ex) {
         ModelAndView mv = new ModelAndView();
+        mv.addObject("status", ex.getStatus());
         mv.setViewName("error/default_feignclient_error");
 
         return mv;
