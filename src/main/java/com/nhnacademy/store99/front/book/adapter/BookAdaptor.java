@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.book.adaptor;
+package com.nhnacademy.store99.front.book.adapter;
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author yrrho2
  */
-@FeignClient(value = "bookstore-book", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
+@FeignClient(value = "bookAdaptor", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
 public interface BookAdaptor {
-    @GetMapping()
+    @GetMapping("/")
     ResponseEntity<CommonResponse<CustomPageImpl<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
 
     @GetMapping("/author/book")
