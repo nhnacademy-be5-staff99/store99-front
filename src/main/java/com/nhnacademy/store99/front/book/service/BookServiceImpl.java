@@ -1,11 +1,13 @@
 package com.nhnacademy.store99.front.book.service;
 
 
+import com.nhnacademy.store99.front.book.Response.BookPageResponse;
 import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.adapter.BookAdapter;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,7 @@ public class BookServiceImpl implements BookService {
      * @return Book Page
      */
     @Override
-    public CustomPageImpl<BookResponse> getBooks(int page, String query) {
-        return Objects.requireNonNull(bookAdaptor.getBooks(page).getBody()).getResult();
+    public CustomPageImpl<BookPageResponse> getBooks(Pageable pageable) {
+        return Objects.requireNonNull(bookAdaptor.getBooks(pageable).getBody()).getResult();
     }
 }

@@ -1,10 +1,11 @@
 package com.nhnacademy.store99.front.book.adapter;
 
-import com.nhnacademy.store99.front.book.Response.BookResponse;
+import com.nhnacademy.store99.front.book.Response.BookPageResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "bookAdaptor", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
 public interface BookAdapter {
     @GetMapping("/")
-    ResponseEntity<CommonResponse<CustomPageImpl<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
+    ResponseEntity<CommonResponse<CustomPageImpl<BookPageResponse>>> getBooks(
+            @RequestParam(value = "page") Pageable pageable);
 
     @GetMapping("/author/book")
     ResponseEntity<CommonResponse<BookAuthorResponse>> getBookAuthor(@RequestParam(value = "bookId") Long bookId);
