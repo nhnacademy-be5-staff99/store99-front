@@ -4,6 +4,12 @@ import com.nhnacademy.store99.front.auth.adapter.LoginAdapter;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.dto.LoginResponse;
 import com.nhnacademy.store99.front.auth.exception.LoginFailException;
+import com.nhnacademy.store99.front.auth.exception.LogoutFailException;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
+import com.nhnacademy.store99.front.common.util.CookieUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,5 +45,32 @@ public class LoginService {
 
         log.debug("token 가져오기 성공");
         return loginResponse.getHeaders().getFirst("X-USER-TOKEN");
+    }
+
+    /**
+     * 로그아웃 실제 로직
+     *
+     * <p>auth server 로 요청을 보내 uuid 삭제, security 관련 객체 삭제
+     * <p>client 의 X-USER-TOKEN Cookie 삭제
+     * <p>thread local 의 X-USER-TOKEN 삭제
+     *
+     * @param request
+     * @param response
+     */
+    public void doLogout(HttpServletRequest request, HttpServletResponse response) {
+        CommonResponse<String> logoutResponse;
+
+        try {
+            logoutResponse = loginAdapter.userLogout(XUserTokenThreadLocal.getXUserToken());
+        } catch (HttpClientErrorException e) {
+            throw new LogoutFailException("로그아웃 실패");
+        }
+        log.debug("로그아웃 성공 : {}", logoutResponse.getResult());
+
+        CookieUtils.deleteCookie(request, response, "X-USER-TOKEN");
+        log.debug("X-USER-TOKEN Cookie 삭제 성공");
+
+        XUserTokenThreadLocal.reset();
+        log.debug("ThreadLocal 에서 X-USER-TOKEN 삭제 성공");
     }
 }

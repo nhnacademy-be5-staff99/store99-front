@@ -1,45 +1,27 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.nhnacademy.store99.front.book.Request.BookRequest;
-import com.nhnacademy.store99.front.book.Response.BookResponse;
-import com.nhnacademy.store99.front.book.service.BookService;
-import com.nhnacademy.store99.front.book_author.service.BookAuthorService;
+import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
+import com.nhnacademy.store99.front.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
  * 도서 뷰 컨트롤러
  * <p>도서 페이지를 보여주는 컨트롤러
  *
- * @author yrrho2
  * @author seunggyu-kim
  */
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class BookController {
-    private final BookService bookService;
-    private final BookAuthorService bookAuthorService;
+    private final CategoryService categoryService;
 
     @GetMapping("/books")
-    public String viewBookSalesPage(Model model,
-                                    @RequestParam(value = "page", defaultValue = "0") int page,
-                                    @RequestParam(value = "query", defaultValue = " ") String query
-    ) {
-        Page<BookResponse> paging = bookService.getBooks(page, query);
-
-        // 도서목록 싹다 바꾸는동안 저자는 사용안함
-        // Map<Long, String> bookAuthorMap = bookAuthorService.bookAuthorMap(paging.getContent());
-        // model.addAttribute("bookAuthor", bookAuthorMap);
-        model.addAttribute("booksPage", paging);
-
+    public String viewBookSalesList() {
         return "book/book_sales_list";
     }
 
@@ -49,15 +31,10 @@ public class BookController {
         return "book/book_sales_page";
     }
 
-    @GetMapping("/admin/books")
-    public String viewManageBookDetail() {
-        return "book/book_admin";
-    }
-
-
-    @PostMapping(value = "/admin/books")
-    public String postBook(@RequestBody BookRequest bookRequest) {
-        bookService.postBook();
-        return "/books/";
+    @GetMapping("/categories/{categoryId}/books")
+    public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model) {
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute = categoryService.getChildrenListAndRoute(categoryId);
+        model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
+        return "book/book_sales_list";
     }
 }

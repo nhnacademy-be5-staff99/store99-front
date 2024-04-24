@@ -1,14 +1,16 @@
 package com.nhnacademy.store99.front.category.service.impl;
 
+import com.nhnacademy.store99.front.category.adapter.CategoryAdminAdapter;
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
-import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.nhnacademy.store99.front.common.aop.AdminPermissionCheck;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,27 +20,39 @@ import org.springframework.transaction.annotation.Transactional;
  * @author seunggyu-kim
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class CategoryAdminServiceImpl implements CategoryAdminService {
+    private final CategoryAdminAdapter categoryAdminAdapter;
+
     @Override
-    public List<CategoryForAdminResponse> getCategories() {
-        List<CategoryForAdminResponse> categories = new ArrayList<>();
-        categories.add(new CategoryForAdminResponse(1L, "카테고리", null, null));
-        categories.add(new CategoryForAdminResponse(2L, "카테고리", 1L, null));
-        categories.add(new CategoryForAdminResponse(3L, "카테고리", 2L, LocalDateTime.now()));
-        return categories;
+    @AdminPermissionCheck
+    public Page<CategoryForAdminResponse> getCategories(Pageable pageable) {
+        return categoryAdminAdapter.getCategories(pageable).getResult();
     }
 
     @Override
-    public void addCategory(final AddCategoryRequest category) {
+    @AdminPermissionCheck
+    public void addCategory(final AddCategoryRequest request) {
+        CommonResponse<Void> response =
+                categoryAdminAdapter.addCategory(request);
     }
 
     @Override
-    public void modifyCategory(final ModifyCategoryRequest category) {
+    @AdminPermissionCheck
+    public void modifyCategory(final Long categoryId, final ModifyCategoryRequest request) {
+        categoryAdminAdapter.modifyCategory(categoryId, request);
     }
 
     @Override
-    public void removeCategory(final RemoveCategoryRequest categoryId) {
+    public void removeCategory(final Long categoryId) {
+        categoryAdminAdapter.removeCategory(categoryId);
+    }
+
+    @Override
+    @AdminPermissionCheck
+    public void restoreCategory(final Long categoryId) {
+        categoryAdminAdapter.restoreCategory(categoryId);
     }
 }

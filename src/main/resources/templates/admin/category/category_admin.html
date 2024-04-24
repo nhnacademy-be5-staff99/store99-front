@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{admin/layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css"></th:block>
+
+<div layout:fragment="content">
+    <h1>Category Management</h1>
+    <div class="table">
+        <div class="row border-bottom py-2" style="--bs-bg-opacity: .5;">
+            <span class="fw-bold col">id</span>
+            <span class="fw-bold col">name</span>
+            <span class="fw-bold col">depth</span>
+            <span class="fw-bold col">parent id</span>
+            <span class="fw-bold col">deleted at</span>
+            <span class="fw-bold col">#</span>
+        </div>
+        <div>
+            <form action="/admin/categories" method="post">
+                <div class="row border-bottom py-2 table-success">
+                    <div class="col d-flex justify-content-center align-self-center"><span>데이터 추가</span></div>
+                    <div class="col">
+                        <input class="form-control" name="categoryName" required type="text">
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <input class="form-control" name="parentCategoryId" type="number">
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <button class="btn btn-success" type="submit">추가</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div th:each="category, status: ${categories.content}" th:object="${category}">
+            <form th:action="@{/admin/categories/{id}(id=*{id})}" th:method="put">
+                <div class="row border-bottom py-2">
+                    <div class="col">
+                        <input class="form-control" disabled name="categoryId" th:value="*{id}" type="number">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="categoryName" th:disabled="*{deletedAt}"
+                               th:value="*{categoryName}"
+                               type="text">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" disabled name="categoryDepth"
+                               th:value="*{categoryDepth}"
+                               type="number">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="parentCategoryId" th:disabled="*{deletedAt}"
+                               th:value="*{parentCategoryId}"
+                               type="number">
+                    </div>
+                    <div class="col align-self-center">
+                        <span th:text="*{#temporals.format(deletedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </div>
+                    <div class="col">
+                        <th:block th:if="*{deletedAt}">
+                            <button class="btn btn-secondary restore-button" th:data-url="@{/admin/categories/{id}/restore(id=*{id})}">복구</button>
+                        </th:block>
+                        <th:block th:unless="*{deletedAt}">
+                            <button class="btn btn-secondary" type="submit">수정</button>
+                            <button class="btn btn-danger delete-button" th:data-url="@{/admin/categories/{id}(id=*{id})}">삭제</button>
+                        </th:block>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-center py-5">
+        <th:block th:with="link = '/admin/categories', items = ${categories}">
+            <nav aria-label="Page navigation example"
+                 th:with="pageRange = 10, startPage=${(items.number / pageRange) * pageRange},
+                           endPage=(${startPage + pageRange <= items.totalPages ? startPage + pageRange - 1 : items.totalPages - 1})">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage - 1}, size=${#request.getParameter('size')})}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link"
+                           th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                           th:text="${pageNumber + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                        <a aria-label="Next" class="page-link" th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </th:block>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                fetch(button.dataset.url, { method: 'DELETE' })
+                    .then(response => location.reload());
+            });
+        });
+
+        document.querySelectorAll('.restore-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                fetch(button.dataset.url, { method: 'PATCH' })
+                    .then(response => location.reload());
+            });
+        });
+    </script>
+</th:block>
+
+</html>

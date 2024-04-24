@@ -1,7 +1,6 @@
 package com.nhnacademy.store99.front.category.dto.response;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,12 +8,13 @@ import lombok.Getter;
  *
  * @author seunggyu-kim
  */
-@AllArgsConstructor
 @Getter
 public class CategoryForAdminResponse {
     private Long id;
 
     private String categoryName;
+
+    private Integer categoryDepth;
 
     private Long parentCategoryId;
 
