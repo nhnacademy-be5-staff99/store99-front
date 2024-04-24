@@ -30,8 +30,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                             <li class="breadcrumb-item"
+                                th:classappend="${status.last} ? 'active'"
                                 th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}"
-                                th:object="${category}" th:classappend="${status.last} ? 'active'">
+                                th:object="${category}">
                                 <a th:href="@{'/categories/{id}/books'(id=*{id})}" th:text="*{categoryName}">Home</a>
                             </li>
                         </ol>
@@ -68,7 +69,7 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
+                                    <a aria-label="Previous" class="page-link" href="#">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -76,7 +77,7 @@
                                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
+                                    <a aria-label="Next" class="page-link" href="#">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -87,7 +88,7 @@
                     <hr class="my-4">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="https://via.placeholder.com/200x260" alt="Book Thumbnail"
+                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
                                  style="width: 200px; height: 260px;">
                         </div>
                         <div class="col-md-7">
@@ -105,7 +106,10 @@
                             </button>
                         </div>
                         <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
+                            <button class="btn btn-primary mb-2 add-to-cart-button"
+                                    data-bs-target="#add-to-cart-button-modal"
+                                    data-bs-toggle="modal" th:data-book-id="1">카트에 넣기
+                            </button>
                             <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
                             </button>
                         </div>
@@ -113,7 +117,7 @@
                     <hr class="my-4">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="https://via.placeholder.com/200x260" alt="Book Thumbnail"
+                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
                                  style="width: 200px; height: 260px;">
                         </div>
                         <div class="col-md-7">
@@ -131,7 +135,10 @@
                             </button>
                         </div>
                         <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
+                            <button class="btn btn-primary mb-2 add-to-cart-button"
+                                    data-bs-target="#add-to-cart-button-modal"
+                                    data-bs-toggle="modal" th:data-book-id="2">카트에 넣기
+                            </button>
                             <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
                             </button>
                         </div>
@@ -139,7 +146,7 @@
                     <hr class="my-4">
                     <div class="row">
                         <div class="col-md-3">
-                            <img src="https://via.placeholder.com/200x260" alt="Book Thumbnail"
+                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
                                  style="width: 200px; height: 260px;">
                         </div>
                         <div class="col-md-7">
@@ -157,7 +164,10 @@
                             </button>
                         </div>
                         <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
+                            <button class="btn btn-primary mb-2 add-to-cart-button"
+                                    data-bs-target="#add-to-cart-button-modal"
+                                    data-bs-toggle="modal" th:data-book-id="3">카트에 넣기
+                            </button>
                             <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
                             </button>
                         </div>
@@ -168,7 +178,7 @@
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
+                                    <a aria-label="Previous" class="page-link" href="#">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -176,7 +186,7 @@
                                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
+                                    <a aria-label="Next" class="page-link" href="#">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -187,29 +197,79 @@
             </div>
         </div>
     </main><!-- End #main -->
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="add-to-cart-button-modal"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    장바구니에 추가되었습니다.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+                    <a href="/cart">
+                        <button class="btn btn-primary" type="button">장바구니로 이동</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        document.getElementById('likeButton').addEventListener('click', function () {
-            var currentCount = parseInt(document.getElementById('likeCount').innerText);
-            var newCount;
+        // TODO: ERROR cuz document.getElementById('likeButton') is null
+        // document.getElementById('likeButton').addEventListener('click', function () {
+        //     var currentCount = parseInt(document.getElementById('likeCount').innerText);
+        //     var newCount;
+        //
+        //     if (this.dataset.liked === 'true') {
+        //         // 좋아요 취소
+        //         newCount = currentCount - 1;
+        //         this.dataset.liked = 'false'; // 좋아요 상태 변경
+        //         document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
+        //     } else {
+        //         // 좋아요 올라감
+        //         newCount = currentCount + 1;
+        //         this.dataset.liked = 'true'; // 좋아요 상태 변경
+        //         document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
+        //     }
+        //
+        //     // 좋아요 수 업데이트
+        //     document.getElementById('likeCount').innerText = newCount;
+        // });
 
-            if (this.dataset.liked === 'true') {
-                // 좋아요 취소
-                newCount = currentCount - 1;
-                this.dataset.liked = 'false'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
-            } else {
-                // 좋아요 올라감
-                newCount = currentCount + 1;
-                this.dataset.liked = 'true'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
-            }
+        /*<![CDATA[*/
+        /**
+         * 카트에 넣기
+         * @author seunggyu-kim
+         */
+        document.querySelectorAll('.add-to-cart-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var bookId = this.dataset.bookId;
 
-            // 좋아요 수 업데이트
-            document.getElementById('likeCount').innerText = newCount;
+                fetch('/cart/books', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "bookId": bookId,
+                        "quantity": 1
+                    }),
+                }).catch((error) => {
+                    console.error('Error:', error);
+                });
+
+
+            });
         });
+        /*]]>*/
     </script>
 </th:block>
 
