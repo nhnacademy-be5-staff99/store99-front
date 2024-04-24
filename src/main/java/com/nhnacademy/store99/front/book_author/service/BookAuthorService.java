@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.book_author.service;
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
-import com.nhnacademy.store99.front.book_author.adaptor.BookAuthorAdaptor;
+import com.nhnacademy.store99.front.book_author.adapter.BookAuthorAdapter;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BookAuthorService {
-    private final BookAuthorAdaptor bookAuthorAdaptor;
+    private final BookAuthorAdapter bookAuthorAdapter;
 
-    public BookAuthorService(BookAuthorAdaptor bookAuthorAdaptor) {
-        this.bookAuthorAdaptor = bookAuthorAdaptor;
+    public BookAuthorService(BookAuthorAdapter bookAuthorAdapter) {
+        this.bookAuthorAdapter = bookAuthorAdapter;
     }
 
     public Map<Long, String> bookAuthorMap(List<BookResponse> bookResponsesList) {
@@ -25,7 +25,7 @@ public class BookAuthorService {
             Long bookId = bookResponse.getId();
             BookAuthorResponse bookAuthorResponse;
             try {
-                bookAuthorResponse = bookAuthorAdaptor.getBookAuthor(bookId).getBody().getResult();
+                bookAuthorResponse = bookAuthorAdapter.getBookAuthor(bookId).getBody().getResult();
             } catch (Exception e) {
                 bookAuthorResponse = null;
             }
