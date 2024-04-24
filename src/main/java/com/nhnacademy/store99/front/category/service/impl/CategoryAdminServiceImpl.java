@@ -1,14 +1,12 @@
 package com.nhnacademy.store99.front.category.service.impl;
 
-import com.nhnacademy.store99.front.admin.exception.AdminPermissionDeniedException;
 import com.nhnacademy.store99.front.category.adapter.CategoryAdminAdapter;
 import com.nhnacademy.store99.front.category.dto.request.AddCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.request.ModifyCategoryRequest;
-import com.nhnacademy.store99.front.category.dto.request.RemoveCategoryRequest;
 import com.nhnacademy.store99.front.category.dto.response.CategoryForAdminResponse;
 import com.nhnacademy.store99.front.category.service.CategoryAdminService;
+import com.nhnacademy.store99.front.common.aop.AdminPermissionCheck;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,35 +27,32 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     private final CategoryAdminAdapter categoryAdminAdapter;
 
     @Override
+    @AdminPermissionCheck
     public Page<CategoryForAdminResponse> getCategories(Pageable pageable) {
-        try {
-            return categoryAdminAdapter.getCategories(pageable).getResult();
-        } catch (FeignException.Forbidden ex) {
-            throw new AdminPermissionDeniedException();
-        } catch (FeignException ex) {
-            log.error("addCategory error", ex);
-            return Page.empty();
-        }
+        return categoryAdminAdapter.getCategories(pageable).getResult();
     }
 
     @Override
+    @AdminPermissionCheck
     public void addCategory(final AddCategoryRequest request) {
-        try {
-            CommonResponse<Void> response =
-                    categoryAdminAdapter.addCategory(request);
-            log.debug("categoryAdminAdapter.addCategory response: {}", response);
-        } catch (FeignException.Forbidden ex) {
-            throw new AdminPermissionDeniedException();
-        } catch (FeignException ex) {
-            log.error("addCategory error", ex);
-        }
+        CommonResponse<Void> response =
+                categoryAdminAdapter.addCategory(request);
     }
 
     @Override
-    public void modifyCategory(final ModifyCategoryRequest request) {
+    @AdminPermissionCheck
+    public void modifyCategory(final Long categoryId, final ModifyCategoryRequest request) {
+        categoryAdminAdapter.modifyCategory(categoryId, request);
     }
 
     @Override
-    public void removeCategory(final RemoveCategoryRequest request) {
+    public void removeCategory(final Long categoryId) {
+        categoryAdminAdapter.removeCategory(categoryId);
+    }
+
+    @Override
+    @AdminPermissionCheck
+    public void restoreCategory(final Long categoryId) {
+        categoryAdminAdapter.restoreCategory(categoryId);
     }
 }
