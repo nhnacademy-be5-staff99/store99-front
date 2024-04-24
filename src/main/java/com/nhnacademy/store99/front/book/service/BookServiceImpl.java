@@ -2,7 +2,7 @@ package com.nhnacademy.store99.front.book.service;
 
 
 import com.nhnacademy.store99.front.book.Response.BookResponse;
-import com.nhnacademy.store99.front.book.adaptor.BookAdaptor;
+import com.nhnacademy.store99.front.book.adapter.BookAdapter;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class BookServiceImpl implements BookService {
-    private final BookAdaptor bookAdaptor;
+    private final BookAdapter bookAdaptor;
 
     @Override
     public BookResponse getBook(Long id) {

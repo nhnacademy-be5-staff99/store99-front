@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author yrrho2
  */
 @FeignClient(value = "bookAdaptor", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
-public interface BookAdaptor {
+public interface BookAdapter {
     @GetMapping("/")
     ResponseEntity<CommonResponse<CustomPageImpl<BookResponse>>> getBooks(@RequestParam(value = "page") int page);
 
