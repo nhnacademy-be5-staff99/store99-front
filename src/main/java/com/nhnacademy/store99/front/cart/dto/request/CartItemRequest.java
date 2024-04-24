@@ -5,6 +5,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
+/**
+ * @author seunggyu-kim
+ */
 @Getter
 public class CartItemRequest {
     @Min(1)

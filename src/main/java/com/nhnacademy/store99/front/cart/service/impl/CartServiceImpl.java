@@ -1,5 +1,6 @@
 package com.nhnacademy.store99.front.cart.service.impl;
 
+import com.nhnacademy.store99.front.cart.adapter.CartAdapter;
 import com.nhnacademy.store99.front.cart.dto.request.CartItemRequest;
 import com.nhnacademy.store99.front.cart.entity.CartItem;
 import com.nhnacademy.store99.front.cart.repository.CartItemRepository;
@@ -23,10 +24,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
+    private final CartAdapter cartAdapter;
 
     @Override
     public void addToCartDB(final CartItemRequest request) {
-        // TODO
+        cartAdapter.addBookToCart(request);
     }
 
     @Override

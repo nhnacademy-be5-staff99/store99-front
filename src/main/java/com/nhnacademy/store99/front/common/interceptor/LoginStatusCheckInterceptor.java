@@ -40,6 +40,8 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
             Boolean isAdmin;
             try {
+                XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
+
                 isAdmin = adminCheckService.checkAdmin();
 
             } catch (FeignException.Unauthorized ex) {
@@ -60,7 +62,6 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                 request.setAttribute("isAdmin", true);
             }
 
-            XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
         } else {
             log.debug("로그아웃 상태 : X-USER-TOKEN Cookie 가 존재하지 않음");
             request.setAttribute("isLogin", false);
