@@ -1,6 +1,5 @@
 package com.nhnacademy.store99.front.common.interceptor;
 
-import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.common.util.CookieUtils;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 모든 Controller 실행 전에 Cookie 유무를 확인하고 로그인 상태를 판단하는 Interceptor
@@ -32,20 +30,32 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        log.debug("LoginStatusCheckInterceptor > preHandle > request.getRequestURI() 요청 주소: {}",
+                request.getRequestURI());
         Cookie xUserTokenCookie = CookieUtils.getCookie(request, "X-USER-TOKEN");
 
         if (Objects.nonNull(xUserTokenCookie)) {
             log.debug("X-USER-TOKEN Cookie : {}", xUserTokenCookie);
             XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
 
-            Boolean isAdmin;
+            boolean isAdmin;
             try {
                 isAdmin = adminCheckService.checkAdmin();
 
-            } catch (FeignException.Unauthorized ex) {
-                log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 401 Error 받음 (Token 문제)");
+            } catch (FeignException.BadRequest | FeignException.Unauthorized ex) {
+                log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 {} Error 받음 (Token 문제)", ex.status());
                 request.setAttribute("isLogin", false);
-                throw new LoginCheckException("로그인 상태 확인 불가");
+
+                CookieUtils.deleteCookie(request, response, "X-USER-TOKEN");
+                log.debug("사용 불가능한 X-USER-TOKEN Cookie 삭제");
+
+                XUserTokenThreadLocal.reset();
+                log.debug("사용 불가능한 X-USER-TOKEN ThreadLocal 삭제");
+
+                request.setAttribute("isLogin", false);
+                request.setAttribute("isAdmin", false);
+
+                return HandlerInterceptor.super.preHandle(request, response, handler);
             }
 
             log.debug("로그인 상태 확인 성공");
@@ -66,14 +76,14 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             request.setAttribute("isAdmin", false);
         }
 
+
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
+    public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
+                                final Object handler, final Exception ex)
+            throws Exception {
         XUserTokenThreadLocal.reset();
-
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 }
