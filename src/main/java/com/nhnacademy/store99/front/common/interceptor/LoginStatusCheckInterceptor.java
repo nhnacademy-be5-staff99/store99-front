@@ -1,6 +1,5 @@
 package com.nhnacademy.store99.front.common.interceptor;
 
-import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.common.util.CookieUtils;
@@ -37,17 +36,28 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
         if (Objects.nonNull(xUserTokenCookie)) {
             log.debug("X-USER-TOKEN Cookie : {}", xUserTokenCookie);
+            XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
 
-            Boolean isAdmin;
+            boolean isAdmin;
             try {
                 XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
 
                 isAdmin = adminCheckService.checkAdmin();
 
-            } catch (FeignException.Unauthorized ex) {
-                log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 401 Error 받음 (Token 문제)");
+            } catch (FeignException.BadRequest | FeignException.Unauthorized ex) {
+                log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 {} Error 받음 (Token 문제)", ex.status());
                 request.setAttribute("isLogin", false);
-                throw new LoginCheckException("로그인 상태 확인 불가");
+
+                CookieUtils.deleteCookie(request, response, "X-USER-TOKEN");
+                log.debug("사용 불가능한 X-USER-TOKEN Cookie 삭제");
+
+                XUserTokenThreadLocal.reset();
+                log.debug("사용 불가능한 X-USER-TOKEN ThreadLocal 삭제");
+
+                request.setAttribute("isLogin", false);
+                request.setAttribute("isAdmin", false);
+
+                return HandlerInterceptor.super.preHandle(request, response, handler);
             }
 
             log.debug("로그인 상태 확인 성공");
