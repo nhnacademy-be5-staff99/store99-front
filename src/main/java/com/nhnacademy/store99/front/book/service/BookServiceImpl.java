@@ -39,6 +39,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public CustomPageImpl<BookPageResponse> getBooks(Pageable pageable) {
-        return Objects.requireNonNull(bookAdaptor.getBooks(pageable).getBody()).getResult();
+        return Objects.requireNonNull(bookAdaptor.getBooks(pageable)).getResult();
     }
 }

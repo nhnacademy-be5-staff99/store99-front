@@ -2,8 +2,10 @@ package com.nhnacademy.store99.front.book.Response;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -30,6 +32,10 @@ import lombok.Setter;
  * 작가 역할
  * 삭제일시 != null
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookPageResponse {
 
     private Long BookId;

@@ -27,8 +27,13 @@ public class BookController {
 
     @GetMapping("/books")
     public String viewBookSalesList(Model model, Pageable pageable) {
-        model.addAttribute("categoryChildrenListAndRoute", null);
-        model.addAttribute("booksDTOPage", null);
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
+                categoryService.getChildrenListAndRoute(1L);
+
+        model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
+        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
+        model.addAttribute("booksDTOPage", booksDTOPage);
+        model.addAttribute("url", "/books");
         return "book/book_sales_list";
     }
 
@@ -42,9 +47,12 @@ public class BookController {
     public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model, Pageable pageable) {
         CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
                 categoryService.getChildrenListAndRoute(categoryId);
-        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
         model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
-//        model.addAttribute("booksDTOPage", booksDTOPage);
+
+        // 여기에 카테고리로 도서목록 검색하는거 넣으면 된다.
+        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
+        model.addAttribute("booksDTOPage", booksDTOPage);
+        model.addAttribute("url", "/categories");
         return "book/book_sales_list";
     }
 }

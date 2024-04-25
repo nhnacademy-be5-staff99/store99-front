@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "bookAdaptor", url = "${gateway.url}/open/bookstore/v1/books", decode404 = true)
 public interface BookAdapter {
     @GetMapping("/")
-    ResponseEntity<CommonResponse<CustomPageImpl<BookPageResponse>>> getBooks(
+    CommonResponse<CustomPageImpl<BookPageResponse>> getBooks(
             @RequestParam(value = "page") Pageable pageable);
 
     @GetMapping("/author/book")
