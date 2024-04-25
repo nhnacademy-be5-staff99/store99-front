@@ -8,8 +8,7 @@
 
 <div layout:fragment="content">
 
-
-    <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <main id="main">
 
@@ -32,16 +31,10 @@
                         </form>
                     </td>
                     <td>
-                        <div class="container mt-5">
-                            <!-- 좋아요 버튼 -->
-                            <button class="btn btn-primary" id="likeButton" type="button">
-                            <span id="likeIcon">
-                                <!-- 하트 아이콘 -->
-                                <i class="far fa-heart"></i>
-                            </span>
-                                <span id="likeCount">0</span>
-                            </button>
-                        </div>
+                        <button type = "button" style="border: none; background: none" th:id="likeButton" onclick="toggleLike()">
+                            <img th:if="${isLiked}" th:src="@{/static/assets/img/like/store99-like.svg}" alt="like"/>
+                            <img th:else="${!isLiked}" th:src="@{/static/assets/img/like/store99-unLike.svg}" alt="unLike"/>
+                        </button>
                     </td>
                 </tr>
                 <tr>
@@ -64,28 +57,124 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     </head>
 
-
     <script th:inline="javascript">
-        document.getElementById('likeButton').addEventListener('click', function () {
-            var currentCount = parseInt(document.getElementById('likeCount').innerText);
-            var newCount;
+        var isLiked = /*[[${isLiked}]];*/false;
 
-            if (this.dataset.liked === 'true') {
-                // 좋아요 취소
-                newCount = currentCount - 1;
-                this.dataset.liked = 'false'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
+
+        function toggleLike() {
+
+            isLiked = !isLiked;
+            var bookId = [[${bookId}]];
+            var userId = [[${userId}]];
+            console.log("bookId"+ bookId);
+            console.log("userId"+ userId);
+
+            var imgElement = document.querySelector('#likeButton img');
+            if (isLiked) {
+                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
+                imgElement.alt = 'Like';
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/likes',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: {
+                        bookId: bookId,
+                        userId: userId
+                    },
+                    success: function(response) {
+                        console.log('Like status updated successfully');
+                    },
+                    error: function(err) {
+                        console.error('Failed to update like status', err);
+                    }
+                });
             } else {
-                // 좋아요 올라감
-                newCount = currentCount + 1;
-                this.dataset.liked = 'true'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
-            }
+                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
+                imgElement.alt = 'unLike';
+                var likeId = [[${likeId}]];
+                console.log("likeId"+ likeId);
 
-            // 좋아요 수 업데이트
-            document.getElementById('likeCount').innerText = newCount;
-        });
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/likes/'+likeId,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: {
+                        likeId: likeId
+                    },
+                    success: function(response) {
+                        console.log('Like status updated successfully');
+                    },
+                    error: function(err) {
+                        console.error('Failed to update like status', err);
+                    }
+                });
+
+            }
+        }
     </script>
+
+
+<!--    <script th:inline="javascript">-->
+<!--        // Thymeleaf에서 변수를 JavaScript로 전달하기 위해 th:inline="javascript" 설정 사용-->
+<!--        var isLiked = /*[[${isLiked}]]*/ false; // Thymeleaf의 isLiked 변수를 JavaScript 변수로 선언-->
+
+<!--        async function toggleLike() {-->
+<!--            isLiked = !isLiked; // 버튼 클릭 시 isLiked 상태를 토글-->
+
+<!--            // 이미지 변경-->
+<!--            var imgElement = document.querySelector('#likeButton img');-->
+<!--            if (isLiked) {-->
+<!--                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경-->
+<!--                imgElement.alt = 'Like';-->
+
+<!--                // 요청할 API 엔드포인트 URL-->
+<!--                const apiUrl = 'http://localhost:8760/api/bookstore/v1/likes';-->
+
+<!--// POST 요청에 필요한 데이터-->
+<!--                const postData = {-->
+<!--                    bookId: 2,-->
+<!--                    userId: 1-->
+<!--                };-->
+
+<!--// fetch를 사용하여 POST 요청 보내기-->
+<!--                fetch(apiUrl, {-->
+<!--                    method: 'POST', // 요청 메서드 지정-->
+<!--                    headers: {-->
+<!--                        'Content-Type': 'application/json' // 요청 헤더 설정 (JSON 형식)-->
+<!--                    },-->
+<!--                    body: JSON.stringify(postData) // 요청 본문 데이터 (JSON 형식으로 변환)-->
+<!--                })-->
+<!--                    .then(response => {-->
+<!--                        // 응답이 성공적으로 받아졌는지 확인-->
+<!--                        if (!response.ok) {-->
+<!--                            throw new Error(`POST 요청 실패: ${response.status}`);-->
+<!--                        }-->
+<!--                        // JSON 형식으로 파싱된 응답 반환-->
+<!--                        return response.json();-->
+<!--                    })-->
+<!--                    .then(data => {-->
+<!--                        // POST 요청에 대한 응답 데이터를 처리-->
+<!--                        console.log('POST 요청 응답:', data);-->
+
+<!--                        // 여기서 데이터를 사용하여 필요한 작업 수행-->
+<!--                    })-->
+<!--                    .catch(error => {-->
+<!--                        // 오류 발생 시 처리-->
+<!--                        console.error('POST 요청 실패:', error);-->
+<!--                    });-->
+
+<!--            } else {-->
+<!--                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경-->
+<!--                imgElement.alt = 'unLike';-->
+<!--            }-->
+
+<!--        }-->
+<!--    </script>-->
 
 </div>
 </html>

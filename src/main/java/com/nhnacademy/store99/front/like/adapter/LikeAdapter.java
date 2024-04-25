@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(value = "like-adapter", url = "${gateway.url}/api/bookstore/v1/likes")
-public interface LikeAdapter  {
+/**
+ * FeignClient를 통한 Like 상태 변경 요청
+ */
+@FeignClient(value = "likeFeign", url = "${gateway.url}/api/bookstore/v1/likes")
+public interface LikeAdapter {
 
     @PostMapping
     CommonResponse<Void> addLike(final LikeRequest req);
 
-    @DeleteMapping("/{bookId}/{userId}")
-    CommonResponse<Void> deleteLike(@PathVariable final Long bookId, @PathVariable final Long userId);
+    @DeleteMapping("/{likeId}")
+    String deleteLike(@PathVariable final Long likeId);
 
-//    @GetMapping
-//    CommonResponse<CustomPageImpl<CategoryForAdminResponse>> getCategories(Pageable pageable);
 }
