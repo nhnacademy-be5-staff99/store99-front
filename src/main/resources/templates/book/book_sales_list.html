@@ -34,6 +34,7 @@
                         <button type = "button" style="border: none; background: none" th:id="likeButton" onclick="toggleLike()">
                             <img th:if="${isLiked}" th:src="@{/static/assets/img/like/store99-like.svg}" alt="like"/>
                             <img th:else="${!isLiked}" th:src="@{/static/assets/img/like/store99-unLike.svg}" alt="unLike"/>
+                            <span>"${likeCnt}"</span>
                         </button>
                     </td>
                 </tr>
@@ -69,6 +70,32 @@
             console.log("bookId"+ bookId);
             console.log("userId"+ userId);
 
+            var apiUrl;
+            if (window.location.hostname === 'localhost' && window.location.port === '8760') {
+                // IntelliJ 환경 설정에 따라 dev 환경인 경우
+                apiUrl = 'http://localhost:8760';
+            } else {
+                // IntelliJ 환경 설정에 따라 prod 환경인 경우
+                apiUrl = 'http://192.168.0.93:8080';
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: apiUrl+'/open/v1/likes/likeCnt/'+bookId,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: {
+                    bookId: bookId
+                },
+                success: function(response) {
+                    console.log('Like status updated successfully');
+                },
+                error: function(err) {
+                    console.error('Failed to update like status', err);
+                }
+            });
+
             var imgElement = document.querySelector('#likeButton img');
             if (isLiked) {
                 imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
@@ -76,7 +103,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/likes',
+                    url: apiUrl+"/likes",
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -99,7 +126,7 @@
 
                 $.ajax({
                     type: 'DELETE',
-                    url: '/likes/'+likeId,
+                    url: apiUrl+'/likes/'+likeId,
                     headers: {
                         'Content-Type': 'application/json',
                     },
