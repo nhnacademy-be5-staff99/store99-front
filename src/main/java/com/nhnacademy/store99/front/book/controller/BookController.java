@@ -33,7 +33,8 @@ public class BookController {
 
     @GetMapping("/categories/{categoryId}/books")
     public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model) {
-        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute = categoryService.getChildrenListAndRoute(categoryId);
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
+                categoryService.getChildrenListAndRoute(categoryId);
         model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
         return "book/book_sales_list";
     }
