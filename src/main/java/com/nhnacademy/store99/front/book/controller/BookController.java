@@ -33,7 +33,6 @@ public class BookController {
         model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
         CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
         model.addAttribute("booksDTOPage", booksDTOPage);
-        model.addAttribute("url", "/books");
         return "book/book_sales_list";
     }
 
