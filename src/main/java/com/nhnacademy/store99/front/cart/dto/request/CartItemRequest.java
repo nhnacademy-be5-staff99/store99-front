@@ -10,10 +10,11 @@ import lombok.Getter;
  */
 @Getter
 public class CartItemRequest {
+    @NotNull
+    private Long bookId;
+
     @Min(1)
     @Max(100)
     @NotNull
     private final Integer quantity = 1;
-    @NotNull
-    private Long bookId;
 }

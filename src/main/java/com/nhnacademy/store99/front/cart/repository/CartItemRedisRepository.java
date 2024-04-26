@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author seunggyu-kim
  */
-public interface CartItemRepository extends CrudRepository<CartItem, UUID> {
+public interface CartItemRedisRepository extends CrudRepository<CartItem, UUID> {
 }
