@@ -24,14 +24,13 @@
                                                               th:text="*{categoryName}"></a></small></li>
                     </ul>
                 </section>  <!-- End Category List -->
-
                 <!-- ======= Search Results ======= -->
                 <section class="book-sales-list col-md-7 col-lg-8 py-0" id="book-sales-list">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                             <li class="breadcrumb-item"
-                                th:classappend="${status.last} ? 'active'"
-                                th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}" th:object="${category}">
+                                th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}"
+                                th:object="${category}" th:classappend="${status.last} ? 'active'">
                                 <a th:href="@{'/categories/{id}/books'(id=*{id})}" th:text="*{categoryName}">Home</a>
                             </li>
                         </ol>
@@ -64,119 +63,119 @@
                         </div>
                     </div>
 
+                    <!--pagination-->
                     <div class="d-flex gap-2 justify-content-center">
-                        <nav aria-label="Page navigation example">
+                        <nav aria-label="Page navigation example"
+                             th:with="link = ${#request.getRequestURI()}, items = ${booksDTOPage},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
                             <ul class="pagination">
-                                <li class="page-item">
-                                    <a aria-label="Previous" class="page-link" href="#">
+                                <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                    <a aria-label="Previous" class="page-link"
+                                       th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a aria-label="Next" class="page-link" href="#">
+                                <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                    th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                    <a class="page-link"
+                                       th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                       th:text="${pageNumber + 1}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                    <a aria-label="Next" class="page-link"
+                                       th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
-
-                    <hr class="my-4">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
-                                 style="width: 200px; height: 260px;">
-                        </div>
-                        <div class="col-md-7">
-                            <h5>자바 ORM 표준 JPA 프로그래밍</h5>
-                            <small>제프 콕스, 하워드 스티븐스 (지은이), 김영한, 김형준 (옮긴이) | 위즈덤하우스 | 2018년 11월</small>
-                            <p><s>18,000원</s> → <span style="font-weight: bold; color: red;">16,200원 (10%할인)</span></p>
-                            <p>리뷰 수: <span class="reviewCount">0</span></p>
-                            <!-- 좋아요 버튼 -->
-                            <button class="btn btn-primary likeButton" type="button">
+                    <div th:each="bookDto, status : ${booksDTOPage.content}">
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img alt="Book Thumbnail" th:src="${bookDto.BookThumbnailUrl}"
+                                     style="width: 200px; height: 260px;">
+                            </div>
+                            <div class="col-md-7">
+                                <h5 th:text="${bookDto.BookTitle}"></h5>
+                                <small>
+                                    <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
+                                        <span th:text="${authorDTO.AuthorName}"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'AUTHOR')}"
+                                              th:text="|(지은이)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
+                                              th:text="|(그림)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
+                                              th:text="|(옮긴이)|"></span>
+                                        <!--이거 두개 뭐라고 써야함...                        -->
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
+                                              th:text="|(SUPERVISION)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
+                                              th:text="|(ETC)|"></span>
+                                    </th:block>
+                                    |
+                                    <th:block th:text="${bookDto.BookPublisher}"></th:block>
+                                    |
+                                    <th:block th:text="${#temporals.format(bookDto.BookDate, 'yyyy-MM-dd')}"></th:block>
+                                </small>
+                                <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
+                                        style="font-weight: bold; color: red;"
+                                        th:text="|${bookDto.BookSalePrice}원|"></span>
+                                </p>
+                                <p>리뷰 수: <span class="reviewCount" th:text="${bookDto.BookCntOfReview}"></span></p>
+                                <!-- 좋아요 버튼 -->
+                                <button class="btn btn-primary likeButton" type="button">
                                 <span class="likeIcon">
                                     <!-- 하트 아이콘 -->
                                     <i class="far fa-heart"></i>
                                 </span>
-                                <span class="likeCount">0</span>
-                            </button>
+                                    <span class="likeCount">0</span>
+                                </button>
+                            </div>
+                            <div class="col-md-2 d-flex flex-column">
+                                <button class="btn btn-primary mb-2">카트에 넣기</button>
+                                <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
-                            <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
-                            </button>
-                        </div>
+                        <hr class="my-4">
                     </div>
-                    <hr class="my-4">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
-                                 style="width: 200px; height: 260px;">
-                        </div>
-                        <div class="col-md-7">
-                            <h5>자바 ORM 표준 JPA 프로그래밍</h5>
-                            <small>제프 콕스, 하워드 스티븐스 (지은이), 김영한, 김형준 (옮긴이) | 위즈덤하우스 | 2018년 11월</small>
-                            <p><s>18,000원</s> → <span style="font-weight: bold; color: red;">16,200원 (10%할인)</span></p>
-                            <p>리뷰 수: <span class="reviewCount">0</span></p>
-                            <!-- 좋아요 버튼 -->
-                            <button class="btn btn-primary likeButton" type="button">
-                                <span class="likeIcon">
-                                    <!-- 하트 아이콘 -->
-                                    <i class="far fa-heart"></i>
-                                </span>
-                                <span class="likeCount">0</span>
-                            </button>
-                        </div>
-                        <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
-                            <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
-                            </button>
-                        </div>
-                    </div>
-                    <hr class="my-4">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img alt="Book Thumbnail" src="https://via.placeholder.com/200x260"
-                                 style="width: 200px; height: 260px;">
-                        </div>
-                        <div class="col-md-7">
-                            <h5>자바 ORM 표준 JPA 프로그래밍</h5>
-                            <small>제프 콕스, 하워드 스티븐스 (지은이), 김영한, 김형준 (옮긴이) | 위즈덤하우스 | 2018년 11월</small>
-                            <p><s>18,000원</s> → <span style="font-weight: bold; color: red;">16,200원 (10%할인)</span></p>
-                            <p>리뷰 수: <span class="reviewCount">0</span></p>
-                            <!-- 좋아요 버튼 -->
-                            <button class="btn btn-primary likeButton" type="button">
-                                <span class="likeIcon">
-                                    <!-- 하트 아이콘 -->
-                                    <i class="far fa-heart"></i>
-                                </span>
-                                <span class="likeCount">0</span>
-                            </button>
-                        </div>
-                        <div class="col-md-2 d-flex flex-column">
-                            <button class="btn btn-primary mb-2">카트에 넣기</button>
-                            <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
-                            </button>
-                        </div>
-                    </div>
-                    <hr class="my-4">
-
+                    <!--pagination-->
                     <div class="d-flex gap-2 justify-content-center">
-                        <nav aria-label="Page navigation example">
+                        <nav aria-label="Page navigation example"
+                             th:with="link = ${#request.getRequestURI()}, items = ${booksDTOPage},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
                             <ul class="pagination">
-                                <li class="page-item">
-                                    <a aria-label="Previous" class="page-link" href="#">
+                                <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                    <a aria-label="Previous" class="page-link"
+                                       th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a aria-label="Next" class="page-link" href="#">
+                                <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                    th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                    <a class="page-link"
+                                       th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                       th:text="${pageNumber + 1}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                    <a aria-label="Next" class="page-link"
+                                       th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -186,31 +185,8 @@
                 </section> <!-- End Search Result -->
             </div>
         </div>
+
+        <script src="/static/assets/js/book_sales_list.js"></script>
     </main><!-- End #main -->
 </div>
-
-<th:block layout:fragment="script">
-    <script th:inline="javascript">
-        document.getElementById('likeButton').addEventListener('click', function () {
-            var currentCount = parseInt(document.getElementById('likeCount').innerText);
-            var newCount;
-
-            if (this.dataset.liked === 'true') {
-                // 좋아요 취소
-                newCount = currentCount - 1;
-                this.dataset.liked = 'false'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="far fa-heart"></i>'; // 빈 하트 아이콘
-            } else {
-                // 좋아요 올라감
-                newCount = currentCount + 1;
-                this.dataset.liked = 'true'; // 좋아요 상태 변경
-                document.getElementById('likeIcon').innerHTML = '<i class="fas fa-heart"></i>'; // 채워진 하트 아이콘
-            }
-
-            // 좋아요 수 업데이트
-            document.getElementById('likeCount').innerText = newCount;
-        });
-    </script>
-</th:block>
-
 </html>

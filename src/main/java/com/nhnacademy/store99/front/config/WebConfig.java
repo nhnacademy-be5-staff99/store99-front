@@ -2,6 +2,7 @@ package com.nhnacademy.store99.front.config;
 
 import com.nhnacademy.store99.front.auth.service.AdminCheckService;
 import com.nhnacademy.store99.front.common.interceptor.LoginStatusCheckInterceptor;
+import com.nhnacademy.store99.front.common.interceptor.XUserTokenCheckForAdminInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
@@ -26,11 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(loginStatusCheckInterceptor())
                 .excludePathPatterns("/error", "/static/**", "/assets/**", "/favicon.ico")
                 .order(1);
-//        registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**").order(2);
-//        registry.addInterceptor(new XUserTokenCheckForUserInterceptor())
-//                .addPathPatterns("/mypage/**")
-//                .addPathPatterns("/logout")
-//                .order(2);
+        registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**").order(2);
     }
 
     @Bean
