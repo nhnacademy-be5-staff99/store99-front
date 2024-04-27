@@ -1,12 +1,16 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.nhnacademy.store99.front.book.Request.BookRequest;
+import com.nhnacademy.store99.front.book.Response.BookPageResponse;
+import com.nhnacademy.store99.front.book.service.BookService;
+import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
+import com.nhnacademy.store99.front.category.service.CategoryService;
+import com.nhnacademy.store99.front.common.response.CustomPageImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
@@ -16,9 +20,19 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author seunggyu-kim
  */
 @Controller
+@RequiredArgsConstructor
 public class BookController {
+    private final CategoryService categoryService;
+    private final BookService bookService;
+
     @GetMapping("/books")
-    public String viewBookSalesList() {
+    public String viewBookSalesList(Model model, Pageable pageable) {
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
+                categoryService.getChildrenListAndRoute(1L);
+
+        model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
+        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
+        model.addAttribute("booksDTOPage", booksDTOPage);
         return "book/book_sales_list";
     }
 
@@ -28,15 +42,16 @@ public class BookController {
         return "book/book_sales_page";
     }
 
-    @GetMapping("/admin/books")
-    public String viewManageBookDetail() {
-        return "admin/book/book_admin";
-    }
+    @GetMapping("/categories/{categoryId}/books")
+    public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model, Pageable pageable) {
+        CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
+                categoryService.getChildrenListAndRoute(categoryId);
+        model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
 
-
-    @PostMapping(value = "/admin/books")
-    public String postBook(@RequestBody BookRequest bookRequest) {
-        System.out.println(bookRequest);
-        return "index";
+        // 여기에 카테고리로 도서목록 검색하는거 넣으면 된다.
+        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
+        model.addAttribute("booksDTOPage", booksDTOPage);
+        model.addAttribute("url", "/categories");
+        return "book/book_sales_list";
     }
 }

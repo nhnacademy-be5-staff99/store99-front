@@ -11,7 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * /books, /mypage, 등의 요청 시에 X-USER-TOKEN cookie 를 thread local 에 저장 하는 interceptor
+ * /mypage, /logout 등의 요청 시에 X-USER-TOKEN cookie 를 thread local 에 저장 하는 interceptor
  *
  * @author Ahyeon Song
  */

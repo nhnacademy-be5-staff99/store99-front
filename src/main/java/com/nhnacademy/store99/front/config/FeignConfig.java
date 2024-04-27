@@ -1,9 +1,11 @@
 package com.nhnacademy.store99.front.config;
 
+import com.nhnacademy.store99.front.config.feign_decoder.FeignClientErrorDecoder;
 import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +13,9 @@ import org.springframework.context.annotation.Configuration;
  * @author seunggyu-kim
  * @author Ahyeon Song
  */
-@Configuration
 @Slf4j
+@Configuration
+@EnableFeignClients(basePackages = "**.adapter")
 public class FeignConfig {
 
     @Value("${gateway.url}")
@@ -34,6 +37,11 @@ public class FeignConfig {
                 template.header("X-USER-TOKEN", xUserToken);
             }
         };
+    }
+
+    @Bean
+    public FeignClientErrorDecoder feignClientErrorDecoder() {
+        return new FeignClientErrorDecoder();
     }
 
     private String getXUserToken() {

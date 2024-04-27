@@ -6,6 +6,8 @@ import com.nhnacademy.store99.front.auth.service.LoginService;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.net.URI;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -78,6 +80,15 @@ public class LoginController {
         responseHeaders.setLocation(URI.create("/index"));
 
         return new ResponseEntity<>(commonResponse, responseHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView doLogout(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView();
+        loginService.doLogout(request, response);
+
+        mv.setViewName("redirect:");
+        return mv;
     }
 
 
