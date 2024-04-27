@@ -5,6 +5,7 @@ import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
 import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
 import com.nhnacademy.store99.front.auth.exception.UnauthorizedFromGatewayException;
 import com.nhnacademy.store99.front.common.exception.DefaultFeignClientError;
+import com.nhnacademy.store99.front.common.exception.FailedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -79,6 +80,15 @@ public class CommonControllerAdvice {
         ModelAndView mv = new ModelAndView();
         mv.addObject("status", ex.getStatus());
         mv.setViewName("error/default_feignclient_error");
+
+        return mv;
+    }
+
+    @ExceptionHandler(FailedException.class)
+    public ModelAndView defaultExceptionHandler(FailedException ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("message", ex.getMessage());
+        mv.setViewName("error/default_error");
 
         return mv;
     }

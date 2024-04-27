@@ -5,6 +5,8 @@ import com.nhnacademy.store99.front.cart.dto.request.CartItemRequest;
 import com.nhnacademy.store99.front.cart.entity.CartItem;
 import com.nhnacademy.store99.front.cart.repository.CartItemRedisRepository;
 import com.nhnacademy.store99.front.cart.service.CartService;
+import com.nhnacademy.store99.front.common.exception.FailedException;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -28,7 +30,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addToCartDB(final CartItemRequest request) {
-        cartAdapter.addBookToCart(request);
+        CommonResponse<Void> response = cartAdapter.addBookToCart(request);
+        if (!response.getHeader().isSuccessful()) {
+            throw new FailedException("장바구니에 도서를 추가하는 데 실패했습니다.");
+        }
     }
 
     @Override

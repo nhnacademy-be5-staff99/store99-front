@@ -2,6 +2,7 @@ package com.nhnacademy.store99.front.cart.service.impl;
 
 import com.nhnacademy.store99.front.book.adapter.BookOpenAdapter;
 import com.nhnacademy.store99.front.book.dto.response.SimpleBookResponse;
+import com.nhnacademy.store99.front.cart.adapter.CartAdapter;
 import com.nhnacademy.store99.front.cart.dto.response.CartItemResponse;
 import com.nhnacademy.store99.front.cart.entity.CartItem;
 import com.nhnacademy.store99.front.cart.repository.CartItemRedisRepository;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 public class CartQueryServiceImpl implements CartQueryService {
     private final CartItemRedisRepository cartItemRedisRepository;
     private final BookOpenAdapter bookOpenAdapter;
+    private final CartAdapter cartAdapter;
 
     /**
      * 비로그인 시 장바구니 조회
@@ -42,7 +44,7 @@ public class CartQueryServiceImpl implements CartQueryService {
      * @return 장바구니 응답 리스트
      */
     @Override
-    public List<CartItemResponse> getSimpleBookListWhenNotLogin(final Cookie cartItemCookie) {
+    public List<CartItemResponse> getCartItemsWhenNotLogin(final Cookie cartItemCookie) {
         if (Objects.isNull(cartItemCookie)) {
             // 쿠키가 없는 경우 빈 리스트 반환
             return List.of();
@@ -71,7 +73,7 @@ public class CartQueryServiceImpl implements CartQueryService {
         List<CartItemResponse> cartItemResponses = new ArrayList<>();
         for (SimpleBookResponse simpleBook : simpleBooks) {
             CartItemResponse cartItemResponse = CartItemResponse.builder()
-                    .id(simpleBook.getId())
+                    .bookId(simpleBook.getId())
                     .bookTitle(simpleBook.getBookTitle())
                     .bookPrice(simpleBook.getBookPrice())
                     .bookSalePrice(simpleBook.getBookSalePrice())
@@ -82,5 +84,14 @@ public class CartQueryServiceImpl implements CartQueryService {
             cartItemResponses.add(cartItemResponse);
         }
         return cartItemResponses;
+    }
+
+    @Override
+    public List<CartItemResponse> getCartItemsWhenLongin() {
+        CommonResponse<List<CartItemResponse>> response = cartAdapter.getCartItemsByUser();
+        if (!response.getHeader().isSuccessful()) {
+            return List.of();
+        }
+        return response.getResult();
     }
 }

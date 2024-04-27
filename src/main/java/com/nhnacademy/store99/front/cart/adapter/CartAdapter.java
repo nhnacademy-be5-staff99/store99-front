@@ -1,7 +1,11 @@
 package com.nhnacademy.store99.front.cart.adapter;
 
 import com.nhnacademy.store99.front.cart.dto.request.CartItemRequest;
+import com.nhnacademy.store99.front.cart.dto.response.CartItemResponse;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -10,5 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(value = "cart-adapter", url = "${gateway.url}/api/bookstore/v1/cart")
 public interface CartAdapter {
     @PostMapping("books")
-    void addBookToCart(CartItemRequest request);
+    CommonResponse<Void> addBookToCart(CartItemRequest request);
+
+    @GetMapping("books")
+    CommonResponse<List<CartItemResponse>> getCartItemsByUser();
 }

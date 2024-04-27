@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 
 public interface CartQueryService {
-    List<CartItemResponse> getSimpleBookListWhenNotLogin(final Cookie cartItemCookie);
+    List<CartItemResponse> getCartItemsWhenNotLogin(final Cookie cartItemCookie);
 
+    List<CartItemResponse> getCartItemsWhenLongin();
 }

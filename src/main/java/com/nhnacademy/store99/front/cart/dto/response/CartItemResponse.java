@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CartItemResponse {
-    private Long id;
+    private Long bookId;
 
     private String bookTitle;
 

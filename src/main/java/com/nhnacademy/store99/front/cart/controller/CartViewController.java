@@ -23,15 +23,17 @@ public class CartViewController {
 
     @GetMapping("/cart")
     public String cart(@CookieValue(required = false) Cookie cartItem, HttpServletRequest servletRequest, Model model) {
+        List<CartItemResponse> cartItems;
         if ((boolean) servletRequest.getAttribute("isLogin")) {
             // 로그인한 경우
+            cartItems = cartQueryService.getCartItemsWhenLongin();
         } else {
             // 비로그인한 경우
-            List<CartItemResponse> cartItems = cartQueryService.getSimpleBookListWhenNotLogin(cartItem);
-            model.addAttribute("cartItems", cartItems);
-            model.addAttribute("totalPrice",
-                    cartItems.stream().map(o -> o.getBookSalePrice() * o.getQuantity()).reduce(0, Integer::sum));
+            cartItems = cartQueryService.getCartItemsWhenNotLogin(cartItem);
         }
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("totalPrice",
+                cartItems.stream().map(o -> o.getBookSalePrice() * o.getQuantity()).reduce(0, Integer::sum));
         return "cart/cart";
     }
 }
