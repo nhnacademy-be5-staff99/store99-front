@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
+
+<div layout:fragment="content">
+    <main id="main">
+        <section class="contact mb-5" id="contact">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-lg-12 text-center mb-2">
+                        <h1 class="page-title">마이페이지</h1>
+                    </div>
+                </div>
+
+                <!-- ======= My Info Start ======= -->
+                <div class="form mt-5 login-form">
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="name" name="name" placeholder="Your Name" required
+                                   type="text">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="email" name="email" placeholder="Your Email" required
+                                   type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="subject" name="subject" placeholder="Subject" required
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                    <textarea class="form-control" name="message" placeholder="Message" required
+                              rows="5"></textarea>
+                    </div>
+
+
+                </div><!-- ======= My Info End ======= -->
+
+            </div>
+        </section>
+
+    </main>
+
+</div>
+</html>
