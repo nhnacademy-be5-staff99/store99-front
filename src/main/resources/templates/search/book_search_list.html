@@ -134,7 +134,8 @@
                     <!-- ======= Bottom Pagination Start  ======= -->
                     <div class="d-flex gap-2 justify-content-center">
                         <nav aria-label="Page navigation example"
-                             th:with="link = ${#request.getRequestURI()}, items = ${searchResults},
+                             th:unless="${searchResults.totalElements == 0}"
+                             th:with="link = ${#request.getRequestURI() + '?content=' + #request.getParameter('content')}, items = ${searchResults},
                              pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
                              endPage=(${
                                 startPage + pageRange <= items.totalPages ?
