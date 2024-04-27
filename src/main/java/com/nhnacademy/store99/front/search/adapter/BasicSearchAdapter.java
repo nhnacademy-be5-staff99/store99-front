@@ -1,8 +1,10 @@
 package com.nhnacademy.store99.front.search.adapter;
 
 import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import com.nhnacademy.store99.front.search.dto.BasicSearchResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,7 +18,6 @@ public interface BasicSearchAdapter {
      * @return BasicSearchResponse
      */
     @GetMapping
-    CommonResponse<BasicSearchResponse> searchBooksByContent(
-            @RequestParam(value = "content", defaultValue = "") String content);
-
+    CommonResponse<CustomPageImpl<BasicSearchResponse>> searchBooksByContent(
+            @RequestParam(value = "content", defaultValue = "") String content, Pageable pageable);
 }
