@@ -24,7 +24,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(loginStatusCheckInterceptor()).excludePathPatterns("/error", "/static/**", "/assets/**")
+        registry.addInterceptor(loginStatusCheckInterceptor())
+                .excludePathPatterns("/error", "/static/**", "/assets/**", "/favicon.ico")
                 .order(1);
         registry.addInterceptor(new XUserTokenCheckForAdminInterceptor()).addPathPatterns("/admin/**").order(2);
     }
