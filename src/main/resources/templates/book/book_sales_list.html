@@ -102,7 +102,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <img alt="Book Thumbnail" th:src="${bookDto.BookThumbnailUrl}"
-                                     style="width: 200px; height: 260px;">
+                                     class="img-thumbnail" style="width: 200px; height: 260px;">
                             </div>
                             <div class="col-md-7">
                                 <h5 th:text="${bookDto.BookTitle}"></h5>
@@ -114,7 +114,7 @@
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
                                               th:text="|(그림)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
-                                              th:text="|(옮긴이)|"></span> -->
+                                              th:text="|(옮긴이)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
                                               th:text="|(관리감독)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
