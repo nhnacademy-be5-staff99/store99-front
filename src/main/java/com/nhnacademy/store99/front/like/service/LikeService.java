@@ -7,4 +7,6 @@ public interface LikeService {
     void addLike(LikeRequest likeRequest);
 
     String deleteLike(Long likeId);
+
+    Long getLikeCnt(Long bookId);
 }

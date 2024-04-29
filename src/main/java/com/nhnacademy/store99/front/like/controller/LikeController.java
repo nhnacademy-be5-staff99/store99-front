@@ -3,12 +3,14 @@ package com.nhnacademy.store99.front.like.controller;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.service.LikeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -22,7 +24,8 @@ public class LikeController {
     }
 
     @GetMapping
-    public String showLikes() {
+    public String showLikes(Model model) {
+        model.addAttribute("isLiked", isLiked);
         return "book/book_sales_list";
     }
 
@@ -48,6 +51,17 @@ public class LikeController {
         mvn.addObject("likeId", likeId);
         mvn.setViewName("redirect:/likes");
         likeService.deleteLike(likeId);
+        return mvn;
+    }
+
+
+    @GetMapping("/likeCnt")
+    public ModelAndView getLikeCnt(@RequestParam(value = "bookId") Long bookId) {
+        ModelAndView mvn = new ModelAndView();
+        mvn.addObject("bookId", bookId);
+        mvn.setViewName("book/book_sales_list");
+        Long cnt = likeService.getLikeCnt(bookId);
+        mvn.addObject("cnt", cnt);
         return mvn;
     }
 
