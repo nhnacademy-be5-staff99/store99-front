@@ -1,10 +1,12 @@
 #BookContents {
     padding: 1rem;
+    font-family: Arial, sans-serif;
 
     /* 추가하기 */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
