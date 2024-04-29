@@ -132,12 +132,9 @@
                                 </p>
                                 <p>리뷰 수: <span class="reviewCount" th:text="${bookDto.BookCntOfReview}"></span></p>
                                 <!-- 좋아요 버튼 -->
-                                <button class="btn btn-primary likeButton" type="button">
-                                <span class="likeIcon">
-                                    <!-- 하트 아이콘 -->
-                                    <i class="far fa-heart"></i>
-                                </span>
-                                    <span class="likeCount">0</span>
+                                <button type = "button" style="border: none; background: none" th:id="likeButton" onclick="toggleLike()">
+                                    <img th:if="${isLiked}" th:src="@{/static/assets/img/like/store99-like.svg}" alt="like"/>
+                                    <img th:else="${!isLiked}" th:src="@{/static/assets/img/like/store99-unLike.svg}" alt="unLike"/>
                                 </button>
                             </div>
                             <div class="col-md-2 d-flex flex-column">
@@ -187,6 +184,66 @@
         </div>
 
         <script src="/static/assets/js/book_sales_list.js"></script>
+        <script th:inline="javascript">
+            var isLiked = /*[[${isLiked}]];*/false;
+
+
+            function toggleLike() {
+
+                isLiked = !isLiked;
+                var bookId = [[${bookId}]];
+                var userId = [[${userId}]];
+                console.log("bookId"+ bookId);
+                console.log("userId"+ userId);
+
+                var imgElement = document.querySelector('#likeButton img');
+                if (isLiked) {
+                    imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
+                    imgElement.alt = 'Like';
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/likes',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            bookId: bookId,
+                            userId: userId
+                        },
+                        success: function(response) {
+                            console.log('Like status updated successfully');
+                        },
+                        error: function(err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+                } else {
+                    imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
+                    imgElement.alt = 'unLike';
+                    var likeId = [[${likeId}]];
+                    console.log("likeId"+ likeId);
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/likes/'+likeId,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            likeId: likeId
+                        },
+                        success: function(response) {
+                            console.log('Like status updated successfully');
+                        },
+                        error: function(err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+
+                }
+            }
+        </script>
     </main><!-- End #main -->
 </div>
 </html>
