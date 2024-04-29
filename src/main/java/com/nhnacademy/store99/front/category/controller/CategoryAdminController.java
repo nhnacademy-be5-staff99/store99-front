@@ -46,8 +46,7 @@ public class CategoryAdminController {
     }
 
     @PutMapping("/{categoryId}")
-    public ModelAndView modifyCategory(@PathVariable Long categoryId,
-                                       @ModelAttribute @Valid ModifyCategoryRequest request) {
+    public ModelAndView modifyCategory(@PathVariable Long categoryId, @ModelAttribute @Valid ModifyCategoryRequest request) {
         categoryAdminService.modifyCategory(categoryId, request);
         return new ModelAndView("redirect:/admin/categories");
     }

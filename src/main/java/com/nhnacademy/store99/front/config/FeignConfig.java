@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.config;
 
-import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.config.feign_decoder.FeignClientErrorDecoder;
+import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
