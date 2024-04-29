@@ -26,26 +26,26 @@
 
     <body>
 
-    <main id="main">
+    <main id="main" th:object="${bookData}">
         <div>
-            <image th:src="${bookThumbnailUrl}"></image>
+            <image th:src="*{BookImageURL}"></image>
             <h1>제목</h1>
-            <h3><span th:text="${bookTitle}"></span></h3>
+            <h3><span th:text="*{bookTitle}"></span></h3>
             <h1>출판사</h1>
-            <h3><span th:text="${bookPublisher}"></span></h3>
+            <h3><span th:text="*{bookPublisher}"></span></h3>
             <h5>리뷰</h5>
-            <h6><span th:text="${bookCntOfReview}"></span></h6>
-            <h6 th:text="${bookAvgOfRate}"></h6>
+            <h6><span th:text="*{bookCntOfReview}"></span></h6>
+            <h6 th:text="*{bookAvgOfRate}"></h6>
         </div>
         <div>
             <!--  만약 h에 직접 th:text로 값을 넣을수있다면, 사용할것.-->
             <h1>가격</h1>
-            <h3 th:text="${bookPrice}"></h3>
+            <h3 th:text="*{bookPrice}"></h3>
             <h1>할인가</h1>
-            <h3><span th:text="${bookSalePrice}"></span></h3>
+            <h3><span th:text="*{bookSalePrice}"></span></h3>
         </div>
         <form action="/carts" method="post">
-            <input disabled name="bookId" th:value="${bookId}" type="number">
+            <input disabled name="bookId" th:value="*{bookId}" type="number">
             <button type="submit">장바구니에 추가</button>
         </form>
         <hr>
@@ -55,15 +55,15 @@
                 <tbody>
                 <tr>
                     <th>발행일</th>
-                    <td><span th:text="${bookDateTime}"></span></td>
+                    <td><span th:text="*{BookDate}"></span></td>
                 </tr>
                 <tr>
                     <th>ISBN13</th>
-                    <td><span th:text="${isbn13}"></span></td>
+                    <td><span th:text="*{BookIsbn13}"></span></td>
                 </tr>
                 <tr>
                     <th>ISBN11</th>
-                    <td><span th:text="${isbn11}"></span></td>
+                    <td><span th:text="*{BookIsbn10}"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -71,10 +71,7 @@
         <hr>
         <div>
             <h1>내용</h1>
-            <p><span th:text="${bookContents}"></span></p>
-            <hr>
-            <h1>설명</h1>
-            <span th:text="${bookDescription}"></span>
+            <p><span th:text="*{bookContents}"></span></p>
             <hr>
         </div>
     </main>

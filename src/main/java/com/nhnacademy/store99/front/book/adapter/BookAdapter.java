@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.book.adapter;
 
 import com.nhnacademy.store99.front.book.Response.BookPageResponse;
+import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
@@ -8,6 +9,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -25,4 +27,6 @@ public interface BookAdapter {
     @GetMapping("/author/book")
     ResponseEntity<CommonResponse<BookAuthorResponse>> getBookAuthor(@RequestParam(value = "bookId") Long bookId);
 
+    @GetMapping("/{bookId}")
+    CommonResponse<BookResponse> getBook(@PathVariable(value = "bookId") Long bookId);
 }

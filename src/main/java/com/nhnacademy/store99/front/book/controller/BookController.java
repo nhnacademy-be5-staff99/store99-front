@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.book.controller;
 
 import com.nhnacademy.store99.front.book.Response.BookPageResponse;
+import com.nhnacademy.store99.front.book.Response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
 import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
 import com.nhnacademy.store99.front.category.service.CategoryService;
@@ -36,9 +37,10 @@ public class BookController {
         return "book/book_sales_list";
     }
 
-    @GetMapping("/books/{id}")
-    public String viewBookSalesPage(@PathVariable Long id, Model model) {
-        model.addAttribute("bookId", id);
+    @GetMapping("/books/{bookId}")
+    public String viewBookSalesPage(@PathVariable Long bookId, Model model) {
+        BookResponse bookResponse = bookService.getBook(bookId);
+        model.addAttribute("bookData", bookResponse);
         return "book/book_sales_page";
     }
 

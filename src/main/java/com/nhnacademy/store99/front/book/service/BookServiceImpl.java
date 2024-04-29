@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService {
     private final BookAdapter bookAdaptor;
 
     @Override
-    public BookResponse getBook(Long id) {
-        return null;
+    public BookResponse getBook(Long bookId) {
+        return bookAdaptor.getBook(bookId).getResult();
     }
 
     @Override
