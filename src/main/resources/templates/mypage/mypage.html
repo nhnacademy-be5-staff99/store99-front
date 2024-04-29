@@ -34,10 +34,10 @@
                                 <a aria-current="page" class="nav-link active" href="#">회원 정보</a>
                             </li>
                             <li>
-                                <a class="nav-link link-dark" href="#">나의 등급</a>
+                                <a class="nav-link link-dark" href="#my_grade_title">나의 등급</a>
                             </li>
                             <li>
-                                <a class="nav-link link-dark" href="#">나의 포인트</a>
+                                <a class="nav-link link-dark" href="#my_point_title">나의 포인트</a>
                             </li>
                             <li>
                                 <a class="nav-link link-dark" href="#">나의 찜 목록</a>
@@ -47,6 +47,23 @@
                             </li>
                         </ul>
                     </div>
+
+                    <script>
+                        // Siderbar 에서 마우스가 올라가 있는 요소의 색을 변경
+                        var navLinks = document.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(function (navLink) {
+                            navLink.addEventListener('mouseover', function () {
+                                navLinks.forEach(function (link) {
+                                    link.classList.remove('active');
+                                    link.classList.add('link-dark');
+                                });
+
+                                this.classList.add('active');
+                                this.classList.remove('link-dark');
+                            })
+                        })
+                    </script>
                     <!-- ======= Sidebar End ======= -->
 
                     <!-- ======= My Info Start ======= -->
@@ -90,10 +107,10 @@
                                 </div>
                             </div><!-- ======= User Info End ======= -->
 
-                            <div class="my-5"></div>
+                            <div class="my-5" id="my_grade_title"></div>
 
-                            <!-- ======= My Rate Start ======= -->
-                            <div class="my-rate">
+                            <!-- ======= My Grade Start ======= -->
+                            <div class="my_grade">
                                 <div style="display: flex; align-items: center;">
                                     <h2 style="margin-right: 14px;">나의 등급</h2>
                                     <a href="/grade_detail"><i class="fas fa-lg fa-search" title="grade_detail"></i></a>
@@ -108,12 +125,12 @@
                                 <div class="col-md-8 fs-6 fw-light"><p
                                         th:text="'구매 가격 당 ' + ${myPageInfo.userGrade.gradeRatio} + '% 씩 적립됩니다'"></p>
                                 </div>
-                            </div><!-- ======= My Rate End ======= -->
+                            </div><!-- ======= My Grade End ======= -->
 
-                            <div class="my-5"></div>
+                            <div class="my-5" id="my_point_title"></div>
 
                             <!-- ======= My Point Start ======= -->
-                            <div class="my-point">
+                            <div class="my_point">
                                 <div style="display: flex; align-items: center;">
                                     <h2 style="margin-right: 14px;">나의 포인트</h2>
                                     <a href="/my_point_history"><i class="fas fa-lg fa-chevron-right"
