@@ -10,7 +10,11 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,5 +43,22 @@ public class CartController {
             cookie = cartService.addToCartRedis(cookie, request);
             servletResponse.addCookie(cookie);
         }
+    }
+
+    @PutMapping("/cart/books")
+    public String updateBookQuantityInCart(@ModelAttribute @Valid CartItemRequest request,
+                                           @RequestAttribute boolean isLogin,
+                                           @CookieValue(value = "cartItem", required = false) Cookie cartItemCookie,
+                                           HttpServletResponse servletResponse) {
+        if (isLogin) {
+            // 로그인한 경우
+            cartService.modifyBookQuantityInCartWhenLogin(request);
+        } else {
+            // 비로그인한 경우
+            cartService.modifyBookQuantityInCartWhenNotLogin(cartItemCookie, request);
+            servletResponse.addCookie(cartItemCookie);
+        }
+
+        return "redirect:/cart";
     }
 }

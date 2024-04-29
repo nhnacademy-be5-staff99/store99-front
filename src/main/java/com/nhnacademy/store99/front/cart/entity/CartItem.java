@@ -27,4 +27,12 @@ public class CartItem {
     public void addBook(Long bookId, Integer quantity) {
         bookIdAndQuantity.put(bookId, bookIdAndQuantity.getOrDefault(bookId, 0) + quantity);
     }
+
+    public boolean modifyBookQuantity(Long bookId, Integer quantity) {
+        if (!bookIdAndQuantity.containsKey(bookId)) {
+            return false;
+        }
+        bookIdAndQuantity.put(bookId, quantity);
+        return true;
+    }
 }

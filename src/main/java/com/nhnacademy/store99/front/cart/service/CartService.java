@@ -10,4 +10,8 @@ public interface CartService {
     void addToCartDB(final CartItemRequest request);
 
     Cookie addToCartRedis(Cookie cartItemCookie, final CartItemRequest request);
+
+    void modifyBookQuantityInCartWhenLogin(CartItemRequest request);
+
+    void modifyBookQuantityInCartWhenNotLogin(Cookie cartItemCookie, CartItemRequest request);
 }
