@@ -32,9 +32,9 @@
                     </td>
                     <td>
                         <button type = "button" style="border: none; background: none" th:id="likeButton" onclick="toggleLike()">
-                            <img th:if="${isLiked}" th:src="@{/static/assets/img/like/store99-like.svg}" alt="like"/>
-                            <img th:else="${!isLiked}" th:src="@{/static/assets/img/like/store99-unLike.svg}" alt="unLike"/>
-                            <span>"${likeCnt}"</span>
+                            <img th:if="${isLiked}==true" th:src="@{/static/assets/img/like/store99-like.svg}" alt="like"/>
+                            <img th:else="${isLiked}==false" th:src="@{/static/assets/img/like/store99-unLike.svg}" alt="unLike"/>
+                            <div id="likeCnt" th:text="${cnt}"></div>
                         </button>
                     </td>
                 </tr>
@@ -64,35 +64,38 @@
 
         function toggleLike() {
 
-            isLiked = !isLiked;
             var bookId = [[${bookId}]];
             var userId = [[${userId}]];
-            console.log("bookId"+ bookId);
-            console.log("userId"+ userId);
+            console.log("bookId: "+ bookId);
+            console.log("userId: "+ userId);
 
             var apiUrl;
-            if (window.location.hostname === 'localhost' && window.location.port === '8760') {
+            // if (window.location.hostname === 'localhost' && window.location.port === '8760') {
                 // IntelliJ 환경 설정에 따라 dev 환경인 경우
                 apiUrl = 'http://localhost:8760';
-            } else {
-                // IntelliJ 환경 설정에 따라 prod 환경인 경우
-                apiUrl = 'http://192.168.0.93:8080';
-            }
+            // } else {
+            //     // IntelliJ 환경 설정에 따라 prod 환경인 경우
+            //     apiUrl = 'http://192.168.0.93:8080';
+            // }
+            var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
             $.ajax({
                 type: 'GET',
-                url: apiUrl+'/open/v1/likes/likeCnt/'+bookId,
+                url: proxyUrl+ apiUrl+"/open/bookstore/v1/likes/likeCnt",
                 headers: {
                     'Content-Type': 'application/json',
+
                 },
                 data: {
-                    bookId: bookId
+                    bookId :bookId
                 },
                 success: function(response) {
-                    console.log('Like status updated successfully');
+                    // document.getElementById('likeCnt').innerText = response.likeCount;
+                    console.log("cnt:"+"${cnt}");
+                    console.log('getLikeCnt success!');
                 },
                 error: function(err) {
-                    console.error('Failed to update like status', err);
+                    console.error('Failed to get LikeCnt', err);
                 }
             });
 
@@ -103,7 +106,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: apiUrl+"/likes",
+                    url: proxyUrl+apiUrl+"/likes",
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -126,7 +129,7 @@
 
                 $.ajax({
                     type: 'DELETE',
-                    url: apiUrl+'/likes/'+likeId,
+                    url: proxyUrl+apiUrl+'/likes/'+likeId,
                     headers: {
                         'Content-Type': 'application/json',
                     },

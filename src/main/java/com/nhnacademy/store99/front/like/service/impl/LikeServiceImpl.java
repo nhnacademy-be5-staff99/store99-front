@@ -1,7 +1,9 @@
 package com.nhnacademy.store99.front.like.service.impl;
 
+import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.like.adapter.LikeAdapter;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
+import com.nhnacademy.store99.front.like.exception.LikeCountNotAvailableException;
 import com.nhnacademy.store99.front.like.exception.LikeProcessingFaildException;
 import com.nhnacademy.store99.front.like.service.LikeService;
 import feign.FeignException;
@@ -35,9 +37,9 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public String deleteLike(Long likeId) {
-        String result="";
+        CommonResponse<String> commonResponse = null;
         try{
-            result = likeAdapter.deleteLike(likeId);
+            commonResponse=likeAdapter.deleteLike(likeId);
         } catch (FeignException.Forbidden ex) {
              throw new LikeProcessingFaildException();
         } catch (Exception ex) {
@@ -45,7 +47,23 @@ public class LikeServiceImpl implements LikeService {
         }
 
         log.debug("successfully deleted like: {}", likeId);
-        log.debug("result: {}", result);
-        return result;
+        assert commonResponse != null;
+        log.debug("commonResponse: {}", commonResponse);
+        return commonResponse.getResult();
+    }
+
+    @Override
+    public Long getLikeCnt(Long bookId) {
+        Long cnt=0L;
+        try{
+             cnt = likeAdapter.getLikeCnt(bookId).getResult();
+
+        } catch (FeignException.Forbidden ex) {
+            throw new LikeCountNotAvailableException();
+        }catch (Exception ex) {
+            log.error("error of deleteLike: ", ex);
+        }
+        log.debug("cnt= "+cnt);
+        return cnt;
     }
 }
