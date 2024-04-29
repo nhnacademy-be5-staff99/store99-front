@@ -114,12 +114,11 @@
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
                                               th:text="|(그림)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
-                                              th:text="|(옮긴이)|"></span>
-                                        <!--이거 두개 뭐라고 써야함...                        -->
+                                              th:text="|(옮긴이)|"></span> -->
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
-                                              th:text="|(SUPERVISION)|"></span>
+                                              th:text="|(관리감독)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
-                                              th:text="|(ETC)|"></span>
+                                              th:text="|(기타)|"></span>
                                     </th:block>
                                     |
                                     <th:block th:text="${bookDto.BookPublisher}"></th:block>
