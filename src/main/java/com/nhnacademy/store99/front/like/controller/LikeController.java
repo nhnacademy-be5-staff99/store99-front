@@ -3,7 +3,6 @@ package com.nhnacademy.store99.front.like.controller;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.service.LikeService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,28 +22,32 @@ public class LikeController {
     }
 
     @GetMapping
-    public String showLikes(Model model) {
-        model.addAttribute("isLiked", isLiked);
-        return"book/book_sales_page";
+    public String showLikes() {
+        return "book/book_sales_list";
     }
 
     @PostMapping
     public ModelAndView addlike(@ModelAttribute LikeRequest request) {
-        isLiked=!isLiked;
+        isLiked=true;
         ModelAndView mvn = new ModelAndView();
-        mvn.addObject(isLiked);
         mvn.setViewName("redirect:/likes");
+        Long bookId = request.getBookId();
+        Long userId = request.getUserId();
+        mvn.addObject("bookId", bookId);
+        mvn.addObject("userId", userId);
+        mvn.addObject("isLiked", isLiked);
         likeService.addLike(request);
         return mvn;
     }
 
-    @DeleteMapping("/{bookId}/{userId}")
-    public ModelAndView deleteLike(@PathVariable Long bookId, @PathVariable Long userId) {
-        isLiked=!isLiked;
+    @DeleteMapping("/{likeId}")
+    public ModelAndView deleteLike(@PathVariable Long likeId) {
+        isLiked=false;
         ModelAndView mvn = new ModelAndView();
-        mvn.addObject(isLiked);
+        mvn.addObject("isLiked", isLiked);
+        mvn.addObject("likeId", likeId);
         mvn.setViewName("redirect:/likes");
-        likeService.deleteLike(bookId, userId);
+        likeService.deleteLike(likeId);
         return mvn;
     }
 

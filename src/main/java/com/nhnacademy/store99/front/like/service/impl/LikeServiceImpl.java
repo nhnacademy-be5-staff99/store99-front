@@ -34,13 +34,18 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void deleteLike(Long bookId, Long userId) {
+    public String deleteLike(Long likeId) {
+        String result="";
         try{
-            likeAdapter.deleteLike(bookId, userId);
+            result = likeAdapter.deleteLike(likeId);
         } catch (FeignException.Forbidden ex) {
-            throw new LikeProcessingFaildException();
+             throw new LikeProcessingFaildException();
         } catch (Exception ex) {
-            log.error("error of addLike: ", ex);
+            log.error("error of deleteLike: ", ex);
         }
+
+        log.debug("successfully deleted like: {}", likeId);
+        log.debug("result: {}", result);
+        return result;
     }
 }
