@@ -30,3 +30,20 @@
 #BookContents:has(+ .card-content__more-btn:checked) {
     -webkit-line-clamp: unset
 }
+
+#ProductData {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+#ProductData th {
+    border-right: 1px solid gray;
+}
+
+#ProductData tr {
+    border-bottom: 1px solid gray;
+}
+
+#ProductData span {
+    padding: 3%;
+}

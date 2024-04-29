@@ -103,18 +103,19 @@
                 <hr class="my-4">
                 <div>
                     <h2>품목정보</h2>
-                    <table>
-                        <tbody>
+                    <table class="border-gray my-4 col-md-8" id="ProductData">
+                        <tbody class="align-content-center">
                         <tr>
-                            <th>발행일</th>
-                            <td><span th:text="*{#temporals.format(BookDate, 'yyyy년 MM월 dd일')}"></span></td>
+                            <th class="bg-body-tertiary text-center">발행일</th>
+                            <td class="text-left"><span
+                                    th:text="*{#temporals.format(BookDate, 'yyyy년 MM월 dd일')}"></span></td>
                         </tr>
                         <tr>
-                            <th>ISBN13</th>
+                            <th class="bg-body-tertiary text-center">ISBN13</th>
                             <td><span th:text="*{BookIsbn13}"></span></td>
                         </tr>
                         <tr>
-                            <th>ISBN10</th>
+                            <th class="bg-body-tertiary text-center">ISBN10</th>
                             <td><span th:text="*{BookIsbn10}"></span></td>
                         </tr>
                         </tbody>
