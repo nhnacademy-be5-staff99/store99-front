@@ -123,7 +123,8 @@
                                     |
                                     <th:block th:text="${bookDto.BookPublisher}"></th:block>
                                     |
-                                    <th:block th:text="${#temporals.format(bookDto.BookDate, 'yyyy-MM-dd')}"></th:block>
+                                    <th:block
+                                            th:text="${#temporals.format(bookDto.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
                                 </small>
                                 <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
                                         style="font-weight: bold; color: red;"

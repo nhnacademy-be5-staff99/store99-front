@@ -3,11 +3,13 @@
         lang="en"
         layout:decorate="~{layouts/layout}"
         xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
-        xmlns:th="http://www.thymeleaf.org"
->
+        xmlns:th="http://www.thymeleaf.org">
 
-<div layout:fragment="content">
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
 
+<head>
     <title>Store99st</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
@@ -21,69 +23,124 @@
     <!-- Template Main CSS Files -->
     <link href="/static/assets/css/variables.css" rel="stylesheet">
     <link href="/static/assets/css/main.css" rel="stylesheet">
+</head>
 
-    </head>
+<div layout:fragment="content">
 
-    <body>
 
     <main id="main" th:object="${bookData}">
-        <div>
-            <image th:src="*{BookImageURL}"></image>
-            <h1>제목</h1>
-            <h3><span th:text="*{bookTitle}"></span></h3>
-            <h1>출판사</h1>
-            <h3><span th:text="*{bookPublisher}"></span></h3>
-            <h5>리뷰</h5>
-            <h6><span th:text="*{bookCntOfReview}"></span></h6>
-            <h6 th:text="*{bookAvgOfRate}"></h6>
-        </div>
-        <div>
-            <!--  만약 h에 직접 th:text로 값을 넣을수있다면, 사용할것.-->
-            <h1>가격</h1>
-            <h3 th:text="*{bookPrice}"></h3>
-            <h1>할인가</h1>
-            <h3><span th:text="*{bookSalePrice}"></span></h3>
-        </div>
-        <form action="/carts" method="post">
-            <input disabled name="bookId" th:value="*{bookId}" type="number">
-            <button type="submit">장바구니에 추가</button>
-        </form>
-        <hr>
-        <div>
-            <h2>품목정보</h2>
-            <table>
-                <tbody>
-                <tr>
-                    <th>발행일</th>
-                    <td><span th:text="*{BookDate}"></span></td>
-                </tr>
-                <tr>
-                    <th>ISBN13</th>
-                    <td><span th:text="*{BookIsbn13}"></span></td>
-                </tr>
-                <tr>
-                    <th>ISBN11</th>
-                    <td><span th:text="*{BookIsbn10}"></span></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <hr>
-        <div>
-            <h1>내용</h1>
-            <p><span th:text="*{bookContents}"></span></p>
-            <hr>
+
+        <div class="container-xxl py-3">
+            <div class="row g-5">
+                <div class=""></div>
+                <div class="row align-items-start">
+                    <div class="col-lg-5 align-items-center">
+                        <image th:src="*{BookImageURL}"></image>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="row">
+                            <h3><span th:text="*{bookTitle}"></span></h3>
+                        </div>
+                        <div class="row">
+                            <small>
+                                <th:block th:each="authorDTO : ${bookData.authorsDTOList}">
+                                    <span th:text="${authorDTO.AuthorName}"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'AUTHOR')}"
+                                          th:text="|(지은이)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
+                                          th:text="|(그림)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
+                                          th:text="|(옮긴이)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
+                                          th:text="|(관리감독)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
+                                          th:text="|(기타)|"></span>
+                                </th:block>
+                                |
+                                <th:block th:text="${bookData.BookPublisher}"></th:block>
+                                |
+                                <th:block th:text="${#temporals.format(bookData.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
+                            </small>
+                        </div>
+                        <div class="row">
+                            <small><br><span th:text="|회원리뷰(*{bookCntOfReview})건 |"></span></small>
+                            <span th:text="|★*{bookAvgOfRate}|"></span>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row ">
+                            <div class="col-md-10">
+                                <div class="row my-4">
+                                    <small class="col-md-4">정가</small>
+                                    <small class="col-md-8" th:text="*{bookPrice}"></small>
+
+                                </div>
+                                <div class="row my-4">
+                                    <span class="col-md-4 fw-bold">판매가</span>
+                                    <div class="col-md-8 color-red ">
+                                        <span class="fw-bold" th:text="*{bookSalePrice}"></span>
+                                        <small th:if="*{bookPrice > bookSalePrice}"
+                                               th:text="|(정가 대비 ${per}% 할인)|"
+                                               th:with="per=((*{bookPrice} - *{bookSalePrice})/*{bookPrice})*100"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="row d-flex flex-column">
+                                    <form action="/carts" method="post">
+                                        <input disabled hidden="hidden" name="bookId" th:value="*{bookId}"
+                                               type="number">
+                                        <button class="btn btn-primary mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
+                                                type="submit">카트에 넣기
+                                        </button>
+                                        <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
+                                                type="submit">바로구매
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h2>품목정보</h2>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>발행일</th>
+                            <td><span th:text="*{#temporals.format(BookDate, 'yyyy년 MM월 dd일')}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>ISBN13</th>
+                            <td><span th:text="*{BookIsbn13}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>ISBN10</th>
+                            <td><span th:text="*{BookIsbn10}"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h1>설명</h1>
+                    <span th:text="*{bookDescription}"></span>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h1>목차</h1>
+
+                    <pre id="BookContents" th:text="*{bookContents}"></pre>
+                    <input class="card-content__more-btn" type="checkbox">
+
+                </div>
+            </div>
         </div>
     </main>
 
-    <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"></i></a>
-
-    <script>
-
-    </script>
-    </body>
+    <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i
+            class="bi bi-arrow-up-short"></i></a>
+    <link href="/static/assets/css/book_sale_page.css" rel="stylesheet">
 
 </div>
-
 
 </html>
