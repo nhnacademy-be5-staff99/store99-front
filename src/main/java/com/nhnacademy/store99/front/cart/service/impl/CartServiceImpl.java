@@ -90,7 +90,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void modifyBookQuantityInCartWhenLogin(final CartItemRequest request) {
-
+        CommonResponse<Void> response = cartAdapter.modifyBookQuantityInCart(request);
+        if (!response.getHeader().isSuccessful()) {
+            throw new FailedException("장바구니에 도서 수량을 수정하는 데 실패했습니다.");
+        }
     }
 
     @Override

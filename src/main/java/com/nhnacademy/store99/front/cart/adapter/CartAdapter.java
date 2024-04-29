@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  * @author seunggyu-kim
@@ -18,4 +19,8 @@ public interface CartAdapter {
 
     @GetMapping("books")
     CommonResponse<List<CartItemResponse>> getCartItemsByUser();
+
+    @PutMapping("books")
+    CommonResponse<Void> modifyBookQuantityInCart(CartItemRequest request);
+
 }
