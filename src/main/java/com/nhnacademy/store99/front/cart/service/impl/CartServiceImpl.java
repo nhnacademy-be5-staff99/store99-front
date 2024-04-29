@@ -3,6 +3,7 @@ package com.nhnacademy.store99.front.cart.service.impl;
 import com.nhnacademy.store99.front.cart.adapter.CartAdapter;
 import com.nhnacademy.store99.front.cart.dto.request.CartItemRequest;
 import com.nhnacademy.store99.front.cart.entity.CartItem;
+import com.nhnacademy.store99.front.cart.exception.DeleteCartFailedException;
 import com.nhnacademy.store99.front.cart.exception.ModifyCartFailedException;
 import com.nhnacademy.store99.front.cart.repository.CartItemRedisRepository;
 import com.nhnacademy.store99.front.cart.service.CartService;
@@ -89,15 +90,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void modifyBookQuantityInCartWhenLogin(final CartItemRequest request) {
+    public void modifyBookQuantityInCartWhenLogin(final CartItemRequest request) throws ModifyCartFailedException {
         CommonResponse<Void> response = cartAdapter.modifyBookQuantityInCart(request);
         if (!response.getHeader().isSuccessful()) {
-            throw new FailedException("장바구니에 도서 수량을 수정하는 데 실패했습니다.");
+            throw new ModifyCartFailedException();
         }
     }
 
     @Override
-    public void modifyBookQuantityInCartWhenNotLogin(final Cookie cartItemCookie, final CartItemRequest request) {
+    public void modifyBookQuantityInCartWhenNotLogin(final Cookie cartItemCookie, final CartItemRequest request)
+            throws ModifyCartFailedException {
         if (Objects.isNull(cartItemCookie)) {
             throw new ModifyCartFailedException();
         }
@@ -109,6 +111,41 @@ public class CartServiceImpl implements CartService {
 
         if (!cartItem.modifyBookQuantity(request.getBookId(), request.getQuantity())) {
             throw new ModifyCartFailedException();
+        }
+
+        cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
+        cartItemCookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(7));     // 쿠키 기간 연장
+    }
+
+    @Override
+    public void removeBookInCartWhenLogin(final Long bookId) throws DeleteCartFailedException {
+        CommonResponse<Void> response = cartAdapter.removeBookFromCart(bookId);
+        if (!response.getHeader().isSuccessful()) {
+            throw new DeleteCartFailedException();
+        }
+    }
+
+    @Override
+    public void removeBookInCartWhenNotLogin(final Cookie cartItemCookie, final Long bookId)
+            throws DeleteCartFailedException {
+        if (Objects.isNull(cartItemCookie)) {
+            throw new DeleteCartFailedException();
+        }
+
+        String redisKey = cartItemCookie.getValue();
+
+        CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
+                .orElseThrow(DeleteCartFailedException::new);
+
+        if (!cartItem.removeBook(bookId)) {
+            throw new DeleteCartFailedException();
+        }
+
+        // 장바구니가 비었으면 쿠키와 레디스 삭제
+        if (cartItem.getBookIdAndQuantity().isEmpty()) {
+            cartItemRedisRepository.delete(cartItem);
+            cartItemCookie.setMaxAge(0);
+            return;
         }
 
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장

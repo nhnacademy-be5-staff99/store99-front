@@ -67,7 +67,9 @@
                                 도착예정
                             </td>
                             <td>
-                                <button class="btn btn-outline-secondary btn-sm mt-1">삭제</button>
+                                <form th:action="@{/cart/books/{bookId}(bookId=*{bookId})}" th:method="delete">
+                                    <button class="btn btn-outline-secondary btn-sm mt-1" type="submit">삭제</button>
+                                </form>
                             </td>
                         </tr>
                         <!-- 추가적인 책 정보 행을 필요한 만큼 더 추가할 수 있습니다. -->

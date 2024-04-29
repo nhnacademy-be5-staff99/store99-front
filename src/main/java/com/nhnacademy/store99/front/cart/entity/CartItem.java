@@ -35,4 +35,8 @@ public class CartItem {
         bookIdAndQuantity.put(bookId, quantity);
         return true;
     }
+
+    public boolean removeBook(Long bookId) {
+        return bookIdAndQuantity.remove(bookId) != null;
+    }
 }

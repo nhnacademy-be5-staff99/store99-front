@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -56,6 +58,23 @@ public class CartController {
         } else {
             // 비로그인한 경우
             cartService.modifyBookQuantityInCartWhenNotLogin(cartItemCookie, request);
+            servletResponse.addCookie(cartItemCookie);
+        }
+
+        return "redirect:/cart";
+    }
+
+    @DeleteMapping("/cart/books/{bookId}")
+    public String deleteBookInCart(@PathVariable Long bookId,
+                                   @RequestAttribute boolean isLogin,
+                                   @CookieValue(value = "cartItem", required = false) Cookie cartItemCookie,
+                                   HttpServletResponse servletResponse) {
+        if (isLogin) {
+            // 로그인한 경우
+            cartService.removeBookInCartWhenLogin(bookId);
+        } else {
+            // 비로그인한 경우
+            cartService.removeBookInCartWhenNotLogin(cartItemCookie, bookId);
             servletResponse.addCookie(cartItemCookie);
         }
 

@@ -1,6 +1,8 @@
 package com.nhnacademy.store99.front.cart.service;
 
 import com.nhnacademy.store99.front.cart.dto.request.CartItemRequest;
+import com.nhnacademy.store99.front.cart.exception.DeleteCartFailedException;
+import com.nhnacademy.store99.front.cart.exception.ModifyCartFailedException;
 import javax.servlet.http.Cookie;
 
 /**
@@ -11,7 +13,13 @@ public interface CartService {
 
     Cookie addToCartRedis(Cookie cartItemCookie, final CartItemRequest request);
 
-    void modifyBookQuantityInCartWhenLogin(CartItemRequest request);
+    void modifyBookQuantityInCartWhenLogin(final CartItemRequest request) throws ModifyCartFailedException;
 
-    void modifyBookQuantityInCartWhenNotLogin(Cookie cartItemCookie, CartItemRequest request);
+    void modifyBookQuantityInCartWhenNotLogin(final Cookie cartItemCookie, final CartItemRequest request)
+            throws ModifyCartFailedException;
+
+    void removeBookInCartWhenLogin(final Long bookId) throws DeleteCartFailedException;
+
+    void removeBookInCartWhenNotLogin(final Cookie cartItemCookie, final Long bookId)
+            throws DeleteCartFailedException;
 }
