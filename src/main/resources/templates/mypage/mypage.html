@@ -23,7 +23,7 @@
                 <!-- ======= New Layout Start ======= -->
                 <div class="d-flex align-items-start mx-3 row g-5">
                     <!-- ======= Sidebar Start ======= -->
-                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-3" style="width: 230px;">
+                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto" style="width: 230px;">
                         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
                            href="/">
                             <span class="fs-4">Sidebar</span>
@@ -68,7 +68,7 @@
 
                     <!-- ======= My Info Start ======= -->
 
-                    <div class="my-info col-9">
+                    <div class="my-info col-lg-9 col-md-auto col-sm-auto">
                         <div class="form login-form ml-5">
                             <!-- ======= User Info Start ======= -->
                             <div style="display: flex; align-items: center;">
@@ -117,13 +117,14 @@
                                 </div>
                                 <hr>
 
-                                <div class="col-md-8 fs-5 "><p
+                                <div class="col-md-12 fs-5 "><p
                                         th:text="'나의 현재 등급 : ' + ${myPageInfo.userGrade.gradeName}"></p></div>
-                                <div class="col-md-8 fs-6 fw-light"><p
-                                        th:text="'이번 달에 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeStartCost, 1, 'COMMA')} + '원 이상 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeEndCost, 1, 'COMMA')} + '원 미만 구매하신 고객님'"></p>
+                                <div class="col-md-12 fs-6 fw-light"><span
+                                        th:text="'최근 3개월 간 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeStartCost, 1, 'COMMA')} + '원 이상 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeEndCost, 1, 'COMMA')} + '원 미만 구매하신 고객님'"></span>
                                 </div>
-                                <div class="col-md-8 fs-6 fw-light"><p
-                                        th:text="'구매 가격 당 ' + ${myPageInfo.userGrade.gradeRatio} + '% 씩 적립됩니다'"></p>
+                                <div class="col-md-12 fs-6 fw-light"><p
+                                        th:text="'순수 금액의 ' + ${myPageInfo.userGrade.gradeRatio} + '% 씩 적립됩니다'"></p>
+                                    <p>*순수 금액 : 주문금액 - (쿠폰 + 배송비 + 취소금액 + 포장비)</p>
                                 </div>
                             </div><!-- ======= My Grade End ======= -->
 
