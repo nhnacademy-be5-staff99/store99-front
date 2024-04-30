@@ -44,7 +44,6 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
             } catch (FeignException.BadRequest | FeignException.Unauthorized ex) {
                 log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 {} Error 받음 (Token 문제)", ex.status());
-                request.setAttribute("isLogin", false);
 
                 CookieUtils.deleteCookie(request, response, "X-USER-TOKEN");
                 log.debug("사용 불가능한 X-USER-TOKEN Cookie 삭제");
