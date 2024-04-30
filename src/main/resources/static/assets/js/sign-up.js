@@ -28,6 +28,8 @@ $(document).ready(function () {
         if (enteredCode === confirmationCode) {
             alert("인증번호가 일치합니다. 회원가입을 진행하세요.");
             isEmailVerified = true;
+            document.getElementById('id').disabled = true;
+            document.getElementById('sendConfirmationCode').disabled = true;
         } else {
             alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
             isEmailVerified = false;
@@ -46,9 +48,10 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 console.log(response);
-                if(response === "false"){
+                if(response === "true"){
                 isPasswordChecked = true;
-                alert("중복되지 않은 비밀번호입니다.");
+                document.getElementById('password').disabled = true;
+                alert("중복되지 않은 비밀번호입니다. 회원가입을 진행해주세요");
                 }
                 else {
                     alert("중복되는 비밀번호입니다. 다시 입력해주세요.");

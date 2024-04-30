@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jinhyogyeom
  */
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class SignUpController {
 
     @Autowired
