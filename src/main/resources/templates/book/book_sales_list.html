@@ -110,7 +110,10 @@
                                      style="width: 200px; height: 260px;" th:src="${bookDto.BookThumbnailUrl}">
                             </div>
                             <div class="col-md-7">
-                                <h5 th:text="${bookDto.BookTitle}"></h5>
+                                <h5>
+                                    <a th:href="@{books/{bookId}(bookId= ${bookDto.bookId})}"
+                                       th:text="${bookDto.BookTitle}"> </a>
+                                </h5>
                                 <small>
                                     <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
                                         <span th:text="${authorDTO.AuthorName}"></span>
