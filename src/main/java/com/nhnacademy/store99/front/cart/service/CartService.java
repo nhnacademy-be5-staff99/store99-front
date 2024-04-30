@@ -22,4 +22,6 @@ public interface CartService {
 
     void removeBookInCartWhenNotLogin(final Cookie cartItemCookie, final Long bookId)
             throws DeleteCartFailedException;
+
+    void mergeCart(final String accessToken, Cookie cartItemCookie);
 }

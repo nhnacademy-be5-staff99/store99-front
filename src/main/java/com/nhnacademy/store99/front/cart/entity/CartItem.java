@@ -17,7 +17,7 @@ import org.springframework.data.redis.core.RedisHash;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@RedisHash(value = "cart_item", timeToLive = 60 * 60 * 24 * 7)
+@RedisHash(value = "cart_item", timeToLive = 60 * 60 * 24)
 public class CartItem {
     @Id
     private UUID id;

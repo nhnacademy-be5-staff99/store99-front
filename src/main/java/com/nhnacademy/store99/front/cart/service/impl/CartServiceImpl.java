@@ -12,9 +12,9 @@ import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -67,7 +67,7 @@ public class CartServiceImpl implements CartService {
         }
 
         cartItemRedisRepository.save(cartItem);
-        cartItemCookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(7));
+        cartItemCookie.setPath("/");
 
         return cartItemCookie;
     }
@@ -100,10 +100,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public void modifyBookQuantityInCartWhenNotLogin(final Cookie cartItemCookie, final CartItemRequest request)
             throws ModifyCartFailedException {
-        if (Objects.isNull(cartItemCookie)) {
-            throw new ModifyCartFailedException();
-        }
-
         String redisKey = cartItemCookie.getValue();
 
         CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
@@ -114,7 +110,7 @@ public class CartServiceImpl implements CartService {
         }
 
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
-        cartItemCookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(7));     // 쿠키 기간 연장
+        cartItemCookie.setPath("/");
     }
 
     @Override
@@ -128,10 +124,6 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeBookInCartWhenNotLogin(final Cookie cartItemCookie, final Long bookId)
             throws DeleteCartFailedException {
-        if (Objects.isNull(cartItemCookie)) {
-            throw new DeleteCartFailedException();
-        }
-
         String redisKey = cartItemCookie.getValue();
 
         CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
@@ -149,6 +141,25 @@ public class CartServiceImpl implements CartService {
         }
 
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
-        cartItemCookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(7));     // 쿠키 기간 연장
+        cartItemCookie.setPath("/");
+    }
+
+    @Async
+    @Override
+    public void mergeCart(final String accessToken, Cookie cartItemCookie) {
+        if (Objects.isNull(cartItemCookie)) {
+            return;
+        }
+
+        String redisKey = cartItemCookie.getValue();
+        CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey)).orElse(null);
+        if (Objects.isNull(cartItem)) {
+            return;
+        }
+
+        CommonResponse<Void> response = cartAdapter.mergeCart(accessToken, cartItem.getBookIdAndQuantity());
+        if (response.getHeader().isSuccessful()) {
+            cartItemRedisRepository.delete(cartItem);
+        }
     }
 }
