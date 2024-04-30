@@ -8,6 +8,7 @@ import com.nhnacademy.store99.front.category.service.CategoryService;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/books")
-    public String viewBookSalesList(Model model, Pageable pageable) {
+    public String viewBookSalesList(Model model, @PageableDefault(size = 10) Pageable pageable) {
         CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
                 categoryService.getChildrenListAndRoute(1L);
 
@@ -45,7 +46,8 @@ public class BookController {
     }
 
     @GetMapping("/categories/{categoryId}/books")
-    public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model, Pageable pageable) {
+    public String viewBookSalesListByCategory(@PathVariable Long categoryId, Model model,
+                                              @PageableDefault(size = 10) Pageable pageable) {
         CategoryChildrenListAndRouteResponse categoryChildrenListAndRoute =
                 categoryService.getChildrenListAndRoute(categoryId);
         model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
