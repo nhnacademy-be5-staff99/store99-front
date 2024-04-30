@@ -1,5 +1,6 @@
 package com.nhnacademy.store99.front.cart.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ public class CartItem {
     @Id
     private UUID id;
 
-    private Map<Long, Integer> bookIdAndQuantity;
+    private Map<Long, Integer> bookIdAndQuantity = new HashMap<>();
 
     public void addBook(Long bookId, Integer quantity) {
         bookIdAndQuantity.put(bookId, bookIdAndQuantity.getOrDefault(bookId, 0) + quantity);

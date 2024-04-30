@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -54,9 +53,8 @@ public class CartServiceImpl implements CartService {
 
             // 쿠키에 담긴 키로 레디스에서 장바구니 정보 조회
             // 만약 레디스에 없으면 새로운 장바구니 아이템 생성
-            cartItem =
-                    cartItemRedisRepository.findById(UUID.fromString(redisKey))
-                            .orElseGet(() -> createNewCartItem(request));
+            cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
+                    .orElseGet(() -> createNewCartItem(request));
             cartItem.addBook(request.getBookId(), request.getQuantity());
 
             // 쿠키에 담긴 키와 레디스에 저장된 키가 다르면 쿠키에 새로운 키를 저장
@@ -136,15 +134,15 @@ public class CartServiceImpl implements CartService {
         // 장바구니가 비었으면 쿠키와 레디스 삭제
         if (cartItem.getBookIdAndQuantity().isEmpty()) {
             cartItemRedisRepository.delete(cartItem);
+            cartItemCookie.setPath("/");
             cartItemCookie.setMaxAge(0);
             return;
         }
 
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
-        cartItemCookie.setPath("/");
     }
 
-    @Async
+    //    @Async
     @Override
     public void mergeCart(final String accessToken, Cookie cartItemCookie) {
         if (Objects.isNull(cartItemCookie)) {
