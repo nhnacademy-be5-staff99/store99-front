@@ -29,8 +29,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                             <li class="breadcrumb-item"
+                                th:classappend="${status.last} ? 'active'"
                                 th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}"
-                                th:object="${category}" th:classappend="${status.last} ? 'active'">
+                                th:object="${category}">
                                 <a th:href="@{'/categories/{id}/books'(id=*{id})}" th:text="*{categoryName}">Home</a>
                             </li>
                         </ol>
@@ -105,8 +106,8 @@
                         <hr class="my-4">
                         <div class="row">
                             <div class="col-md-3">
-                                <img alt="Book Thumbnail" th:src="${bookDto.BookThumbnailUrl}"
-                                     style="width: 200px; height: 260px;">
+                                <img alt="Book Thumbnail" class="img-thumbnail"
+                                     style="width: 200px; height: 260px;" th:src="${bookDto.BookThumbnailUrl}">
                             </div>
                             <div class="col-md-7">
                                 <h5 th:text="${bookDto.BookTitle}"></h5>
@@ -119,16 +120,16 @@
                                               th:text="|(그림)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
                                               th:text="|(옮긴이)|"></span>
-                                        <!--이거 두개 뭐라고 써야함...                        -->
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
-                                              th:text="|(SUPERVISION)|"></span>
+                                              th:text="|(감수)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
-                                              th:text="|(ETC)|"></span>
+                                              th:text="|(기타)|"></span>
                                     </th:block>
                                     |
                                     <th:block th:text="${bookDto.BookPublisher}"></th:block>
                                     |
-                                    <th:block th:text="${#temporals.format(bookDto.BookDate, 'yyyy-MM-dd')}"></th:block>
+                                    <th:block
+                                            th:text="${#temporals.format(bookDto.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
                                 </small>
                                 <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
                                         style="font-weight: bold; color: red;"
