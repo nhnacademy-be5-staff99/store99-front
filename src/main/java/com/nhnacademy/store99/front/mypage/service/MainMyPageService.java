@@ -1,6 +1,6 @@
 package com.nhnacademy.store99.front.mypage.service;
 
-import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
+import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.mypage.adapter.MyPageAdapter;
 import com.nhnacademy.store99.front.mypage.dto.MainMyPageResponse;
@@ -29,7 +29,7 @@ public class MainMyPageService {
         try {
             mainMyPageResponse = myPageAdapter.getMainMyPage();
         } catch (FeignException.Unauthorized | FeignException.BadRequest ex) {
-            throw new LoginCheckException("마이페이지에 접근하나, 로그인이 되어있지 않음");
+            throw new LoginRequiredException("마이페이지에 접근하나, 로그인이 되어있지 않음");
         }
         return mainMyPageResponse.getResult();
     }

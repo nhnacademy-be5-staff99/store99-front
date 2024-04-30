@@ -10,6 +10,9 @@
 
 
 <div layout:fragment="content">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <main id="main">
         <section class="contact mb-5" id="contact">
             <div class="container" data-aos="fade-up">
@@ -23,7 +26,8 @@
                 <!-- ======= New Layout Start ======= -->
                 <div class="d-flex align-items-start mx-3 row g-5">
                     <!-- ======= Sidebar Start ======= -->
-                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto" style="width: 230px;">
+                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto"
+                         style="width: 230px;">
                         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
                            href="/">
                             <span class="fs-4">Sidebar</span>
@@ -97,14 +101,88 @@
                                 <div class="row">
                                     <div style="display: flex; align-items: center;">
                                         <div class="col-md-2 fs-5">기본 주소</div>
-                                        <a href="/my_address_info"><i class="fas fa-sm fa-chevron-right"
-                                                                      title="user_info_edit"></i></a>
+                                        <!-- Address Modal Trigger Button -->
+                                        <div class="address_modal_btn" data-bs-target="#address_modal"
+                                             data-bs-toggle="modal">
+                                            <i class="fas fa-sm fa-chevron-right" style="cursor: pointer"
+                                               title="user_address_info"></i>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12 fs-5 mt-2"><p
                                             th:text="${myPageInfo.userAddress.addressAlias} + ' | ' + ${myPageInfo.userAddress.addressGeneral} +  ' ' + ${myPageInfo.userAddress.addressDetail} + ' | ' +${myPageInfo.userAddress.addressCode}"></p>
                                     </div>
                                 </div>
+
+                                <!-- ======= Address Modal Start ======= -->
+                                <div aria-hidden="true" aria-labelledby="address_modal" class="modal fade"
+                                     id="address_modal"
+                                     tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">내 주소</h5>
+                                                <button aria-label="Close" class="btn-close address_modal_close"
+                                                        data-bs-dismiss="modal" type="button"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary address_modal_close"
+                                                        data-bs-dismiss="modal"
+                                                        type="button">Close
+                                                </button>
+                                                <button class="btn btn-primary" type="button">주소 추가하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $('.address_modal_btn').on('click', function () {
+                                            $.ajax({
+                                                url: '/my_address_info',
+                                                type: 'GET',
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    var modalBody = $('#address_modal .modal-body');
+                                                    modalBody.empty();
+
+                                                    data.forEach(function (address) {
+                                                        if (address.isDefaultAddress) {
+                                                            modalBody.append('<p style="font-weight: bold">기본주소</p>');
+                                                        }
+                                                        modalBody.append('<p>' + address.addressAlias + '</p>');
+                                                        modalBody.append('<p>' + address.addressGeneral + ' ' + address.addressDetail + '</p>');
+                                                        modalBody.append('<p style="display: flex; justify-content: space-between;">우편번호 : ' + address.addressCode + '<button class="btn btn-primary delete-button" data-address-id="' + address.addressId + '">삭제</button></p>');
+                                                        modalBody.append('<hr>');
+                                                    });
+
+                                                    $('#address_modal').modal('show');
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown, data) {
+                                                    console.error('AJAX request fail');
+                                                }
+                                            });
+                                        });
+
+                                        // 모달 종료 (hide)
+                                        $(document).on('click', '.address_modal_close', function () {
+                                            $('#address_modal').modal('hide');
+                                        });
+
+                                        // 선택한 주소 삭제
+                                        $(document).on('click', '.delete-button', function () {
+                                            var addressId = $(this).data('address-id');
+                                            // addressId 에 해당하는 주소 삭제 로직 작성
+
+                                        });
+                                    });
+                                </script>
+                                <!-- ======= Address Modal End ======= -->
+
                             </div><!-- ======= User Info End ======= -->
 
                             <div class="my-5" id="my_grade_title"></div>
@@ -142,7 +220,7 @@
                                 <div class="col-md-12 fs-5"><p
                                         th:text="'사용 가능 포인트 : ' + ${#numbers.formatInteger(myPageInfo.userPoint, 1, 'COMMA')} + ' p'"></p>
                                 </div>
-                            </div><!-- ======= My Rate End ======= -->
+                            </div><!-- ======= My Point End ======= -->
 
 
                         </div>
