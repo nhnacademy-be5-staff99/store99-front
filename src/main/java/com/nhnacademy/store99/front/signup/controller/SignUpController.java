@@ -1,8 +1,13 @@
 package com.nhnacademy.store99.front.signup.controller;
 
 import static com.nhnacademy.store99.front.signup.service.SignUpService.code;
+import static com.nhnacademy.store99.front.signup.service.SignUpService.isDuplicate;
 
+import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.response.CommonHeader;
 import com.nhnacademy.store99.front.signup.dto.EmailDto;
+import com.nhnacademy.store99.front.signup.dto.PasswordDto;
+import com.nhnacademy.store99.front.signup.dto.SignUpDto;
 import com.nhnacademy.store99.front.signup.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +40,41 @@ public class SignUpController {
             return ResponseEntity.ok(code);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/duplicateCheck")
+    public ResponseEntity<String> duplicateCheck(@RequestBody PasswordDto passwordDto) {
+        try{
+            signUpService.duplicateCheck(passwordDto.getPassword());
+            return ResponseEntity.ok(isDuplicate);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+    }
+}
+    @PostMapping("/sign-up")
+    public ResponseEntity<CommonResponse<String>> signUp(@RequestBody SignUpDto signUpDto) {
+        try {
+            signUpService.signUp(signUpDto);
+            CommonHeader header = CommonHeader.builder()
+                    .httpStatus(HttpStatus.OK)
+                    .resultMessage("Success")
+                    .build();
+            CommonResponse<String> response = CommonResponse.<String>builder()
+                    .header(header)
+                    .result("User registration successful.")
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            CommonHeader header = CommonHeader.builder()
+                    .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .resultMessage("Error occurred: " + e.getMessage())
+                    .build();
+            CommonResponse<String> response = CommonResponse.<String>builder()
+                    .header(header)
+                    .result(null)
+                    .build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }

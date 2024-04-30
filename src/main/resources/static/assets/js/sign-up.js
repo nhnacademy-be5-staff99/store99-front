@@ -1,10 +1,9 @@
 var isEmailVerified = false;
 var isPasswordChecked = false;
 $(document).ready(function () {
-    var confirmationCode = "";
+    var confirmationCode;
     $("#sendConfirmationCode").click(function () {
         var email = $("#id").val();
-
         $.ajax({
             type: "POST",
             url: "/mailConfirm",
@@ -19,7 +18,7 @@ $(document).ready(function () {
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error("오류: " + xhr.responseText);
-                alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+                alert("존재하지 않는 이메일입니다. 다시 시도해주세요.");
             }
         });
     });
@@ -31,38 +30,87 @@ $(document).ready(function () {
             isEmailVerified = true;
         } else {
             alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
+            isEmailVerified = false;
         }
     });
 
     $("#duplicateCheck").click(function () {
+        var password = $("#password").val();
+        if(isEmailVerified == true){
         $.ajax({
             type: "POST",
             url: "/duplicateCheck",
+            contentType: "application/json",
             data: JSON.stringify({
-                "email": email
+                "password": password
             }),
             success: function (response) {
-                // 비밀번호 중복 확인 성공 시
-                // isPasswordChecked 값을 true로 설정합니다.
+                console.log(response);
+                if(response === "true"){
                 isPasswordChecked = true;
-                // 회원가입 버튼을 활성화하는 함수 호출
-                // enableSignupButton();
+                alert("중복되지 않은 비밀번호입니다.");
+                }
+                else {
+                    alert("중복되는 비밀번호입니다. 다시 입력해주세요.");
+                }
             },
             error: function (xhr, textStatus, errorThrown) {
-                // 비밀번호 중복 확인 실패 시
-                // 오류 메시지를 출력합니다.
                 alert("비밀번호 중복 확인에 실패했습니다.");
             }
-        });
+        })}
+        else {
+            alert("이메일 인증을 먼저 진행해주세요.");
+        }
     });
 
-    document.getElementById("signup-btn").addEventListener("click", function () {
+    document.getElementById('signUp').addEventListener('submit', function(event) {
+        event.preventDefault(); // Form의 기본 제출 동작을 막습니다.
+        const formData = {
+            email: document.getElementById('id').value,
+            password: document.getElementById('password').value,
+            name: document.getElementById('username').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
+            userBirthDate: document.getElementById('birthday').value,
+            address: {
+                addressGeneral: document.getElementById('address_general').value,
+                addressDetail: document.getElementById('address_detail').value,
+                addressAlias: document.getElementById('address_alias').value,
+                addressCode: parseInt(document.getElementById('address_code').value),
+                isDefaultAddress: true
+            }
+        };
         if (isEmailVerified == true && isPasswordChecked == true) {
-            alert("회원가입이 성공적으로 완료되었습니다.\n로그인 페이지로 돌아갑니다.");
-            window.location.href = "/login_form";
+            fetch('/sign-up', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
+                            alert(`회원가입 실패: ${data.header.resultMessage}`);
+                            throw new Error(data.header.resultMessage);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    alert("회원가입이 성공적으로 완료되었습니다.\n로그인 페이지로 돌아갑니다.");
+                    window.location = "login_form"
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         } else {
             alert("이메일 인증과 비밀번호 중복 확인을 먼저 진행해주세요");
         }
+
+
+
+
     });
 });
 
