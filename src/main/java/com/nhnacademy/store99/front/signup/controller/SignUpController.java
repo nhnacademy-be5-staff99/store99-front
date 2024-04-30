@@ -17,9 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author jinhyogyeom
+ */
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class SignUpController {
 
     @Autowired
@@ -33,6 +37,13 @@ public class SignUpController {
         return "sign-up";
     }
 
+    /**
+     * 이메일 서비스를 요청하는 메소드
+     * 이메일 인증번호를 반환
+     *
+     * @param emailDto
+     * @return String
+     */
     @PostMapping("/mailConfirm")
     public ResponseEntity<String> mailConfirm(@RequestBody EmailDto emailDto) {
         try {
@@ -42,7 +53,13 @@ public class SignUpController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
     }
-
+    /**
+     * 중복검사 서비스를 요청하는 메소드
+     * 중복검사 결과 반환
+     *
+     * @param passwordDto
+     * @return String
+     */
     @PostMapping("/duplicateCheck")
     public ResponseEntity<String> duplicateCheck(@RequestBody PasswordDto passwordDto) {
         try{
@@ -52,6 +69,14 @@ public class SignUpController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
     }
 }
+
+    /**
+     * 회원가입 서비스를 요청하는 메소드
+     * 회원가입 성공 메세지 반환
+     *
+     * @param signUpDto
+     * @return String
+     */
     @PostMapping("/sign-up")
     public ResponseEntity<CommonResponse<String>> signUp(@RequestBody SignUpDto signUpDto) {
         try {

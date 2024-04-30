@@ -46,7 +46,7 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 console.log(response);
-                if(response === "true"){
+                if(response === "false"){
                 isPasswordChecked = true;
                 alert("중복되지 않은 비밀번호입니다.");
                 }
@@ -64,7 +64,7 @@ $(document).ready(function () {
     });
 
     document.getElementById('signUp').addEventListener('submit', function(event) {
-        event.preventDefault(); // Form의 기본 제출 동작을 막습니다.
+        event.preventDefault();
         const formData = {
             email: document.getElementById('id').value,
             password: document.getElementById('password').value,
@@ -107,10 +107,6 @@ $(document).ready(function () {
         } else {
             alert("이메일 인증과 비밀번호 중복 확인을 먼저 진행해주세요");
         }
-
-
-
-
     });
 });
 

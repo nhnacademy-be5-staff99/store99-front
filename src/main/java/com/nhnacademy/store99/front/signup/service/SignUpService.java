@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author jinhyogyeom
+ */
 @Service
 public class SignUpService {
 
@@ -26,8 +29,15 @@ public class SignUpService {
         this.restTemplate = restTemplate;
     }
 
+
+    /**
+     * 북스토어에 이메일 인증요청을 보내는 메소드
+     * 이메일 인증번호를 반환
+     *
+     * @param email
+     * @return void
+     */
     public void mailConfirm(String email) {
-        // 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String requestBody = "{\"email\":\"" + email + "\"}";
@@ -53,6 +63,14 @@ public class SignUpService {
             System.out.println("메일 확인 요청을 보내는 중 오류가 발생하였습니다. 응답 코드: " + responseEntity.getStatusCodeValue());
         }
     }
+
+    /**
+     * 북스토어에 비밀번호 중복검사 요청을 보내는 메소드
+     * 중복검사한 값 (true/false)를 반환
+     *
+     * @param password
+     * @return void
+     */
 
     public void duplicateCheck(String password) {
         HttpHeaders headers = new HttpHeaders();
@@ -83,6 +101,14 @@ public class SignUpService {
         }
     }
 
+
+    /**
+     * form에서 받은  값들로 북스토어에 회원가입 요청을 보내는 메소드
+     * 회원가입성공여부 메세지를 반환
+     *
+     * @param signUpDto
+     * @return void
+     */
     public void signUp(SignUpDto signUpDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
