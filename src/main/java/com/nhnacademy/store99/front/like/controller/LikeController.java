@@ -3,7 +3,6 @@ package com.nhnacademy.store99.front.like.controller;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.service.LikeService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,11 +22,6 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    @GetMapping
-    public String showLikes(Model model) {
-        model.addAttribute("isLiked", isLiked);
-        return "book/book_sales_list";
-    }
 
     @PostMapping
     public ModelAndView addlike(@ModelAttribute LikeRequest request) {
@@ -55,7 +49,7 @@ public class LikeController {
     }
 
 
-    @GetMapping("/likeCnt")
+    @GetMapping("/count")
     public ModelAndView getLikeCnt(@RequestParam(value = "bookId") Long bookId) {
         ModelAndView mvn = new ModelAndView();
         mvn.addObject("bookId", bookId);

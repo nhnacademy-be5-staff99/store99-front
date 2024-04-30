@@ -30,7 +30,8 @@
                         <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                             <li class="breadcrumb-item"
                                 th:classappend="${status.last} ? 'active'"
-                                th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}" th:object="${category}">
+                                th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}"
+                                th:object="${category}">
                                 <a th:href="@{'/categories/{id}/books'(id=*{id})}" th:text="*{categoryName}">Home</a>
                             </li>
                         </ol>
@@ -211,7 +212,7 @@
 
                 $.ajax({
                     type: 'GET',
-                    url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/likeCnt",
+                    url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/count",
                     headers: {
                         'Content-Type': 'application/json',
 
@@ -245,6 +246,7 @@
                             userId: userId
                         },
                         success: function (response) {
+                            location.reload()
                             console.log('Like status updated successfully');
                         },
                         error: function (err) {

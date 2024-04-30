@@ -23,6 +23,6 @@ public interface LikeAdapter {
     @DeleteMapping("/api/bookstore/v1/likes/{likeId}")
     CommonResponse<String> deleteLike(@PathVariable final Long likeId);
 
-    @GetMapping("/open/bookstore/v1/likes/likeCnt")
+    @GetMapping("/open/bookstore/v1/likes/count")
     CommonResponse<Long> getLikeCnt(@RequestParam(value = "bookId") final Long bookId);
 }
