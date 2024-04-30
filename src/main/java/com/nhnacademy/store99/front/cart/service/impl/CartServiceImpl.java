@@ -14,6 +14,8 @@ import java.util.Objects;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
  *
  * @author seunggyu-kim
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
@@ -142,9 +145,10 @@ public class CartServiceImpl implements CartService {
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
     }
 
-    //    @Async
+    @Async
     @Override
     public void mergeCart(final String accessToken, Cookie cartItemCookie) {
+        log.info("Current thread name: " + Thread.currentThread().getName());
         if (Objects.isNull(cartItemCookie)) {
             return;
         }
@@ -159,5 +163,6 @@ public class CartServiceImpl implements CartService {
         if (response.getHeader().isSuccessful()) {
             cartItemRedisRepository.delete(cartItem);
         }
+
     }
 }
