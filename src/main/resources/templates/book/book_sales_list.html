@@ -221,7 +221,7 @@
                         bookId: bookId
                     },
                     success: function (response) {
-                        // document.getElementById('likeCnt').innerText = response.likeCount;
+                        location.reload()
                         console.log("cnt:" + "${cnt}");
                         console.log('getLikeCnt success!');
                     },
@@ -269,6 +269,7 @@
                             likeId: likeId
                         },
                         success: function (response) {
+                            location.reload()
                             console.log('Like status updated successfully');
                         },
                         error: function (err) {
