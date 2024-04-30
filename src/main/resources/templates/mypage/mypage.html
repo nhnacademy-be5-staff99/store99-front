@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
+
+
+<div layout:fragment="content">
+    <main id="main">
+        <section class="contact mb-5" id="contact">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-lg-12 text-center mt-2 mb-5">
+                        <h1 class="page-title">마이페이지</h1>
+                    </div>
+                </div>
+
+                <!-- ======= New Layout Start ======= -->
+                <div class="d-flex align-items-start mx-3 row g-5">
+                    <!-- ======= Sidebar Start ======= -->
+                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto" style="width: 230px;">
+                        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                           href="/">
+                            <span class="fs-4">Sidebar</span>
+                        </a>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a aria-current="page" class="nav-link active" href="#">회원 정보</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#my_grade_title">나의 등급</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#my_point_title">나의 포인트</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">나의 찜 목록</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">주문 내역</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <script>
+                        // Siderbar 에서 마우스가 올라가 있는 요소의 색을 변경
+                        var navLinks = document.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(function (navLink) {
+                            navLink.addEventListener('mouseover', function () {
+                                navLinks.forEach(function (link) {
+                                    link.classList.remove('active');
+                                    link.classList.add('link-dark');
+                                });
+
+                                this.classList.add('active');
+                                this.classList.remove('link-dark');
+                            })
+                        })
+                    </script>
+                    <!-- ======= Sidebar End ======= -->
+
+                    <!-- ======= My Info Start ======= -->
+
+                    <div class="my-info col-lg-9 col-md-auto col-sm-auto">
+                        <div class="form login-form ml-5">
+                            <!-- ======= User Info Start ======= -->
+                            <div style="display: flex; align-items: center;">
+                                <h2 style="margin-right: 14px;">회원 정보</h2>
+                                <a href="/user_info_edit"><i class="fas fa-lg fa-chevron-right"
+                                                             title="user_info_edit"></i></a>
+                            </div>
+                            <hr>
+                            <div class="user-info">
+                                <div class="row">
+                                    <div class="col-md-2 fs-5">고객명</div>
+                                    <div class="col-md-4 fs-5"><p th:text="${myPageInfo.userName}"></p></div>
+                                    <div class="col-md-2 fs-5">Email</div>
+                                    <div class="col-md-4 fs-5"><p th:text="${myPageInfo.userEmail}"></p></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 fs-5">연락처</div>
+                                    <div class="col-md-4 fs-5"><p
+                                            th:text="${@formatterUtil.setPhoneNum(myPageInfo.userPhoneNumber)}"></p>
+                                    </div>
+                                    <div class="col-md-2 fs-5">생년월일</div>
+                                    <div class="col-md-4 fs-5"><p
+                                            th:text="${#temporals.format(myPageInfo.userBirthDay, 'yyyy년 MM월 dd일')}"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="display: flex; align-items: center;">
+                                        <div class="col-md-2 fs-5">기본 주소</div>
+                                        <a href="/my_address_info"><i class="fas fa-sm fa-chevron-right"
+                                                                      title="user_info_edit"></i></a>
+                                    </div>
+
+                                    <div class="col-md-12 fs-5 mt-2"><p
+                                            th:text="${myPageInfo.userAddress.addressAlias} + ' | ' + ${myPageInfo.userAddress.addressGeneral} +  ' ' + ${myPageInfo.userAddress.addressDetail} + ' | ' +${myPageInfo.userAddress.addressCode}"></p>
+                                    </div>
+                                </div>
+                            </div><!-- ======= User Info End ======= -->
+
+                            <div class="my-5" id="my_grade_title"></div>
+
+                            <!-- ======= My Grade Start ======= -->
+                            <div class="my_grade">
+                                <div style="display: flex; align-items: center;">
+                                    <h2 style="margin-right: 14px;">나의 등급</h2>
+                                    <a href="/grade_detail"><i class="fas fa-lg fa-search" title="grade_detail"></i></a>
+                                </div>
+                                <hr>
+
+                                <div class="col-md-12 fs-5 "><p
+                                        th:text="'나의 현재 등급 : ' + ${myPageInfo.userGrade.gradeName}"></p></div>
+                                <div class="col-md-12 fs-6 fw-light"><span
+                                        th:text="'최근 3개월 간 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeStartCost, 1, 'COMMA')} + '원 이상 ' + ${#numbers.formatInteger(myPageInfo.userGrade.gradeEndCost, 1, 'COMMA')} + '원 미만 구매하신 고객님'"></span>
+                                </div>
+                                <div class="col-md-12 fs-6 fw-light"><p
+                                        th:text="'순수 금액의 ' + ${myPageInfo.userGrade.gradeRatio} + '% 씩 적립됩니다'"></p>
+                                    <p>*순수 금액 : 주문금액 - (쿠폰 + 배송비 + 취소금액 + 포장비)</p>
+                                </div>
+                            </div><!-- ======= My Grade End ======= -->
+
+                            <div class="my-5" id="my_point_title"></div>
+
+                            <!-- ======= My Point Start ======= -->
+                            <div class="my_point">
+                                <div style="display: flex; align-items: center;">
+                                    <h2 style="margin-right: 14px;">나의 포인트</h2>
+                                    <a href="/my_point_history"><i class="fas fa-lg fa-chevron-right"
+                                                                   title="my_point"></i></a>
+                                </div>
+                                <hr>
+
+                                <div class="col-md-12 fs-5"><p
+                                        th:text="'사용 가능 포인트 : ' + ${#numbers.formatInteger(myPageInfo.userPoint, 1, 'COMMA')} + ' p'"></p>
+                                </div>
+                            </div><!-- ======= My Rate End ======= -->
+
+
+                        </div>
+                    </div>
+                    <!-- ======= My Info End ======= -->
+                </div>
+                <!-- ======= New Layout End ======= -->
+
+            </div>
+        </section>
+    </main>
+
+
+</div>
+</html>

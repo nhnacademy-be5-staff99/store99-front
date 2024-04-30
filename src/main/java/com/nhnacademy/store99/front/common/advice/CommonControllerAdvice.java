@@ -69,7 +69,7 @@ public class CommonControllerAdvice {
     @ExceptionHandler(value = {LoginCheckException.class})
     public ModelAndView loginCheckFailException(LoginCheckException ex) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
+        mv.setViewName("login_form");
 
         return mv;
     }
