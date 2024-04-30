@@ -56,7 +56,8 @@
 
                         <div class="page-size-selector">
                             <select class="form-select form-select-sm"
-                                    onchange="window.location.href='?pageSize=' + this.value">
+                                    onchange="window.location.href='?size=' + this.value">
+                                <option value="0">조회 개수 선택</option>
                                 <option value="10">10개씩 보기</option>
                                 <option value="20">20개씩 보기</option>
                                 <option value="50">50개씩 보기</option>
@@ -82,13 +83,15 @@
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
+
                                 <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
                                     th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
                                     <a class="page-link"
                                        th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
-                                       th:text="${pageNumber + 1}">
+                                       th:text="${pageNumber+1}">
                                     </a>
                                 </li>
+
                                 <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
                                     <a aria-label="Next" class="page-link"
                                        th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
@@ -98,15 +101,19 @@
                             </ul>
                         </nav>
                     </div>
+                    <!--book list-->
                     <div th:each="bookDto, status : ${booksDTOPage.content}">
                         <hr class="my-4">
                         <div class="row">
                             <div class="col-md-3">
-                                <img alt="Book Thumbnail" style="width: 200px; height: 260px;"
-                                     th:src="${bookDto.BookThumbnailUrl}">
+                                <img alt="Book Thumbnail" class="img-thumbnail"
+                                     style="width: 200px; height: 260px;" th:src="${bookDto.BookThumbnailUrl}">
                             </div>
                             <div class="col-md-7">
-                                <h5 th:text="${bookDto.BookTitle}"></h5>
+                                <h5>
+                                    <a th:href="@{books/{bookId}(bookId= ${bookDto.bookId})}"
+                                       th:text="${bookDto.BookTitle}"> </a>
+                                </h5>
                                 <small>
                                     <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
                                         <span th:text="${authorDTO.AuthorName}"></span>
@@ -116,16 +123,16 @@
                                               th:text="|(그림)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
                                               th:text="|(옮긴이)|"></span>
-                                        <!--이거 두개 뭐라고 써야함...                        -->
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
-                                              th:text="|(SUPERVISION)|"></span>
+                                              th:text="|(감수)|"></span>
                                         <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
-                                              th:text="|(ETC)|"></span>
+                                              th:text="|(기타)|"></span>
                                     </th:block>
                                     |
                                     <th:block th:text="${bookDto.BookPublisher}"></th:block>
                                     |
-                                    <th:block th:text="${#temporals.format(bookDto.BookDate, 'yyyy-MM-dd')}"></th:block>
+                                    <th:block
+                                            th:text="${#temporals.format(bookDto.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
                                 </small>
                                 <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
                                         style="font-weight: bold; color: red;"
