@@ -38,10 +38,10 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public String deleteLike(Long likeId) {
         CommonResponse<String> commonResponse = null;
-        try{
-            commonResponse=likeAdapter.deleteLike(likeId);
+        try {
+            commonResponse = likeAdapter.deleteLike(likeId);
         } catch (FeignException.Forbidden ex) {
-             throw new LikeProcessingFaildException();
+            throw new LikeProcessingFaildException();
         } catch (Exception ex) {
             log.error("error of deleteLike: ", ex);
         }
@@ -54,16 +54,16 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Long getLikeCnt(Long bookId) {
-        Long cnt=0L;
-        try{
-             cnt = likeAdapter.getLikeCnt(bookId).getResult();
+        Long cnt = 0L;
+        try {
+            cnt = likeAdapter.getLikeCnt(bookId).getResult();
 
         } catch (FeignException.Forbidden ex) {
             throw new LikeCountNotAvailableException();
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             log.error("error of deleteLike: ", ex);
         }
-        log.debug("cnt= "+cnt);
+        log.debug("cnt= " + cnt);
         return cnt;
     }
 }

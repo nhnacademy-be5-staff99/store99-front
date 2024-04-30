@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/likes")
 public class LikeController {
     private final LikeService likeService;
-    private boolean isLiked=false;
+    private boolean isLiked = false;
 
     public LikeController(LikeService likeService) {
         this.likeService = likeService;
@@ -31,7 +31,7 @@ public class LikeController {
 
     @PostMapping
     public ModelAndView addlike(@ModelAttribute LikeRequest request) {
-        isLiked=true;
+        isLiked = true;
         ModelAndView mvn = new ModelAndView();
         mvn.setViewName("redirect:/likes");
         Long bookId = request.getBookId();
@@ -45,7 +45,7 @@ public class LikeController {
 
     @DeleteMapping("/{likeId}")
     public ModelAndView deleteLike(@PathVariable Long likeId) {
-        isLiked=false;
+        isLiked = false;
         ModelAndView mvn = new ModelAndView();
         mvn.addObject("isLiked", isLiked);
         mvn.addObject("likeId", likeId);
