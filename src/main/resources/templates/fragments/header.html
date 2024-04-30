@@ -84,7 +84,7 @@
                             <a href="/logout" style="font-size: 12px">로그아웃</a></li>
                         <li class="grid gap-1"
                             th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == false}">
-                            <a href="../contact.html" style="font-size: 12px">마이페이지</a></li>
+                            <a href="/mypage" style="font-size: 12px">마이페이지</a></li>
                         <li class="grid gap-1"
                             th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == false}">
                             <a href="/cart" style="font-size: 12px">장바구니</a></li>

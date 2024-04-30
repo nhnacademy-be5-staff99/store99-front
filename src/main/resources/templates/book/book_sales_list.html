@@ -1,213 +1,340 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        layout:decorate="~{layouts/layout}"
-        xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
-        xmlns:th="http://www.thymeleaf.org"
->
+
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
+
 
 <div layout:fragment="content">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <main id="main">
+        <div class="container py-3">
+            <div class="row g-5">
+                <!-- ======= Category List ======= -->
+                <section class="col-md-3 col-lg-2 bg-body-tertiary" id="category-list">
+                    <h5>카테고리</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item py-1"
+                            th:each="category, status: ${categoryChildrenListAndRoute.childrenCategoryList}"
+                            th:object="${category}"><small><a th:href="@{'/categories/{id}/books'(id=*{id})}"
+                                                              th:text="*{categoryName}"></a></small></li>
+                    </ul>
+                </section>  <!-- End Category List -->
+                <!-- ======= Search Results ======= -->
+                <section class="book-sales-list col-md-7 col-lg-8 py-0" id="book-sales-list">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+                            <li class="breadcrumb-item"
+                                th:classappend="${status.last} ? 'active'"
+                                th:each="category, status: ${categoryChildrenListAndRoute.getNowCategoryRoute()}" th:object="${category}">
+                                <a th:href="@{'/categories/{id}/books'(id=*{id})}" th:text="*{categoryName}">Home</a>
+                            </li>
+                        </ol>
+                    </nav>
 
-        <!-- ======= Search Results ======= -->
-        <section class="book-sales-list" id="book-sales-list">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>주문</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td onclick="location.href='/books/1'" style="cursor:pointer;">1</td>
-                    <td>
-                        <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="1">
-                            <button type="submit">장바구니에 추가</button>
-                        </form>
-                    </td>
-                    <td>
-                        <button onclick="toggleLike()" style="border: none; background: none" th:id="likeButton"
-                                type="button">
-                            <img alt="like" th:if="${isLiked}==true"
-                                 th:src="@{/static/assets/img/like/store99-like.svg}"/>
-                            <img alt="unLike" th:else="${isLiked}==false"
-                                 th:src="@{/static/assets/img/like/store99-unLike.svg}"/>
-                            <div id="likeCnt" th:text="${cnt}"></div>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td onclick="location.href='/books/2'" style="cursor:pointer;">2</td>
-                    <td>
-                        <form action="/carts" method="post">
-                            <input name="bookId" type="hidden" value="2">
-                            <button type="submit">장바구니에 추가</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </section> <!-- End Search Result -->
+                    <div class="d-flex justify-content-between align-items-center border p-3 mb-3">
+                        <div class="sort-bar">
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=default">기본순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=sales"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">판매량순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=new"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">신상품순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=date"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">등록일순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=lowPrice"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">최저가순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=highPrice"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">최고가순</a>
+                            <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=name"
+                               onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">상품명순</a>
+                        </div>
 
-    </main><!-- End #main -->
+                        <div class="page-size-selector">
+                            <select class="form-select form-select-sm"
+                                    onchange="window.location.href='?pageSize=' + this.value">
+                                <option value="10">10개씩 보기</option>
+                                <option value="20">20개씩 보기</option>
+                                <option value="50">50개씩 보기</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--pagination-->
+                    <div class="d-flex gap-2 justify-content-center">
+                        <nav aria-label="Page navigation example"
+                             th:with="link = ${#request.getRequestURI()}, items = ${booksDTOPage},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                    <a aria-label="Previous" class="page-link"
+                                       th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                    th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                    <a class="page-link"
+                                       th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                       th:text="${pageNumber + 1}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                    <a aria-label="Next" class="page-link"
+                                       th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div th:each="bookDto, status : ${booksDTOPage.content}">
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img alt="Book Thumbnail" style="width: 200px; height: 260px;"
+                                     th:src="${bookDto.BookThumbnailUrl}">
+                            </div>
+                            <div class="col-md-7">
+                                <h5 th:text="${bookDto.BookTitle}"></h5>
+                                <small>
+                                    <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
+                                        <span th:text="${authorDTO.AuthorName}"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'AUTHOR')}"
+                                              th:text="|(지은이)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
+                                              th:text="|(그림)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
+                                              th:text="|(옮긴이)|"></span>
+                                        <!--이거 두개 뭐라고 써야함...                        -->
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
+                                              th:text="|(SUPERVISION)|"></span>
+                                        <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
+                                              th:text="|(ETC)|"></span>
+                                    </th:block>
+                                    |
+                                    <th:block th:text="${bookDto.BookPublisher}"></th:block>
+                                    |
+                                    <th:block th:text="${#temporals.format(bookDto.BookDate, 'yyyy-MM-dd')}"></th:block>
+                                </small>
+                                <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
+                                        style="font-weight: bold; color: red;"
+                                        th:text="|${bookDto.BookSalePrice}원|"></span>
+                                </p>
+                                <p>리뷰 수: <span class="reviewCount" th:text="${bookDto.BookCntOfReview}"></span></p>
+                                <!-- 좋아요 버튼 -->
+                                <button onclick="toggleLike()" style="border: none; background: none" th:id="likeButton"
+                                        type="button">
+                                    <img alt="like" th:if="${isLiked}==true"
+                                         th:src="@{/static/assets/img/like/store99-like.svg}"/>
+                                    <img alt="unLike" th:else="${isLiked}==false"
+                                         th:src="@{/static/assets/img/like/store99-unLike.svg}"/>
+                                    <div id="likeCnt" th:text="${cnt}"></div>
+                                </button>
+                            </div>
+                            <div class="col-md-2 d-flex flex-column">
+                                <button class="btn btn-primary mb-2">카트에 넣기</button>
+                                <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
+                                </button>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                    </div>
+                    <!--pagination-->
+                    <div class="d-flex gap-2 justify-content-center">
+                        <nav aria-label="Page navigation example"
+                             th:with="link = ${#request.getRequestURI()}, items = ${booksDTOPage},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                    <a aria-label="Previous" class="page-link"
+                                       th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                    th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                    <a class="page-link"
+                                       th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                       th:text="${pageNumber + 1}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                    <a aria-label="Next" class="page-link"
+                                       th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section> <!-- End Search Result -->
+            </div>
+        </div>
+
+        <script src="/static/assets/js/book_sales_list.js"></script>
+        <script th:inline="javascript">
+            var isLiked = /*[[${isLiked}]];*/false;
 
 
-    <head>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    </head>
+            function toggleLike() {
 
-    <script th:inline="javascript">
-        var isLiked = /*[[${isLiked}]];*/false;
+                var bookId = [[${bookId}]];
+                var userId = [[${userId}]];
+                console.log("bookId: " + bookId);
+                console.log("userId: " + userId);
 
+                var apiUrl;
+                // if (window.location.hostname === 'localhost' && window.location.port === '8760') {
+                // IntelliJ 환경 설정에 따라 dev 환경인 경우
+                apiUrl = 'http://localhost:8760';
+                // } else {
+                //     // IntelliJ 환경 설정에 따라 prod 환경인 경우
+                //     apiUrl = 'http://192.168.0.93:8080';
+                // }
+                var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
-        function toggleLike() {
+                $.ajax({
+                    type: 'GET',
+                    url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/likeCnt",
+                    headers: {
+                        'Content-Type': 'application/json',
 
-            var bookId = [[${bookId}]];
-            var userId = [[${userId}]];
-            console.log("bookId: " + bookId);
-            console.log("userId: " + userId);
+                    },
+                    data: {
+                        bookId: bookId
+                    },
+                    success: function (response) {
+                        // document.getElementById('likeCnt').innerText = response.likeCount;
+                        console.log("cnt:" + "${cnt}");
+                        console.log('getLikeCnt success!');
+                    },
+                    error: function (err) {
+                        console.error('Failed to get LikeCnt', err);
+                    }
+                });
 
-            var apiUrl;
-            // if (window.location.hostname === 'localhost' && window.location.port === '8760') {
-            // IntelliJ 환경 설정에 따라 dev 환경인 경우
-            apiUrl = 'http://localhost:8760';
-            // } else {
-            //     // IntelliJ 환경 설정에 따라 prod 환경인 경우
-            //     apiUrl = 'http://192.168.0.93:8080';
-            // }
-            var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                var imgElement = document.querySelector('#likeButton img');
+                if (isLiked) {
+                    imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
+                    imgElement.alt = 'Like';
 
-            $.ajax({
-                type: 'GET',
-                url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/likeCnt",
-                headers: {
-                    'Content-Type': 'application/json',
+                    $.ajax({
+                        type: 'POST',
+                        url: proxyUrl + apiUrl + "/likes",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            bookId: bookId,
+                            userId: userId
+                        },
+                        success: function (response) {
+                            console.log('Like status updated successfully');
+                        },
+                        error: function (err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+                } else {
+                    imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
+                    imgElement.alt = 'unLike';
+                    var likeId = [[${likeId}]];
+                    console.log("likeId" + likeId);
 
-                },
-                data: {
-                    bookId: bookId
-                },
-                success: function (response) {
-                    // document.getElementById('likeCnt').innerText = response.likeCount;
-                    console.log("cnt:" + "${cnt}");
-                    console.log('getLikeCnt success!');
-                },
-                error: function (err) {
-                    console.error('Failed to get LikeCnt', err);
+                    $.ajax({
+                        type: 'DELETE',
+                        url: proxyUrl + apiUrl + '/likes/' + likeId,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            likeId: likeId
+                        },
+                        success: function (response) {
+                            console.log('Like status updated successfully');
+                        },
+                        error: function (err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+
                 }
-            });
-
-            var imgElement = document.querySelector('#likeButton img');
-            if (isLiked) {
-                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
-                imgElement.alt = 'Like';
-
-                $.ajax({
-                    type: 'POST',
-                    url: proxyUrl + apiUrl + "/likes",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    data: {
-                        bookId: bookId,
-                        userId: userId
-                    },
-                    success: function (response) {
-                        console.log('Like status updated successfully');
-                    },
-                    error: function (err) {
-                        console.error('Failed to update like status', err);
-                    }
-                });
-            } else {
-                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
-                imgElement.alt = 'unLike';
-                var likeId = [[${likeId}]];
-                console.log("likeId" + likeId);
-
-                $.ajax({
-                    type: 'DELETE',
-                    url: proxyUrl + apiUrl + '/likes/' + likeId,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    data: {
-                        likeId: likeId
-                    },
-                    success: function (response) {
-                        console.log('Like status updated successfully');
-                    },
-                    error: function (err) {
-                        console.error('Failed to update like status', err);
-                    }
-                });
-
             }
-        }
-    </script>
+        </script>
 
 
-    <!--    <script th:inline="javascript">-->
-    <!--        // Thymeleaf에서 변수를 JavaScript로 전달하기 위해 th:inline="javascript" 설정 사용-->
-    <!--        var isLiked = /*[[${isLiked}]]*/ false; // Thymeleaf의 isLiked 변수를 JavaScript 변수로 선언-->
+        <!--    <script th:inline="javascript">-->
+        <!--        // Thymeleaf에서 변수를 JavaScript로 전달하기 위해 th:inline="javascript" 설정 사용-->
+        <!--        var isLiked = /*[[${isLiked}]]*/ false; // Thymeleaf의 isLiked 변수를 JavaScript 변수로 선언-->
 
-    <!--        async function toggleLike() {-->
-    <!--            isLiked = !isLiked; // 버튼 클릭 시 isLiked 상태를 토글-->
+        <!--        async function toggleLike() {-->
+        <!--            isLiked = !isLiked; // 버튼 클릭 시 isLiked 상태를 토글-->
 
-    <!--            // 이미지 변경-->
-    <!--            var imgElement = document.querySelector('#likeButton img');-->
-    <!--            if (isLiked) {-->
-    <!--                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경-->
-    <!--                imgElement.alt = 'Like';-->
+        <!--            // 이미지 변경-->
+        <!--            var imgElement = document.querySelector('#likeButton img');-->
+        <!--            if (isLiked) {-->
+        <!--                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경-->
+        <!--                imgElement.alt = 'Like';-->
 
-    <!--                // 요청할 API 엔드포인트 URL-->
-    <!--                const apiUrl = 'http://localhost:8760/api/bookstore/v1/likes';-->
+        <!--                // 요청할 API 엔드포인트 URL-->
+        <!--                const apiUrl = 'http://localhost:8760/api/bookstore/v1/likes';-->
 
-    <!--// POST 요청에 필요한 데이터-->
-    <!--                const postData = {-->
-    <!--                    bookId: 2,-->
-    <!--                    userId: 1-->
-    <!--                };-->
+        <!--// POST 요청에 필요한 데이터-->
+        <!--                const postData = {-->
+        <!--                    bookId: 2,-->
+        <!--                    userId: 1-->
+        <!--                };-->
 
-    <!--// fetch를 사용하여 POST 요청 보내기-->
-    <!--                fetch(apiUrl, {-->
-    <!--                    method: 'POST', // 요청 메서드 지정-->
-    <!--                    headers: {-->
-    <!--                        'Content-Type': 'application/json' // 요청 헤더 설정 (JSON 형식)-->
-    <!--                    },-->
-    <!--                    body: JSON.stringify(postData) // 요청 본문 데이터 (JSON 형식으로 변환)-->
-    <!--                })-->
-    <!--                    .then(response => {-->
-    <!--                        // 응답이 성공적으로 받아졌는지 확인-->
-    <!--                        if (!response.ok) {-->
-    <!--                            throw new Error(`POST 요청 실패: ${response.status}`);-->
-    <!--                        }-->
-    <!--                        // JSON 형식으로 파싱된 응답 반환-->
-    <!--                        return response.json();-->
-    <!--                    })-->
-    <!--                    .then(data => {-->
-    <!--                        // POST 요청에 대한 응답 데이터를 처리-->
-    <!--                        console.log('POST 요청 응답:', data);-->
+        <!--// fetch를 사용하여 POST 요청 보내기-->
+        <!--                fetch(apiUrl, {-->
+        <!--                    method: 'POST', // 요청 메서드 지정-->
+        <!--                    headers: {-->
+        <!--                        'Content-Type': 'application/json' // 요청 헤더 설정 (JSON 형식)-->
+        <!--                    },-->
+        <!--                    body: JSON.stringify(postData) // 요청 본문 데이터 (JSON 형식으로 변환)-->
+        <!--                })-->
+        <!--                    .then(response => {-->
+        <!--                        // 응답이 성공적으로 받아졌는지 확인-->
+        <!--                        if (!response.ok) {-->
+        <!--                            throw new Error(`POST 요청 실패: ${response.status}`);-->
+        <!--                        }-->
+        <!--                        // JSON 형식으로 파싱된 응답 반환-->
+        <!--                        return response.json();-->
+        <!--                    })-->
+        <!--                    .then(data => {-->
+        <!--                        // POST 요청에 대한 응답 데이터를 처리-->
+        <!--                        console.log('POST 요청 응답:', data);-->
 
-    <!--                        // 여기서 데이터를 사용하여 필요한 작업 수행-->
-    <!--                    })-->
-    <!--                    .catch(error => {-->
-    <!--                        // 오류 발생 시 처리-->
-    <!--                        console.error('POST 요청 실패:', error);-->
-    <!--                    });-->
+        <!--                        // 여기서 데이터를 사용하여 필요한 작업 수행-->
+        <!--                    })-->
+        <!--                    .catch(error => {-->
+        <!--                        // 오류 발생 시 처리-->
+        <!--                        console.error('POST 요청 실패:', error);-->
+        <!--                    });-->
 
-    <!--            } else {-->
-    <!--                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경-->
-    <!--                imgElement.alt = 'unLike';-->
-    <!--            }-->
+        <!--            } else {-->
+        <!--                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경-->
+        <!--                imgElement.alt = 'unLike';-->
+        <!--            }-->
 
-    <!--        }-->
-    <!--    </script>-->
-
+        <!--        }-->
+        <!--    </script>-->
+    </main><!-- End #main -->
 </div>
 </html>
