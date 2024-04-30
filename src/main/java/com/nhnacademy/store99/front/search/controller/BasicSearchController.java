@@ -20,7 +20,8 @@ public class BasicSearchController {
     private final BasicSearchService searchService;
 
     @GetMapping("/search")
-    public ModelAndView basicSearchResult(@RequestParam(value = "content", defaultValue = "") String content, Pageable pageable) {
+    public ModelAndView basicSearchResult(@RequestParam(value = "content", defaultValue = "") String content,
+                                          Pageable pageable) {
         ModelAndView mv = new ModelAndView();
         Page<BasicSearchResponse> searchResults = searchService.basicSearchResult(content, pageable);
 
