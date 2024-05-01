@@ -49,7 +49,6 @@ public class CartServiceImpl implements CartService {
             cartItem = CartItem.builder()
                     .id(redisKey)
                     .build();
-
             cartItemCookie = new Cookie("cartItem", redisKey.toString());
         } else {
             // 쿠키가 있는 경우
@@ -64,8 +63,6 @@ public class CartServiceImpl implements CartService {
                 cartItem = CartItem.builder().id(UUID.randomUUID()).build();
             }
 
-            cartItem.addBook(request.getBookId(), request.getQuantity());
-
             // 쿠키에 담긴 키와 레디스에 저장된 키가 다르면 쿠키에 새로운 키를 저장
             String newRedisKey = cartItem.getId().toString();
             if (!redisKey.equals(newRedisKey)) {
@@ -73,6 +70,7 @@ public class CartServiceImpl implements CartService {
             }
         }
 
+        cartItem.addBook(request.getBookId(), request.getQuantity());
         cartItemRedisRepository.save(cartItem);
         cartItemCookie.setPath("/");
         return cartItemCookie;
