@@ -9,7 +9,6 @@ import com.nhnacademy.store99.front.cart.repository.CartItemRedisRepository;
 import com.nhnacademy.store99.front.cart.service.CartService;
 import com.nhnacademy.store99.front.common.exception.FailedException;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
@@ -46,18 +45,25 @@ public class CartServiceImpl implements CartService {
 
         if (Objects.isNull(cartItemCookie)) {
             // 쿠키가 없는 경우 새로운 장바구니 아이템 생성
-            cartItem = createNewCartItem(request);
+            UUID redisKey = UUID.randomUUID();
+            cartItem = CartItem.builder()
+                    .id(redisKey)
+                    .build();
 
-            String redisKey = cartItem.getId().toString();
-            cartItemCookie = new Cookie("cartItem", redisKey);
+            cartItemCookie = new Cookie("cartItem", redisKey.toString());
         } else {
             // 쿠키가 있는 경우
             String redisKey = cartItemCookie.getValue();
 
-            // 쿠키에 담긴 키로 레디스에서 장바구니 정보 조회
-            // 만약 레디스에 없으면 새로운 장바구니 아이템 생성
-            cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
-                    .orElseGet(() -> createNewCartItem(request));
+            // 레디스에 저장된 장바구니 정보를 가져오거나 새로운 장바구니 아이템 생성
+            try {
+                cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
+                        .orElseGet(() -> CartItem.builder().id(UUID.randomUUID()).build());
+            } catch (IllegalArgumentException e) {
+                // 쿠키에 저장된 값이 UUID가 아닌 경우
+                cartItem = CartItem.builder().id(UUID.randomUUID()).build();
+            }
+
             cartItem.addBook(request.getBookId(), request.getQuantity());
 
             // 쿠키에 담긴 키와 레디스에 저장된 키가 다르면 쿠키에 새로운 키를 저장
@@ -69,25 +75,7 @@ public class CartServiceImpl implements CartService {
 
         cartItemRedisRepository.save(cartItem);
         cartItemCookie.setPath("/");
-
         return cartItemCookie;
-    }
-
-    /**
-     * 새로운 장바구니 아이템을 생성한다.
-     *
-     * @param request 장바구니 요청
-     * @return 새로운 장바구니 아이템
-     */
-    private CartItem createNewCartItem(CartItemRequest request) {
-        Map<Long, Integer> bookIdAndQuantity = Map.of(request.getBookId(), request.getQuantity());
-
-        UUID id = UUID.randomUUID();
-
-        return CartItem.builder()
-                .id(id)
-                .bookIdAndQuantity(bookIdAndQuantity)
-                .build();
     }
 
     @Override
@@ -103,8 +91,13 @@ public class CartServiceImpl implements CartService {
             throws ModifyCartFailedException {
         String redisKey = cartItemCookie.getValue();
 
-        CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
-                .orElseThrow(ModifyCartFailedException::new);
+        CartItem cartItem;
+        try {
+            cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
+                    .orElseThrow(ModifyCartFailedException::new);
+        } catch (IllegalArgumentException e) {
+            throw new ModifyCartFailedException();
+        }
 
         if (!cartItem.modifyBookQuantity(request.getBookId(), request.getQuantity())) {
             throw new ModifyCartFailedException();
@@ -127,8 +120,13 @@ public class CartServiceImpl implements CartService {
             throws DeleteCartFailedException {
         String redisKey = cartItemCookie.getValue();
 
-        CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
-                .orElseThrow(DeleteCartFailedException::new);
+        CartItem cartItem;
+        try {
+            cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey))
+                    .orElseThrow(DeleteCartFailedException::new);
+        } catch (IllegalArgumentException e) {
+            throw new DeleteCartFailedException();
+        }
 
         if (!cartItem.removeBook(bookId)) {
             throw new DeleteCartFailedException();
@@ -154,7 +152,12 @@ public class CartServiceImpl implements CartService {
         }
 
         String redisKey = cartItemCookie.getValue();
-        CartItem cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey)).orElse(null);
+        CartItem cartItem;
+        try {
+            cartItem = cartItemRedisRepository.findById(UUID.fromString(redisKey)).orElse(null);
+        } catch (IllegalArgumentException e) {
+            return;
+        }
         if (Objects.isNull(cartItem)) {
             return;
         }

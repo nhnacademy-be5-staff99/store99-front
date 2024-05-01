@@ -23,6 +23,7 @@ public class CartItem {
     @Id
     private UUID id;
 
+    @Builder.Default
     private Map<Long, Integer> bookIdAndQuantity = new HashMap<>();
 
     public void addBook(Long bookId, Integer quantity) {

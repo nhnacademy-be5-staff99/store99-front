@@ -51,8 +51,13 @@ public class CartQueryServiceImpl implements CartQueryService {
         }
 
         // 레디스 장바구니 조회
-        UUID redisId = UUID.fromString(cartItemCookie.getValue());
-        Optional<CartItem> cartItem = cartItemRedisRepository.findById(redisId);
+        UUID redisKey;
+        try {
+            redisKey = UUID.fromString(cartItemCookie.getValue());
+        } catch (IllegalArgumentException e) {
+            return List.of();
+        }
+        Optional<CartItem> cartItem = cartItemRedisRepository.findById(redisKey);
         if (cartItem.isEmpty()) {
             // 레디스의 장바구니가 비어있는 경우 빈 리스트 반환
             return List.of();
