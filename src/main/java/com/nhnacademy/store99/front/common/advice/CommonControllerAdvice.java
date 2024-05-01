@@ -5,6 +5,10 @@ import com.nhnacademy.store99.front.auth.exception.LoginCheckException;
 import com.nhnacademy.store99.front.auth.exception.LoginRequiredException;
 import com.nhnacademy.store99.front.auth.exception.UnauthorizedFromGatewayException;
 import com.nhnacademy.store99.front.common.exception.DefaultFeignClientError;
+import com.nhnacademy.store99.front.common.exception.FailedException;
+import java.util.stream.Collectors;
+import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -82,4 +86,27 @@ public class CommonControllerAdvice {
 
         return mv;
     }
+
+    @ExceptionHandler(FailedException.class)
+    public ModelAndView defaultExceptionHandler(FailedException ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("message", ex.getMessage());
+        mv.setViewName("error/default_error");
+
+        return mv;
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ModelAndView validationExceptionHandler(BindException ex) {
+        ModelAndView mv = new ModelAndView();
+        String errorMessage = ex.getBindingResult()
+                .getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.joining(", "));
+        mv.addObject("message", errorMessage);
+        mv.setViewName("error/default_error");
+
+        return mv;
+    }
+
 }

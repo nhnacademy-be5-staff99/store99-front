@@ -40,6 +40,8 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
             boolean isAdmin;
             try {
+                XUserTokenThreadLocal.setXUserToken(xUserTokenCookie.getValue());
+
                 isAdmin = adminCheckService.checkAdmin();
 
             } catch (FeignException.BadRequest | FeignException.Unauthorized ex) {

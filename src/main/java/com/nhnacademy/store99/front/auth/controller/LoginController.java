@@ -3,15 +3,19 @@ package com.nhnacademy.store99.front.auth.controller;
 import com.nhnacademy.store99.front.auth.cookie.CookieSecurityProperties;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.service.LoginService;
+import com.nhnacademy.store99.front.cart.service.CartService;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import java.net.URI;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,18 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Ahyeon Song
+ * @author seunggyu-kim
  */
 @RestController
+@RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
     private final CookieSecurityProperties cookieSecurityProperties;
-
-    public LoginController(LoginService loginService, CookieSecurityProperties cookieSecurityProperties) {
-        this.loginService = loginService;
-        this.cookieSecurityProperties = cookieSecurityProperties;
-    }
-
+    private final CartService cartService;
 
     /**
      * 로그인 페이지 진입
@@ -56,7 +57,10 @@ public class LoginController {
      * @return cookie 를 포함한 response
      */
     @PostMapping("/login")
-    public ResponseEntity<CommonResponse<String>> doLogin(@ModelAttribute LoginRequest request) {
+    public ResponseEntity<CommonResponse<String>> doLogin(@ModelAttribute LoginRequest request,
+                                                          HttpServletResponse servletResponse,
+                                                          @CookieValue(value = "cartItem", required = false)
+                                                          Cookie cartItemCookie) {
         String accessToken = loginService.doLogin(request);
         accessToken = accessToken.replace(" ", "");
 
@@ -78,6 +82,8 @@ public class LoginController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
         responseHeaders.setLocation(URI.create("/index"));
+
+        cartService.mergeCart(accessToken, cartItemCookie);
 
         return new ResponseEntity<>(commonResponse, responseHeaders, HttpStatus.OK);
     }
