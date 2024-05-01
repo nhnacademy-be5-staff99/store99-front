@@ -14,7 +14,6 @@ $(document).ready(function () {
             success: function (response) {
                 confirmationCode = response;
                 alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
-                console.log("인증번호: " + confirmationCode);
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error("오류: " + xhr.responseText);
