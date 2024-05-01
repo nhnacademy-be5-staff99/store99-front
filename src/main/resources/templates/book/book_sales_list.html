@@ -142,12 +142,13 @@
                                 </p>
                                 <p>리뷰 수: <span class="reviewCount" th:text="${bookDto.BookCntOfReview}"></span></p>
                                 <!-- 좋아요 버튼 -->
-                                <button class="btn btn-primary likeButton" type="button">
-                                <span class="likeIcon">
-                                    <!-- 하트 아이콘 -->
-                                    <i class="far fa-heart"></i>
-                                </span>
-                                    <span class="likeCount">0</span>
+                                <button onclick="toggleLike()" style="border: none; background: none" th:id="likeButton"
+                                        type="button">
+                                    <img alt="like" th:if="${isLiked}==true"
+                                         th:src="@{/static/assets/img/like/store99-like.svg}"/>
+                                    <img alt="unLike" th:else="${isLiked}==false"
+                                         th:src="@{/static/assets/img/like/store99-unLike.svg}"/>
+                                    <div id="likeCnt" th:text="${cnt}"></div>
                                 </button>
                             </div>
                             <div class="col-md-2 d-flex flex-column">
@@ -199,6 +200,156 @@
             </div>
         </div>
 
+        <script src="/static/assets/js/book_sales_list.js"></script>
+        <script th:inline="javascript">
+            var isLiked = /*[[${isLiked}]];*/false;
+
+
+            function toggleLike() {
+
+                var bookId = [[${bookId}]];
+                var userId = [[${userId}]];
+                console.log("bookId: " + bookId);
+                console.log("userId: " + userId);
+
+                var apiUrl;
+                // if (window.location.hostname === 'localhost' && window.location.port === '8760') {
+                // IntelliJ 환경 설정에 따라 dev 환경인 경우
+                apiUrl = 'http://localhost:8760';
+                // } else {
+                //     // IntelliJ 환경 설정에 따라 prod 환경인 경우
+                //     apiUrl = 'http://192.168.0.93:8080';
+                // }
+                var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+                $.ajax({
+                    type: 'GET',
+                    url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/count",
+                    headers: {
+                        'Content-Type': 'application/json',
+
+                    },
+                    data: {
+                        bookId: bookId
+                    },
+                    success: function (response) {
+                        location.reload()
+                        console.log("cnt:" + "${cnt}");
+                        console.log('getLikeCnt success!');
+                    },
+                    error: function (err) {
+                        console.error('Failed to get LikeCnt', err);
+                    }
+                });
+
+                var imgElement = document.querySelector('#likeButton img');
+                if (isLiked) {
+                    imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
+                    imgElement.alt = 'Like';
+
+                    $.ajax({
+                        type: 'POST',
+                        url: proxyUrl + apiUrl + "/likes",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            bookId: bookId,
+                            userId: userId
+                        },
+                        success: function (response) {
+                            location.reload()
+                            console.log('Like status updated successfully');
+                        },
+                        error: function (err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+                } else {
+                    imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
+                    imgElement.alt = 'unLike';
+                    var likeId = [[${likeId}]];
+                    console.log("likeId" + likeId);
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: proxyUrl + apiUrl + '/likes/' + likeId,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data: {
+                            likeId: likeId
+                        },
+                        success: function (response) {
+                            location.reload()
+                            console.log('Like status updated successfully');
+                        },
+                        error: function (err) {
+                            console.error('Failed to update like status', err);
+                        }
+                    });
+
+                }
+            }
+        </script>
+
+
+        <!--    <script th:inline="javascript">-->
+        <!--        // Thymeleaf에서 변수를 JavaScript로 전달하기 위해 th:inline="javascript" 설정 사용-->
+        <!--        var isLiked = /*[[${isLiked}]]*/ false; // Thymeleaf의 isLiked 변수를 JavaScript 변수로 선언-->
+
+        <!--        async function toggleLike() {-->
+        <!--            isLiked = !isLiked; // 버튼 클릭 시 isLiked 상태를 토글-->
+
+        <!--            // 이미지 변경-->
+        <!--            var imgElement = document.querySelector('#likeButton img');-->
+        <!--            if (isLiked) {-->
+        <!--                imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경-->
+        <!--                imgElement.alt = 'Like';-->
+
+        <!--                // 요청할 API 엔드포인트 URL-->
+        <!--                const apiUrl = 'http://localhost:8760/api/bookstore/v1/likes';-->
+
+        <!--// POST 요청에 필요한 데이터-->
+        <!--                const postData = {-->
+        <!--                    bookId: 2,-->
+        <!--                    userId: 1-->
+        <!--                };-->
+
+        <!--// fetch를 사용하여 POST 요청 보내기-->
+        <!--                fetch(apiUrl, {-->
+        <!--                    method: 'POST', // 요청 메서드 지정-->
+        <!--                    headers: {-->
+        <!--                        'Content-Type': 'application/json' // 요청 헤더 설정 (JSON 형식)-->
+        <!--                    },-->
+        <!--                    body: JSON.stringify(postData) // 요청 본문 데이터 (JSON 형식으로 변환)-->
+        <!--                })-->
+        <!--                    .then(response => {-->
+        <!--                        // 응답이 성공적으로 받아졌는지 확인-->
+        <!--                        if (!response.ok) {-->
+        <!--                            throw new Error(`POST 요청 실패: ${response.status}`);-->
+        <!--                        }-->
+        <!--                        // JSON 형식으로 파싱된 응답 반환-->
+        <!--                        return response.json();-->
+        <!--                    })-->
+        <!--                    .then(data => {-->
+        <!--                        // POST 요청에 대한 응답 데이터를 처리-->
+        <!--                        console.log('POST 요청 응답:', data);-->
+
+        <!--                        // 여기서 데이터를 사용하여 필요한 작업 수행-->
+        <!--                    })-->
+        <!--                    .catch(error => {-->
+        <!--                        // 오류 발생 시 처리-->
+        <!--                        console.error('POST 요청 실패:', error);-->
+        <!--                    });-->
+
+        <!--            } else {-->
+        <!--                imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경-->
+        <!--                imgElement.alt = 'unLike';-->
+        <!--            }-->
+
+        <!--        }-->
+        <!--    </script>-->
     </main><!-- End #main -->
 
     <button class="btn btn-primary mb-2 add-to-cart-button"
