@@ -63,7 +63,7 @@
                             <td th:if="*{bookStock > 0}">
                                 <strong>내일</strong>
                                 <br>
-                                (4/2, 화)
+                                [[${#temporals.format(#temporals.createNow(), '(M/d, E)')}]]
                                 <br>
                                 도착예정
                             </td>
