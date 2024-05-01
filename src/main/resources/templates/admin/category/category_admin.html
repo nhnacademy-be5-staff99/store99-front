@@ -61,11 +61,15 @@
                     </div>
                     <div class="col">
                         <th:block th:if="*{deletedAt}">
-                            <button class="btn btn-secondary restore-button" th:data-url="@{/admin/categories/{id}/restore(id=*{id})}">복구</button>
+                            <button class="btn btn-secondary restore-button"
+                                    th:data-url="@{/admin/categories/{id}/restore(id=*{id})}">복구
+                            </button>
                         </th:block>
                         <th:block th:unless="*{deletedAt}">
                             <button class="btn btn-secondary" type="submit">수정</button>
-                            <button class="btn btn-danger delete-button" th:data-url="@{/admin/categories/{id}(id=*{id})}">삭제</button>
+                            <button class="btn btn-danger delete-button"
+                                    th:data-url="@{/admin/categories/{id}(id=*{id})}">삭제
+                            </button>
                         </th:block>
                     </div>
                 </div>
@@ -80,7 +84,8 @@
                            endPage=(${startPage + pageRange <= items.totalPages ? startPage + pageRange - 1 : items.totalPages - 1})">
                 <ul class="pagination">
                     <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
-                        <a aria-label="Previous" class="page-link" th:href="@{${link}(page=${startPage - 1}, size=${#request.getParameter('size')})}">
+                        <a aria-label="Previous" class="page-link"
+                           th:href="@{${link}(page=${startPage - 1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -91,7 +96,8 @@
                            th:text="${pageNumber + 1}"></a>
                     </li>
                     <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
-                        <a aria-label="Next" class="page-link" th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                        <a aria-label="Next" class="page-link"
+                           th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -104,7 +110,7 @@
 <th:block layout:fragment="script">
     <script>
         document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', function(event) {
+            button.addEventListener('click', function (event) {
                 event.preventDefault();
                 fetch(button.dataset.url, {method: 'DELETE'})
                     .then(response => location.reload())
@@ -116,10 +122,12 @@
         });
 
         document.querySelectorAll('.restore-button').forEach(button => {
-            button.addEventListener('click', function(event) {
+            button.addEventListener('click', function (event) {
                 event.preventDefault();
                 fetch(button.dataset.url, {method: 'PATCH'})
-                    .then(response => location.reload())
+            ]
+            .
+                then(response => location.reload())
                     .catch(error => {
                         console.error(error);
                         location.reload();
