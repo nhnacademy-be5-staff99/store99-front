@@ -6,6 +6,7 @@
 <div layout:fragment="content"><!-- ==== fragment:content === -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <main id="main">
         <section class="contact mb-5" id="contact">
@@ -73,12 +74,39 @@
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <h2>주소 관리</h2>
                                 <button class="btn btn-primary" th:if="${#lists.size(userAddresses)} < 10"
-                                        type="button">
-                                    <a class="nav-link active" href="#">주소 추가</a>
+                                        type="button" data-bs-toggle="modal" data-bs-target="#addressModal">
+                                    <span class="nav-link active">주소 추가</span>
                                 </button>
                             </div>
                             <hr>
 
+                            <!-- ======= Address Add Modal Start ======= -->
+                            <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addressModalLabel">주소 추가</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text"  class="my-1 form-control" id="aliasInput" placeholder="별칭">
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" id="postCodeInput" placeholder="우편번호">
+                                                <button type="button" onclick="sample4_execDaumPostcode()">우편번호 찾기</button>
+                                            </div>
+                                            <span id="guide" style="color:#999;display:none"></span>
+                                            <input type="text" class="form-control" id="generalAddressInput" placeholder="도로명주소">
+                                            <input type="text" class="form-control" id="detailAddressInput" placeholder="상세주소">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                            <button type="button" class="btn btn-primary" id="addAddress">추가하기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- ======= Address Add Modal End ======= -->
+
+                            <!-- ======= Address List Start ======= -->
                             <div class="user-address-manage">
                                 <th:block th:each="userAddress : ${userAddresses}">
                                     <div class="fs-5" style="display: flex; align-items: flex-start;">
@@ -109,8 +137,7 @@
                                     </div>
                                     <hr>
                                 </th:block>
-
-                            </div>
+                            </div><!-- ======= Address List End ======= -->
                         </div>
                     </div>
                     <!-- ======= Address Info End ======= -->
@@ -122,6 +149,7 @@
     </main>
 
     <script src="/static/assets/js/mypage_address.js"></script>
+    <script src="/static/assets/js/kakao_postcode_service.js"></script>
 
 </div><!-- ==== End fragment:content === -->
 </html>
