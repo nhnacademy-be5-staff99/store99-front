@@ -30,8 +30,8 @@
                     </li>
                     <li><a class="dropdown-item" href="#">Separated link</a></li>
                 </ul>
-                <form action="search-result.html" class="search-form">
-                    <input class="form-control" placeholder="Search" type="text" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">
+                <form action="/search" class="search-form">
+                    <input class="form-control" name="content" placeholder="Search" type="text">
                 </form>
             </div>
             <!-- End Search Form -->
@@ -67,16 +67,16 @@
                             </ul>
 
                             <!-- 로그아웃 상태 -->
-                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a
-                                href="/login_form" style="font-size: 12px">로그인</a></li>
-                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a href="/sign-up"
-                                                                                                       style="font-size: 12px">회원가입</a>
+                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}">
+                            <a href="/login_form" style="font-size: 12px">로그인</a>
                         </li>
-                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a href="/cart"
-                                                                                                       style="font-size: 12px">장바구니</a>
+                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}">
+                            <a href="/sign-up" style="font-size: 12px">회원가입</a>
                         </li>
-                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a
-                                href="../contact.html" style="font-size: 12px">찜목록</a></li>
+                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}">
+                            <a href="/cart" style="font-size: 12px">장바구니</a>
+                        </li>
+                        <!--                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a href="../contact.html" style="font-size: 12px">찜목록</a></li>-->
 
                         <!-- 로그인 상태 (USER) -->
                         <li class="grid gap-1"
@@ -84,7 +84,7 @@
                             <a href="/logout" style="font-size: 12px">로그아웃</a></li>
                         <li class="grid gap-1"
                             th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == false}">
-                            <a href="../contact.html" style="font-size: 12px">마이페이지</a></li>
+                            <a href="/mypage" style="font-size: 12px">마이페이지</a></li>
                         <li class="grid gap-1"
                             th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == false}">
                             <a href="/cart" style="font-size: 12px">장바구니</a></li>
@@ -99,8 +99,12 @@
                         <li class="grid gap-1"
                             th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == true}">
                             <a href="/admin" style="font-size: 12px">관리자페이지</a></li>
-                        <!--                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == true}"><a href="../contact.html" style="font-size: 12px">장바구니</a></li>-->
-                        <!--                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == true}"><a href="../contact.html" style="font-size: 12px">찜목록</a></li>-->
+                        <li class="grid gap-1"
+                            th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == true}">
+                            <a href="/cart" style="font-size: 12px">장바구니</a></li>
+                        <li class="grid gap-1"
+                            th:if="${#request.getAttribute('isLogin') == true} and ${#request.getAttribute('isAdmin') == true}">
+                            <a href="../contact.html" style="font-size: 12px">찜목록</a></li>
 
                     </ul>
                 </nav>

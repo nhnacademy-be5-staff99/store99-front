@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
+
+
+<div layout:fragment="content">
+    <main id="main">
+        <div class="container py-3">
+
+            <!-- ======= Search Results Start ======= -->
+            <section class="basic-search-list col-md-auto col-lg-auto py-0 mx-lg-5 mx-md-2 mx-sm-1"
+                     id="basic-search-list">
+                <!-- ======= Search Result Title Start ======= -->
+                <div class="result-title py-3">
+                    <h1 th:text="'\'' + ${searchContent} + '\'' + ' 검색 결과'"></h1>
+                    <h4 th:text="'총 ' + ${searchResults.totalElements} + '개의 검색 결과가 있습니다'"></h4>
+                </div><!-- ======= Search Result Title End ======= -->
+
+                <div class="d-flex justify-content-between align-items-center border p-3 mb-3">
+                    <!-- ======= Sorting Start ======= -->
+                    <div class="sort-bar">
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=default">기본순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=sales"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">판매량순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=new"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">신상품순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=date"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">등록일순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=lowPrice"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">최저가순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=highPrice"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">최고가순</a>
+                        <a class="btn btn-outline-secondary btn-sm me-2" href="?sort=name"
+                           onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">상품명순</a>
+                    </div><!-- ======= Sorting End ======= -->
+
+                    <!-- ======= Change Page Size By Toggle Start ======= -->
+                    <div class="page-size-selector">
+                        <div class="dropdown">
+                            <button aria-expanded="false" class="form-select form-select-sm" data-bs-toggle="dropdown"
+                                    id="dropdownMenuButton" type="button">
+                                20개씩 보기
+                            </button>
+                            <ul aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="changePageSize(10)">10개씩 보기</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changePageSize(20)">20개씩 보기</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changePageSize(50)">50개씩 보기</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <script>
+                        window.onload = function () {
+                            var urlParams = new URLSearchParams(window.location.search);
+                            var pageSize = urlParams.get('size') || 20;
+                            var dropdownButton = document.getElementById('dropdownMenuButton');
+
+                            dropdownButton.textContent = `${pageSize}개씩 보기`;
+
+                            document.querySelectorAll('.dropdown-item').forEach(function (item) {
+                                if (item.textContent.includes(pageSize + '개씩 보기')) {
+                                    item.classList.add('active');
+                                } else {
+                                    item.classList.remove('active');
+                                }
+                            });
+                        }
+
+                        function changePageSize(value) {
+                            var url = new URL(window.location.href);
+                            url.searchParams.set('size', value);
+                            window.location.href = url.toString();
+                        }
+                    </script><!-- ======= Change Page Size By Toggle End ======= -->
+                </div>
+
+                <!-- ======= Searched Book List Start  ======= -->
+                <div th:each="searchResult, status : ${searchResults}">
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img alt="Book Thumbnail" class="img-fluid" style="width: 200px; height: 260px;"
+                                 th:src="${searchResult.bookThumbnailUrl}">
+                        </div>
+                        <div class="col-md-7">
+                            <h5><a th:href="@{/books/{id}(id=${searchResult.bookId})}"
+                                   th:text="${searchResult.bookTitle}"></a></h5>
+                            <small>
+                                <th:block th:each="authorInfo : ${searchResult.bookAuthorInfos}">
+                                    <span th:text="${authorInfo.authorName}"></span>
+                                    <span th:if="${#strings.equals(authorInfo.authorType,'AUTHOR')}"
+                                          th:text="|(지은이)|"></span>
+                                    <span th:if="${#strings.equals(authorInfo.authorType,'PAINTER')}"
+                                          th:text="|(그림)|"></span>
+                                    <span th:if="${#strings.equals(authorInfo.authorType,'TRANSLATOR')}"
+                                          th:text="|(옮긴이)|"></span>
+                                    <span th:if="${#strings.equals(authorInfo.authorType,'SUPERVISION')}"
+                                          th:text="|(감수)|"></span>
+                                    <span th:if="${#strings.equals(authorInfo.authorType,'ETC')}"
+                                          th:text="|(기타 참여)|"></span>
+                                </th:block>
+                                |
+                                <th:block th:text="${searchResult.bookPublisher}"></th:block>
+                                |
+                                <th:block
+                                        th:text="${#temporals.format(searchResult.bookDate, 'yyyy-MM-dd')}"></th:block>
+                            </small>
+                            <p><s th:text="|${searchResult.bookPrice}원|"></s> → <span
+                                    style="font-weight: bold; color: red;"
+                                    th:text="|${searchResult.bookSalePrice}원|"></span>
+                            </p>
+                            <p>리뷰 수: <span class="reviewCount" th:text="${searchResult.bookCntOfReview}"></span></p>
+                            <!-- 좋아요 버튼 -->
+                            <button class="btn btn-primary likeButton" type="button">
+                                <span class="likeIcon">
+                                    <!-- 하트 아이콘 -->
+                                    <i class="far fa-heart"></i>
+                                </span>
+                                <span class="likeCount">0</span>
+                            </button>
+                        </div>
+                        <div class="col-md-2 d-flex flex-column">
+                            <button class="btn btn-primary mb-2">카트에 넣기</button>
+                            <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
+                            </button>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                </div><!-- ======= Searched Book List End  ======= -->
+
+                <!-- ======= Bottom Pagination Start  ======= -->
+                <div class="d-flex gap-2 justify-content-center">
+                    <nav aria-label="Page navigation example"
+                         th:unless="${searchResults.totalElements == 0}"
+                         th:with="link = ${#request.getRequestURI() + '?content=' + #request.getParameter('content')}, items = ${searchResults},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                <a aria-label="Previous" class="page-link"
+                                   th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                <a class="page-link"
+                                   th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                   th:text="${pageNumber + 1}">
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                <a aria-label="Next" class="page-link"
+                                   th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div><!-- ======= Bottom Pagination End  ======= -->
+            </section><!-- ======= Search Results End ======= -->
+        </div>
+
+        <script src="/static/assets/js/book_sales_list.js"></script>
+    </main><!-- End #main -->
+</div>
+</html>
