@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content"><!-- ==== fragment:content === -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <main id="main">
+        <section class="contact mb-5" id="contact">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-lg-12 text-center mt-2 mb-5">
+                        <h1 class="page-title">마이페이지</h1>
+                    </div>
+                </div>
+
+                <!-- ======= New Layout Start ======= -->
+                <div class="d-flex align-items-start mx-3 row g-5">
+                    <!-- ======= Sidebar Start ======= -->
+                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto"
+                         style="width: 230px;">
+                        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                           href="/">
+                            <span class="fs-4">Sidebar</span>
+                        </a>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a class="nav-link link-dark" href="/mypage">회원 정보</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-current="page" class="nav-link active" href="#">주소 관리</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="/my_grade_title">나의 등급</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="/my_point_title">나의 포인트</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">나의 찜 목록</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">주문 내역</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <script>
+                        // Siderbar 에서 마우스가 올라가 있는 요소의 색을 변경
+                        var navLinks = document.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(function (navLink) {
+                            navLink.addEventListener('mouseover', function () {
+                                navLinks.forEach(function (link) {
+                                    link.classList.remove('active');
+                                    link.classList.add('link-dark');
+                                });
+
+                                this.classList.add('active');
+                                this.classList.remove('link-dark');
+                            })
+                        })
+                    </script>
+                    <!-- ======= Sidebar End ======= -->
+
+                    <!-- ======= Address Info Start ======= -->
+                    <div class="my-info col-lg-9 col-md-auto col-sm-auto">
+                        <div class="form login-form ml-5">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h2>주소 관리</h2>
+                                <button class="btn btn-primary" data-bs-target="#addressModal"
+                                        data-bs-toggle="modal" th:if="${#lists.size(userAddresses)} < 10" type="button">
+                                    <span class="nav-link active">주소 추가</span>
+                                </button>
+                            </div>
+                            <hr>
+
+                            <!-- ======= Address Add Modal Start ======= -->
+                            <div aria-hidden="true" aria-labelledby="addressModalLabel" class="modal fade" id="addressModal"
+                                 tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addressModalLabel">주소 추가</h5>
+                                            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                    type="button"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="my-1 form-control" id="aliasInput" placeholder="별칭"
+                                                   type="text">
+                                            <div class="input-group mb-3">
+                                                <input class="form-control" id="postCodeInput" placeholder="우편번호"
+                                                       type="text">
+                                                <button onclick="sample4_execDaumPostcode()" type="button">주소 찾기
+                                                </button>
+                                            </div>
+                                            <span id="guide" style="color:#999;display:none"></span>
+                                            <input class="form-control" id="generalAddressInput" placeholder="도로명주소"
+                                                   type="text">
+                                            <input class="form-control" id="detailAddressInput" placeholder="상세주소"
+                                                   type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기
+                                            </button>
+                                            <button class="btn btn-primary" id="addAddress" type="button">추가하기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- ======= Address Add Modal End ======= -->
+
+                            <!-- ======= Address List Start ======= -->
+                            <div class="user-address-manage">
+                                <th:block th:each="userAddress : ${userAddresses}">
+                                    <div class="fs-5" style="display: flex; align-items: flex-start;">
+                                        <p th:text="${userAddress.addressAlias}"></p>
+                                        <div th:if="${userAddress.isDefaultAddress}">
+                                            <span class="fs-6 mx-2 rounded-pill bg-dark text-white ml-2"
+                                                  style="display: inline-block; padding: 2px 5px">기본주소</span>
+                                        </div>
+                                    </div>
+                                    <div class="fs-5"><p
+                                            th:text="${userAddress.addressGeneral} + ' ' + ${userAddress.addressDetail}"></p>
+                                    </div>
+                                    <div class="fs-5"
+                                         style="display: flex; justify-content: space-between; align-items: center;">
+                                        <p th:text="${userAddress.addressCode}"></p>
+                                        <div>
+                                            <button class="btn btn-outline-dark address-update-btn" th:id="${userAddress.addressId}"
+                                                    type="button">수정
+                                            </button>
+                                            <button class="btn btn-outline-dark address-delete-btn"
+                                                    th:id="${userAddress.addressId}"
+                                                    th:if="${!userAddress.isDefaultAddress}"
+                                                    type="button">삭제
+                                            </button>
+                                            <button class="btn btn-outline-dark address-change-default-btn"
+                                                    th:id="${userAddress.addressId}"
+                                                    th:if="${!userAddress.isDefaultAddress}"
+                                                    type="button">기본으로
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </th:block>
+                            </div><!-- ======= Address List End ======= -->
+                        </div>
+                    </div>
+                    <!-- ======= Address Info End ======= -->
+                </div>
+                <!-- ======= New Layout End ======= -->
+
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/assets/js/mypage_address.js"></script>
+    <script src="/static/assets/js/kakao_postcode_service.js"></script>
+
+</div><!-- ==== End fragment:content === -->
+</html>

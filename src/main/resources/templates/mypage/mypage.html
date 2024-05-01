@@ -38,7 +38,7 @@
                                 <a aria-current="page" class="nav-link active" href="#">회원 정보</a>
                             </li>
                             <li class="nav-item">
-                                <a aria-current="page" class="nav-link active" href="#">주소 관리</a>
+                                <a class="nav-link link-dark" href="/my_address_view">주소 관리</a>
                             </li>
                             <li>
                                 <a class="nav-link link-dark" href="#my_grade_title">나의 등급</a>
@@ -136,7 +136,9 @@
                                                         data-bs-dismiss="modal"
                                                         type="button">Close
                                                 </button>
-                                                <button class="btn btn-primary" type="button">주소 추가하기</button>
+                                                <button class="btn btn-primary" type="button"><a class="nav-link"
+                                                                                                 href="/my_address_view">주소
+                                                    관리</a></button>
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +161,7 @@
                                                         }
                                                         modalBody.append('<p>' + address.addressAlias + '</p>');
                                                         modalBody.append('<p>' + address.addressGeneral + ' ' + address.addressDetail + '</p>');
-                                                        modalBody.append('<p style="display: flex; justify-content: space-between;">우편번호 : ' + address.addressCode + '<button class="btn btn-primary delete-button" data-address-id="' + address.addressId + '">삭제</button></p>');
+                                                        modalBody.append('<p>우편번호 : ' + address.addressCode + '</p>');
                                                         modalBody.append('<hr>');
                                                     });
 
@@ -175,14 +177,6 @@
                                         // 모달 종료 (hide)
                                         $(document).on('click', '.address_modal_close', function () {
                                             $('#address_modal').modal('hide');
-                                        });
-
-                                        // 선택한 주소 삭제
-                                        $(document).on('click', '.delete-button', function () {
-                                            var addressId = $(this).data('address-id');
-                                            window.alert('죄송합니다! 아직 지원되지 않는 기능입니다');
-                                            // addressId 에 해당하는 주소 삭제 로직 작성
-
                                         });
                                     });
                                 </script>
