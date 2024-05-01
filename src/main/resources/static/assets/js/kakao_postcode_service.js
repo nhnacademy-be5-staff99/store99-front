@@ -1,7 +1,7 @@
 // 카카오 도로명 주소 서비스
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
-    new daum.Postcode({
+    var searchAddressWindow = new daum.Postcode({
         oncomplete: function (data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -29,7 +29,7 @@ function sample4_execDaumPostcode() {
             document.getElementById("generalAddressInput").value = roadAddr;
 
             // 주소 검색 창을 닫는다
-            this.hide();
+            searchAddressWindow.hide();
 
             var guideTextBox = document.getElementById("guide");
             // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
@@ -48,7 +48,9 @@ function sample4_execDaumPostcode() {
             }
 
             // 주소 검색창을 닫는다
-            this.hide();
+            searchAddressWindow.hide();
         }
-    }).open();
+    });
+
+    searchAddressWindow.open();
 }

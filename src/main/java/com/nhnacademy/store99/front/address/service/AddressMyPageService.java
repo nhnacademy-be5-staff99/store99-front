@@ -44,6 +44,23 @@ public class AddressMyPageService {
     }
 
     /**
+     * addressId 에 해당하는 주소 조회
+     *
+     * @param addressId
+     * @return
+     */
+    public UserAddressResponse getUserAddressById(Long addressId) {
+        CommonResponse<UserAddressResponse> userAddress;
+        try {
+            userAddress = addressAdapter.getUserAddressById(addressId);
+        } catch (FeignException.Unauthorized | FeignException.BadRequest ex) {
+            throw new LoginRequiredException(
+                    String.format("고객이 주소 (addressId : %d) 조회를 요청했으나, 로그인 되어있지 않음", addressId));
+        }
+        return userAddress.getResult();
+    }
+
+    /**
      * 주소 추가
      */
     @Transactional

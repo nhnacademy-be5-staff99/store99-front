@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,6 +51,12 @@ public class AddressMyPageController {
         return mv;
     }
 
+    @GetMapping(value = "/address", params = {"addressId"})
+    @ResponseBody
+    public UserAddressResponse getUserAddressById(@RequestParam("addressId") Long addressId) {
+        return addressMyPageService.getUserAddressById(addressId);
+    }
+
     @PostMapping("/address/add")
     public String addUserAddress(@RequestBody UserAddressAddRequest request) {
         addressMyPageService.addUserAddress(request);
@@ -58,10 +65,11 @@ public class AddressMyPageController {
     }
 
     @PatchMapping("/address/update")
-    public String updateUserAddress(@RequestBody UserAddressUpdateRequest request) {
+    @ResponseBody
+    public ResponseEntity<Void> updateUserAddress(@RequestBody UserAddressUpdateRequest request) {
         addressMyPageService.updateUserAddress(request);
 
-        return "redirect:/my_address_view";
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/address/change_default")
