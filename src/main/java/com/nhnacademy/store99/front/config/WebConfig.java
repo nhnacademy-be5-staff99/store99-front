@@ -5,8 +5,10 @@ import com.nhnacademy.store99.front.common.interceptor.LoginStatusCheckIntercept
 import com.nhnacademy.store99.front.common.interceptor.XUserTokenCheckForAdminInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -33,5 +35,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public LoginStatusCheckInterceptor loginStatusCheckInterceptor() {
         return new LoginStatusCheckInterceptor(adminCheckServices);
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 }

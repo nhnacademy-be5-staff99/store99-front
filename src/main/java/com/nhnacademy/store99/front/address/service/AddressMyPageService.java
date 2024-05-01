@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.address.service;
 
 import com.nhnacademy.store99.front.address.adapter.AddressAdapter;
+import com.nhnacademy.store99.front.address.adapter.AddressRestTemplateAdapter;
 import com.nhnacademy.store99.front.address.dto.UserAddressAddRequest;
 import com.nhnacademy.store99.front.address.dto.UserAddressResponse;
 import com.nhnacademy.store99.front.address.dto.UserAddressUpdateRequest;
@@ -14,6 +15,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 /**
  * 회원의 주소를 조회하고 관리
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AddressMyPageService {
 
     private final AddressAdapter addressAdapter;
+    private final AddressRestTemplateAdapter restTemplateAdapter;
 
     /**
      * 마이페이지에서 보여주는 회원의 주소 목록을 반환
@@ -93,8 +96,8 @@ public class AddressMyPageService {
     @Transactional
     public void updateUserAddress(UserAddressUpdateRequest request) {
         try {
-            addressAdapter.updateUserAddress(request);
-        } catch (FeignException.Unauthorized | FeignException.BadRequest ex) {
+            restTemplateAdapter.updateUserAddress(request);
+        } catch (HttpClientErrorException ex) {
             throw new LoginRequiredException("고객이 주소 수정을 요청했으나, 로그인 되어있지 않음");
         }
     }
@@ -105,8 +108,8 @@ public class AddressMyPageService {
     @Transactional
     public void updateDefaultAddress(UserChangeDefaultAddressRequest request) {
         try {
-            addressAdapter.updateDefaultAddress(request);
-        } catch (FeignException.Unauthorized | FeignException.BadRequest ex) {
+            restTemplateAdapter.updateDefaultAddress(request);
+        } catch (HttpClientErrorException ex) {
             throw new LoginRequiredException("고객이 기본 주소 변경을 요청했으나, 로그인 되어있지 않음");
         }
     }
