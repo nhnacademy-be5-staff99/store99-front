@@ -31,10 +31,11 @@
                         <thead>
                         <tr>
                             <th class="col-1" scope="col">선택</th>
-                            <th colspan="2" scope="col">상품정보</th>
+                            <th class="col" scope="col">상품정보</th>
                             <th class="col-1" scope="col">수량</th>
-                            <th class="col-2" scope="col">상품금액</th>
-                            <th class="col-2" scope="col">배송 정보</th>
+                            <th class="col-1" scope="col">상품금액</th>
+                            <th class="col-1" scope="col">배송 정보</th>
+                            <th class="col-1" scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,12 +60,15 @@
                                 <strong class="order-per-price"
                                         th:text="*{bookSalePrice} * *{quantity}">20000원</strong>
                             </td>
-                            <td>
+                            <td th:if="*{bookStock > 0}">
                                 <strong>내일</strong>
                                 <br>
                                 (4/2, 화)
                                 <br>
                                 도착예정
+                            </td>
+                            <td th:unless="*{bookStock > 0}">
+                                <strong class="text-danger">절판</strong>
                             </td>
                             <td>
                                 <form th:action="@{/cart/books/{bookId}(bookId=*{bookId})}" th:method="delete">
