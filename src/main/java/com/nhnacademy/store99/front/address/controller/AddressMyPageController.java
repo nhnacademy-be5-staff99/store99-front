@@ -5,6 +5,7 @@ import com.nhnacademy.store99.front.address.dto.UserAddressResponse;
 import com.nhnacademy.store99.front.address.dto.UserAddressUpdateRequest;
 import com.nhnacademy.store99.front.address.dto.UserChangeDefaultAddressRequest;
 import com.nhnacademy.store99.front.address.service.AddressMyPageService;
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,10 +59,11 @@ public class AddressMyPageController {
     }
 
     @PostMapping("/address/add")
-    public String addUserAddress(@RequestBody UserAddressAddRequest request) {
+    @ResponseBody
+    public ResponseEntity<Void> addUserAddress(@RequestBody UserAddressAddRequest request) {
         addressMyPageService.addUserAddress(request);
 
-        return "redirect:/my_address_view";
+        return ResponseEntity.created(URI.create("address/add")).build();
     }
 
     @PatchMapping("/address/update")
