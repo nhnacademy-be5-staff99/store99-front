@@ -66,7 +66,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     // 수정 버튼에 클릭 이벤트 리스너 추가
     $('.address-update-btn').click(function () {
-        var addressId = $(this).data('id');
+        var addressId = $(this).attr('data-id');
 
         // 주소 정보 가져오기
         $.ajax({
