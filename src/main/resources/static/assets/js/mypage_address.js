@@ -86,10 +86,10 @@ $(document).ready(function () {
                     // 수정된 주소 정보 가져오기
                     var updatedAddressInfo = {
                         addressId: addressId,
-                        addressGeneral: $('#generalAddressInput').val(),
-                        addressDetail: $('#detailAddressInput').val(),
-                        addressAlias: $('#aliasInput').val(),
-                        addressCode: $('#postCodeInput').val()
+                        addressGeneral: $('#generalAddressUpdate').val(),
+                        addressDetail: $('#detailAddressUpdate').val(),
+                        addressAlias: $('#aliasUpdate').val(),
+                        addressCode: $('#postCodeUpdate').val()
                     };
 
                     // AJAX 요청을 통해 서버에 수정된 주소 정보 전송
