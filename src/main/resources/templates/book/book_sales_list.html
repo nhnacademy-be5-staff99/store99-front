@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-md-7">
                                 <h5>
-                                    <a th:href="@{books/{bookId}(bookId= ${bookDto.BookId})}"
+                                    <a th:href="@{/books/{bookId}(bookId= ${bookDto.bookId})}"
                                        th:text="${bookDto.BookTitle}"> </a>
                                 </h5>
                                 <small>
@@ -293,11 +293,6 @@
         </script>
 
     </main><!-- End #main -->
-
-    <button class="btn btn-primary mb-2 add-to-cart-button"
-            data-bs-target="#add-to-cart-button-modal"
-            data-bs-toggle="modal">카트에 넣기
-    </button>
 
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="add-to-cart-button-modal"

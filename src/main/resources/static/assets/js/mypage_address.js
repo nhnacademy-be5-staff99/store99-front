@@ -67,6 +67,7 @@ $(document).ready(function () {
     // 수정 버튼에 클릭 이벤트 리스너 추가
     $('.address-update-btn').click(function () {
         var addressId = $(this).attr('id');
+        console.log(addressId);
 
         // 주소 정보 가져오기
         $.ajax({
@@ -75,29 +76,20 @@ $(document).ready(function () {
             success: function (addressInfo) {
                 console.log(addressInfo);
                 // 모달의 입력 필드에 주소 정보 채우기
-                $('#aliasInput').val(addressInfo.addressAlias);
-                $('#postCodeInput').val(addressInfo.addressCode);
-                $('#generalAddressInput').val(addressInfo.addressGeneral);
-                $('#detailAddressInput').val(addressInfo.addressDetail);
-
-                // 모달 header 의 제목 변경
-                $('#addressModalLabel').text('주소 수정');
-
-                // 모달의 footer 에 '추가하기' 버튼 삭제
-                $('#addAddress').remove();
-
-                // 모달의 footer에 '수정하기' 버튼 추가
-                $('.modal-footer').append('<button type="button" class="btn btn-primary" id="updateAddress">수정하기</button>');
+                $('#aliasUpdate').val(addressInfo.addressAlias);
+                $('#postCodeUpdate').val(addressInfo.addressCode);
+                $('#generalAddressUpdate').val(addressInfo.addressGeneral);
+                $('#detailAddressUpdate').val(addressInfo.addressDetail);
 
                 // '수정하기' 버튼에 클릭 이벤트 리스너 추가
                 $('#updateAddress').click(function () {
                     // 수정된 주소 정보 가져오기
                     var updatedAddressInfo = {
                         addressId: addressId,
-                        addressGeneral: $('#generalAddressInput').val(),
-                        addressDetail: $('#detailAddressInput').val(),
-                        addressAlias: $('#aliasInput').val(),
-                        addressCode: $('#postCodeInput').val()
+                        addressGeneral: $('#generalAddressUpdate').val(),
+                        addressDetail: $('#detailAddressUpdate').val(),
+                        addressAlias: $('#aliasUpdate').val(),
+                        addressCode: $('#postCodeUpdate').val()
                     };
 
                     // AJAX 요청을 통해 서버에 수정된 주소 정보 전송
@@ -108,7 +100,7 @@ $(document).ready(function () {
                         contentType: 'application/json; charset=utf-8',
                         success: function () {
                             // 요청이 성공적으로 완료되면 모달을 닫고 페이지를 새로 고침합니다.
-                            $('#addressModal').modal('hide');
+                            $('#addressUpdateModal').modal('hide');
                             location.reload();
                         },
                         error: function () {
@@ -119,7 +111,9 @@ $(document).ready(function () {
                 });
 
                 // 모달 창 열기
-                $('#addressModal').modal('show');
+                $('#addressUpdateModal').modal('show');
+
+
             },
             error: function () {
                 // 요청이 실패하면 오류 메시지를 표시합니다.
@@ -127,4 +121,20 @@ $(document).ready(function () {
             }
         });
     });
+});
+
+// 주소 추가 모달 창 닫을 때 입력 필드 초기화
+$('#addressModal').on('hidden.bs.modal', function () {
+    $('#aliasInput').val('');
+    $('#postCodeInput').val('');
+    $('#generalAddressInput').val('');
+    $('#detailAddressInput').val('');
+});
+
+// 주소 삭제 모달 창 닫을 때 입력 필드 초기화
+$('#addressUpdateModal').on('hidden.bs.modal', function () {
+    $('#aliasUpdate').val('');
+    $('#postCodeUpdate').val('');
+    $('#generalAddressUpdate').val('');
+    $('#detailAddressUpdate').val('');
 });
