@@ -61,23 +61,23 @@
                                th:text="${bookInfo.bookTitle}"> </a>
                         </h5>
                         <small>
-                            <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
-                                <span th:text="${authorDTO.AuthorName}"></span>
-                                <span th:if="${#strings.equals(authorDTO.AuthorType,'AUTHOR')}"
+                            <th:block th:each="authorDTO : ${bookInfo.authorsDTOList}">
+                                <span th:text="${authorDTO.authorName}"></span>
+                                <span th:if="${#strings.equals(authorDTO.authorType,'AUTHOR')}"
                                       th:text="|(지은이)|"></span>
-                                <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
+                                <span th:if="${#strings.equals(authorDTO.authorType,'PAINTER')}"
                                       th:text="|(그림)|"></span>
-                                <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
+                                <span th:if="${#strings.equals(authorDTO.authorType,'TRANSLATOR')}"
                                       th:text="|(옮긴이)|"></span>
-                                <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
+                                <span th:if="${#strings.equals(authorDTO.authorType,'SUPERVISION')}"
                                       th:text="|(감수)|"></span>
-                                <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
+                                <span th:if="${#strings.equals(authorDTO.authorType,'ETC')}"
                                       th:text="|(기타)|"></span>
                             </th:block>
                         </small>
-                        <p><s th:text="|${bookInfo.BookPrice}원|"></s> → <span
+                        <p><s th:text="|${bookInfo.bookPrice}원|"></s> → <span
                                 style="font-weight: bold; color: red;"
-                                th:text="|${bookInfo.BookSalePrice}원|"></span>
+                                th:text="|${bookInfo.bookSalePrice}원|"></span>
                         </p>
                     </div>
                 </div>

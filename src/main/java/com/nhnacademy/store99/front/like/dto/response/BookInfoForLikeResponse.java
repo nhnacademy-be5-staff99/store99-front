@@ -28,10 +28,12 @@ public class BookInfoForLikeResponse {
     @Setter
     @Builder
     public static class AuthorDTO {
-        private String AuthorName;
+        private String authorName;
+        private String authorType;
 
-        public AuthorDTO(String authorName) {
-            AuthorName = authorName;
+        public AuthorDTO(String authorName, String authorType) {
+            this.authorName = authorName;
+            this.authorType = authorType;
         }
     }
 
