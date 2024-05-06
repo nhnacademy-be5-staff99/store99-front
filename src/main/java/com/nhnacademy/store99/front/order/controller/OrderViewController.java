@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class OrderViewController {
     @GetMapping("/order")
     public String getOrderIndex() {
-        return "order/order_index";
+        return "order/order_main";
     }
 }
