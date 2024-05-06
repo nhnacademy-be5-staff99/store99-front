@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content"><!-- ==== fragment:content === -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <main id="main">
+        <section class="contact mb-5" id="contact">
+            <<h1>My Liked Books</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        <li th:each="likeList : ${likedList}">
+<!--                            <a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}"></a>-->
+                        </li>
+                    </ul>
+                </div>
+        </section>
+    </main>
+
+</div><!-- ==== End fragment:content === -->
+</html>

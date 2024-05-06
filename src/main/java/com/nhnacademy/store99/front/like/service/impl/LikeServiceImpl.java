@@ -3,12 +3,15 @@ package com.nhnacademy.store99.front.like.service.impl;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.like.adapter.LikeAdapter;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
+import com.nhnacademy.store99.front.like.dto.response.BookInfoForLikeResponse;
 import com.nhnacademy.store99.front.like.exception.LikeCountNotAvailableException;
 import com.nhnacademy.store99.front.like.exception.LikeProcessingFaildException;
 import com.nhnacademy.store99.front.like.service.LikeService;
 import feign.FeignException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,5 +68,10 @@ public class LikeServiceImpl implements LikeService {
         }
         log.debug("cnt= " + cnt);
         return cnt;
+    }
+
+    @Override
+    public Page<BookInfoForLikeResponse> getLikeListByUser(Pageable pageable, Long userId) {
+        return likeAdapter.getLikeListByUser(pageable, userId).getResult();
     }
 }

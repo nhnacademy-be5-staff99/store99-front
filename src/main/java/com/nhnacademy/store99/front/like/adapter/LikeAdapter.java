@@ -1,8 +1,11 @@
 package com.nhnacademy.store99.front.like.adapter;
 
 import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
+import com.nhnacademy.store99.front.like.dto.response.BookInfoForLikeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * FeignClient를 통한 LikeAdapter 클래스 입니다.
+ * FeignClient로 api를 요청하는 LikeAdapter 클래스 입니다.
  *
  * @author 이서연
  */
@@ -23,6 +26,13 @@ public interface LikeAdapter {
     @DeleteMapping("/api/bookstore/v1/likes/{likeId}")
     CommonResponse<String> deleteLike(@PathVariable final Long likeId);
 
-    @GetMapping("/open/bookstore/v1/likes/count")
+    @GetMapping(value = "/open/bookstore/v1/likes/count", params = {"bookId"})
     CommonResponse<Long> getLikeCnt(@RequestParam(value = "bookId") final Long bookId);
+
+    @GetMapping(value = "/api/bookstore/v1/mylikes", params = {"userId"})
+    CommonResponse<CustomPageImpl<BookInfoForLikeResponse>> getLikeListByUser(Pageable pageable,
+                                                                              @RequestParam(value = "userId")
+                                                                              final Long userId);
+
+
 }
