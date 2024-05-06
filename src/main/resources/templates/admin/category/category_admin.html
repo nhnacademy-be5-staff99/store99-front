@@ -125,9 +125,7 @@
             button.addEventListener('click', function (event) {
                 event.preventDefault();
                 fetch(button.dataset.url, {method: 'PATCH'})
-            ]
-            .
-                then(response => location.reload())
+                    .then(response => location.reload())
                     .catch(error => {
                         console.error(error);
                         location.reload();

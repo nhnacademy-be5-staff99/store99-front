@@ -31,5 +31,4 @@ public class RedisConfig {
         redisStandaloneConfiguration.setDatabase(redisProperties.getDatabase());
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
-
 }
