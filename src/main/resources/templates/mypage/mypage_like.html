@@ -74,15 +74,10 @@
                                 <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
                                       th:text="|(기타)|"></span>
                             </th:block>
-                            |
-                            <th:block th:text="${bookDto.BookPublisher}"></th:block>
-                            |
-                            <th:block
-                                    th:text="${#temporals.format(bookDto.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
                         </small>
-                        <p><s th:text="|${bookDto.BookPrice}원|"></s> → <span
+                        <p><s th:text="|${bookInfo.BookPrice}원|"></s> → <span
                                 style="font-weight: bold; color: red;"
-                                th:text="|${bookDto.BookSalePrice}원|"></span>
+                                th:text="|${bookInfo.BookSalePrice}원|"></span>
                         </p>
                     </div>
                 </div>

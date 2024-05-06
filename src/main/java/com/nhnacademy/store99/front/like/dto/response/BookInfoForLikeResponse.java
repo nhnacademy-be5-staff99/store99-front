@@ -1,7 +1,12 @@
 package com.nhnacademy.store99.front.like.dto.response;
 
+import com.nhnacademy.store99.front.book.Response.BookPageResponse;
+import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Data
@@ -13,5 +18,21 @@ public class BookInfoForLikeResponse {
 
     private String bookTitle;
 
-    private String authorName;
+    private Integer bookPrice;
+
+    private Integer bookSalePrice;
+
+    private List<BookPageResponse.AuthorDTO> authorsDTOList;
+
+    @Getter
+    @Setter
+    @Builder
+    public static class AuthorDTO {
+        private String AuthorName;
+
+        public AuthorDTO(String authorName) {
+            AuthorName = authorName;
+        }
+    }
+
 }
