@@ -50,7 +50,7 @@ public class CartController {
     @PutMapping("/cart/books")
     public String updateBookQuantityInCart(@ModelAttribute @Valid CartItemRequest request,
                                            @RequestAttribute boolean isLogin,
-                                           @CookieValue(value = "cartItem") Cookie cartItemCookie,
+                                           @CookieValue(value = "cartItem", required = false) Cookie cartItemCookie,
                                            HttpServletResponse servletResponse) {
         if (isLogin) {
             // 로그인한 경우
@@ -67,7 +67,7 @@ public class CartController {
     @DeleteMapping("/cart/books/{bookId}")
     public String deleteBookInCart(@PathVariable Long bookId,
                                    @RequestAttribute boolean isLogin,
-                                   @CookieValue(value = "cartItem") Cookie cartItemCookie,
+                                   @CookieValue(value = "cartItem", required = false) Cookie cartItemCookie,
                                    HttpServletResponse servletResponse) {
         if (isLogin) {
             // 로그인한 경우
