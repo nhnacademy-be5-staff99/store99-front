@@ -139,6 +139,7 @@ public class CartServiceImpl implements CartService {
         }
 
         cartItemRedisRepository.save(cartItem);     // 레디스 기간 연장
+        cartItemCookie.setPath("/");
     }
 
     @Async
