@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class BookInfoForLikeResponse {
 
+    private Long bookId;
+
     private String bookThumbnailUrl;
 
     private String bookTitle;

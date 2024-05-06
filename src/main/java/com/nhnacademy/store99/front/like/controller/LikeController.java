@@ -1,10 +1,11 @@
 package com.nhnacademy.store99.front.like.controller;
 
+import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.dto.response.BookInfoForLikeResponse;
 import com.nhnacademy.store99.front.like.service.LikeService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,15 +64,15 @@ public class LikeController {
     }
 
     @GetMapping(value = "/mylikes", params = "userId")
-    public ModelAndView getLikeListByUser(Pageable pageable, @RequestParam(value = "userId") Long userId) {
+    public ModelAndView getLikeListByUser(@PageableDefault(size = 10) Pageable pageable,
+                                          @RequestParam(value = "userId") Long userId) {
         ModelAndView mvn = new ModelAndView();
         mvn.setViewName("mypage/mypage_like");
         mvn.addObject("userId", userId);
 
-        Page<BookInfoForLikeResponse> likedList = likeService.getLikeListByUser(pageable, userId);
-        mvn.addObject("likedList", likedList);
+        CustomPageImpl<BookInfoForLikeResponse> likeList = likeService.getAllByUser(pageable, userId);
+        mvn.addObject("likeList", likeList);
         return mvn;
     }
-
 
 }

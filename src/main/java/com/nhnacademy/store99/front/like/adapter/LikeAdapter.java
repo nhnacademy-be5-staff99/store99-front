@@ -6,6 +6,7 @@ import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.dto.response.BookInfoForLikeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +31,9 @@ public interface LikeAdapter {
     CommonResponse<Long> getLikeCnt(@RequestParam(value = "bookId") final Long bookId);
 
     @GetMapping(value = "/api/bookstore/v1/mylikes", params = {"userId"})
-    CommonResponse<CustomPageImpl<BookInfoForLikeResponse>> getLikeListByUser(Pageable pageable,
-                                                                              @RequestParam(value = "userId")
-                                                                              final Long userId);
+    CommonResponse<CustomPageImpl<BookInfoForLikeResponse>> findAllByUser(@PageableDefault Pageable pageable,
+                                                                          @RequestParam(value = "userId")
+                                                                          final Long userId);
 
 
 }
