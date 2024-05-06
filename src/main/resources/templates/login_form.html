@@ -63,8 +63,6 @@
                                                     password: password
                                                 },
                                                 success: function (data, textStatus, request) {
-                                                    // 서버로부터 받은 쿠키를 저장
-                                                    document.cookie = request.getResponseHeader('Set-Cookie');
                                                     // index 페이지로 리다이렉트
                                                     window.location.href = request.getResponseHeader('Location');
                                                 },
