@@ -12,8 +12,12 @@ $(document).ready(function () {
                 "email": email
             }),
             success: function (response) {
+                if(response === "duplicateEmail"){
+                    alert("이미 가입된 이메일입니다. 다른 이메일로 시도해주세요")
+                }
+                else{
                 confirmationCode = response;
-                alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+                alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");}
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error("오류: " + xhr.responseText);
@@ -35,35 +39,53 @@ $(document).ready(function () {
         }
     });
 
-    $("#duplicateCheck").click(function () {
+    $("#validateCheck").click(function () {
         var password = $("#password").val();
         if(isEmailVerified == true){
-        $.ajax({
-            type: "POST",
-            url: "/duplicateCheck",
-            contentType: "application/json",
-            data: JSON.stringify({
-                "password": password
-            }),
-            success: function (response) {
-                console.log(response);
-                if(response === "true"){
+            var passwordReg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
+            if (!passwordReg.test(password)) {
+                alert("비밀번호는 8~16자리의 영문과 숫자를 포함해야합니다.");
+                isPasswordChecked = false;
+            } else {
+                alert("사용 가능한 비밀번호입니다.");
                 isPasswordChecked = true;
-                document.getElementById('password').disabled = true;
-                alert("중복되지 않은 비밀번호입니다. 회원가입을 진행해주세요");
-                }
-                else {
-                    alert("중복되는 비밀번호입니다. 다시 입력해주세요.");
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("비밀번호 중복 확인에 실패했습니다.");
             }
-        })}
+        }
         else {
             alert("이메일 인증을 먼저 진행해주세요.");
         }
     });
+
+
+    $("#addressCodeSearch").click(function() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var fullRoadAddr = data.roadAddress;
+                var extraRoadAddr = '';
+
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                $("#address_code").val(data.zonecode);
+                $("#address_general").val(fullRoadAddr);
+            }
+        }).open();
+    });
+
 
     document.getElementById('signUp').addEventListener('submit', function(event) {
         event.preventDefault();

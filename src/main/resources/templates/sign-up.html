@@ -156,8 +156,8 @@
                                                 <input class="form-control form-control-lg" id="password"
                                                        name="password" required type="password">
                                                 <div class="input-group-append" style="margin-left : 15px">
-                                                    <button class="btn btn-primary" id="duplicateCheck" type="button">
-                                                        중복확인
+                                                    <button class="btn btn-primary" id="validateCheck" type="button">
+                                                        비밀번호 확인
                                                     </button>
                                                 </div>
                                             </div>
@@ -173,17 +173,18 @@
 
                                         <div class="form-group">
                                             <label for="address_general">주소</label>
-                                            <input class="form-control form-control-lg" id="address_general" name="address_general" required>
+                                            <input class="form-control form-control-lg" id="address_general" name="address_general" required disabled = "true">
                                             <label for="address_detail">상세주소</label>
                                             <input class="form-control form-control-lg" id="address_detail" name="address_detail" required>
                                             <div class="row">
                                                 <div class="col">
-                                                    <label for="address_alias">별명</label>
+                                                    <label for="address_alias">별칭</label>
                                                     <input class="form-control form-control-lg" id="address_alias" name="address_alias" required>
                                                 </div>
                                                 <div class="col">
-                                                    <label for="address_code">도로명주소</label>
-                                                    <input class="form-control form-control-lg" id="address_code" name="address_code" required>
+                                                    <label for="address_code">우편번호</label>
+                                                    <input class="form-control form-control-lg" id="address_code" name="address_code" required disabled = "true">
+                                                    <button class="btn btn-primary" id = "addressCodeSearch" type ="button" style = margin-top:10px>우편번호 찾기</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -340,6 +341,7 @@
 <!-- Template Main JS File -->
 <script src="/static/assets/js/main.js"></script>
 <script src="/static/assets/js/sign-up.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
 
 </body>
