@@ -29,4 +29,10 @@ public interface BookAdapter {
 
     @GetMapping("/{bookId}")
     CommonResponse<BookResponse> getBook(@PathVariable(value = "bookId") Long bookId);
+
+    // 자식 카테고리까지 포함된 도서 목록
+    @GetMapping("/categories/{categoryId}")
+    CommonResponse<CustomPageImpl<BookPageResponse>> getBooksByCategory(@PathVariable("categoryId") Long categoryId,
+                                                                        Pageable pageable);
+
 }
