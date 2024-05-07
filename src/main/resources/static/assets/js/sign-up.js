@@ -1,5 +1,6 @@
 var isEmailVerified = false;
 var isPasswordChecked = false;
+var isPhoneNumberValid = false;
 $(document).ready(function () {
     var confirmationCode;
     $("#sendConfirmationCode").click(function () {
@@ -33,6 +34,9 @@ $(document).ready(function () {
             isEmailVerified = true;
             document.getElementById('id').disabled = true;
             document.getElementById('sendConfirmationCode').disabled = true;
+            document.getElementById('emailConfirmationCode').disabled = true;
+            document.getElementById('password').disabled = false;
+            document.getElementById('validateCheck').disabled = false;
         } else {
             alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
             isEmailVerified = false;
@@ -49,6 +53,14 @@ $(document).ready(function () {
             } else {
                 alert("사용 가능한 비밀번호입니다.");
                 isPasswordChecked = true;
+                document.getElementById('password').disabled = true;
+                document.getElementById('validateCheck').disabled = true;
+                document.getElementById('username').disabled = false;
+                document.getElementById('address_detail').disabled = false;
+                document.getElementById('address_alias').disabled = false;
+                document.getElementById('addressCodeSearch').disabled = false;
+                document.getElementById('phoneNumber').disabled = false;
+                document.getElementById('birthday').disabled = false;
             }
         }
         else {
@@ -86,8 +98,20 @@ $(document).ready(function () {
         }).open();
     });
 
+    function validateInput(input) {
+        if (input.length !== 11) {
+            return false;
+        }
+        for (let i = 0; i < input.length; i++) {
+            if (isNaN(parseInt(input[i])) || parseInt(input[i]) < 0 || parseInt(input[i]) > 9) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     document.getElementById('signUp').addEventListener('submit', function(event) {
+        isPhoneNumberValid = validateInput(document.getElementById('phoneNumber').value);
         event.preventDefault();
         const formData = {
             email: document.getElementById('id').value,
@@ -104,6 +128,10 @@ $(document).ready(function () {
             }
         };
         if (isEmailVerified == true && isPasswordChecked == true) {
+            if(isPhoneNumberValid == false){
+                alert("휴대폰 번호 형식이 올바르지 않습니다.");
+            }
+            else{
             fetch('/sign-up', {
                 method: 'POST',
                 headers: {
@@ -128,7 +156,7 @@ $(document).ready(function () {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        } else {
+        }} else {
             alert("이메일 인증과 비밀번호 중복 확인을 먼저 진행해주세요");
         }
     });

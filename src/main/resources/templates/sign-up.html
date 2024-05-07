@@ -154,9 +154,9 @@
                                             <label for="password">Password</label>
                                             <div class="input-group mb-3">
                                                 <input class="form-control form-control-lg" id="password"
-                                                       name="password" required type="password">
+                                                       name="password" required type="password" disabled = "true">
                                                 <div class="input-group-append" style="margin-left : 15px">
-                                                    <button class="btn btn-primary" id="validateCheck" type="button">
+                                                    <button class="btn btn-primary" id="validateCheck" type="button" disabled = "true">
                                                         비밀번호 확인
                                                     </button>
                                                 </div>
@@ -168,23 +168,23 @@
                                             <label for="password">사용자명</label><input
                                                 class="form-control form-control-lg"
                                                 id="username"
-                                                name="name">
+                                                name="name" required disabled = "true">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="address_general">주소</label>
                                             <input class="form-control form-control-lg" id="address_general" name="address_general" required disabled = "true">
                                             <label for="address_detail">상세주소</label>
-                                            <input class="form-control form-control-lg" id="address_detail" name="address_detail" required>
+                                            <input class="form-control form-control-lg" id="address_detail" name="address_detail" required disabled = "true">
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="address_alias">별칭</label>
-                                                    <input class="form-control form-control-lg" id="address_alias" name="address_alias" required>
+                                                    <input class="form-control form-control-lg" id="address_alias" name="address_alias" required disabled = "true">
                                                 </div>
                                                 <div class="col">
                                                     <label for="address_code">우편번호</label>
                                                     <input class="form-control form-control-lg" id="address_code" name="address_code" required disabled = "true">
-                                                    <button class="btn btn-primary" id = "addressCodeSearch" type ="button" style = margin-top:10px>우편번호 찾기</button>
+                                                    <button class="btn btn-primary" id = "addressCodeSearch" type ="button" style = margin-top:10px disabled = "true">우편번호 찾기</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,7 +194,7 @@
                                             <label for="password">연락처 ('-' 는 제외하고 입력)</label><input
                                                 class="form-control form-control-lg"
                                                 id="phoneNumber"
-                                                name="phoneNumber">
+                                                name="phoneNumber" disabled = "true">
                                         </div>
 
                                         <div class="form-group">
@@ -202,7 +202,7 @@
                                                 class="form-control form-control-lg"
                                                 id="birthday"
                                                 name="userBirthDate"
-                                                type="date">
+                                                type="date" disabled = "true">
                                         </div>
 
 
