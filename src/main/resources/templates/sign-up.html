@@ -123,11 +123,12 @@
                                 <div class="auth-form-light text-left py-5 px-4 px-sm-5 login-form">
 
                                     <!-- === login form === -->
-                                    <form class="pt-3" method="post"  th:action="@{/sign-up}" id = "signUp">
+                                    <form class="pt-3" id="signUp" method="post" th:action="@{/sign-up}">
                                         <div class="form-group">
                                             <label for="id">ID</label>
                                             <div class="input-group mb-3">
-                                                <input autofocus class="form-control form-control-lg" id="id" name="email"
+                                                <input autofocus class="form-control form-control-lg" id="id"
+                                                       name="email"
                                                        placeholder="이메일" required type="email">
                                                 <div class="input-group-append" style="margin-left : 15px">
                                                     <button class="btn btn-primary" id="sendConfirmationCode"
@@ -173,17 +174,21 @@
 
                                         <div class="form-group">
                                             <label for="address_general">주소</label>
-                                            <input class="form-control form-control-lg" id="address_general" name="address_general" required>
+                                            <input class="form-control form-control-lg" id="address_general"
+                                                   name="address_general" required>
                                             <label for="address_detail">상세주소</label>
-                                            <input class="form-control form-control-lg" id="address_detail" name="address_detail" required>
+                                            <input class="form-control form-control-lg" id="address_detail"
+                                                   name="address_detail" required>
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="address_alias">별명</label>
-                                                    <input class="form-control form-control-lg" id="address_alias" name="address_alias" required>
+                                                    <input class="form-control form-control-lg" id="address_alias"
+                                                           name="address_alias" required>
                                                 </div>
                                                 <div class="col">
                                                     <label for="address_code">도로명주소</label>
-                                                    <input class="form-control form-control-lg" id="address_code" name="address_code" required>
+                                                    <input class="form-control form-control-lg" id="address_code"
+                                                           name="address_code" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +212,7 @@
 
                                         <div class="mt-3 login-btn">
                                             <button class="btn btn-lg font-weight-medium btn-light"
-                                                    id="signup-btn" type="submit" >회원가입
+                                                    id="signup-btn" type="submit">회원가입
                                             </button>
                                         </div>
                                     </form> <!-- === sign-up form end ===-->
