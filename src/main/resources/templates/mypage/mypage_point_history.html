@@ -83,9 +83,12 @@
                                     <th:block th:each="pointHistory, status : ${userPointHistories}">
                                         <div class="row py-2">
                                             <span class="col-2 text-center" th:text="${status.count}"></span>
-                                            <span class="col-2 text-end" th:text="${#numbers.formatInteger(pointHistory.pointHistoryValue, 1, 'COMMA')} + ' p'"></span>
-                                            <span class="col-4 text-center" th:text="${pointHistory.pointHistoryType}"></span>
-                                            <span class="col-4 text-center" th:text="${#temporals.format(pointHistory.createdAt, 'yyyy-MM-dd hh시 mm분')}"></span>
+                                            <span class="col-2 text-end"
+                                                  th:text="${#numbers.formatInteger(pointHistory.pointHistoryValue, 1, 'COMMA')} + ' p'"></span>
+                                            <span class="col-4 text-center"
+                                                  th:text="${pointHistory.pointHistoryType}"></span>
+                                            <span class="col-4 text-center"
+                                                  th:text="${#temporals.format(pointHistory.createdAt, 'yyyy-MM-dd hh시 mm분')}"></span>
                                         </div>
 
 
