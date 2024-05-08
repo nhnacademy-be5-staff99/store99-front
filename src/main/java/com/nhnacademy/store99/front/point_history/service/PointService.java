@@ -7,7 +7,6 @@ import com.nhnacademy.store99.front.point_history.dto.UserPointResponse;
 import feign.FeignException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,7 @@ public class PointService {
             userPointHistories = pointAdapter.getUserPointHistories();
         } catch (FeignException.Unauthorized | FeignException.BadRequest ex) {
             throw new LoginRequiredException("나의 포인트 내역 조회에 접근하나 로그인 되어있지 않음");
-        } catch (FeignException.NotFound ex){
+        } catch (FeignException.NotFound ex) {
             throw new LoginRequiredException("로그인 한 아이디로 포인트를 조회할 수 없음");
         }
 
