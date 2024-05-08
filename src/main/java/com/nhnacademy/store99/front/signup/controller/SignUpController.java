@@ -3,8 +3,8 @@ package com.nhnacademy.store99.front.signup.controller;
 import static com.nhnacademy.store99.front.signup.service.SignUpService.code;
 import static com.nhnacademy.store99.front.signup.service.SignUpService.isDuplicate;
 
-import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CommonHeader;
+import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.signup.dto.EmailDto;
 import com.nhnacademy.store99.front.signup.dto.PasswordDto;
 import com.nhnacademy.store99.front.signup.dto.SignUpDto;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author jinhyogyeom
@@ -32,6 +31,7 @@ public class SignUpController {
     public SignUpController(SignUpService signUpService) {
         this.signUpService = signUpService;
     }
+
     @GetMapping("/sign-up")
     public String SignUpView() {
         return "sign-up";
@@ -53,6 +53,7 @@ public class SignUpController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
     }
+
     /**
      * 중복검사 서비스를 요청하는 메소드
      * 중복검사 결과 반환
@@ -62,13 +63,13 @@ public class SignUpController {
      */
     @PostMapping("/duplicateCheck")
     public ResponseEntity<String> duplicateCheck(@RequestBody PasswordDto passwordDto) {
-        try{
+        try {
             signUpService.duplicateCheck(passwordDto.getPassword());
             return ResponseEntity.ok(isDuplicate);
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
     }
-}
 
     /**
      * 회원가입 서비스를 요청하는 메소드
