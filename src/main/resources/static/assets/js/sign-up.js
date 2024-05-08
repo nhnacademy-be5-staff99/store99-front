@@ -37,35 +37,34 @@ $(document).ready(function () {
 
     $("#duplicateCheck").click(function () {
         var password = $("#password").val();
-        if(isEmailVerified == true){
-        $.ajax({
-            type: "POST",
-            url: "/duplicateCheck",
-            contentType: "application/json",
-            data: JSON.stringify({
-                "password": password
-            }),
-            success: function (response) {
-                console.log(response);
-                if(response === "true"){
-                isPasswordChecked = true;
-                document.getElementById('password').disabled = true;
-                alert("중복되지 않은 비밀번호입니다. 회원가입을 진행해주세요");
+        if (isEmailVerified == true) {
+            $.ajax({
+                type: "POST",
+                url: "/duplicateCheck",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "password": password
+                }),
+                success: function (response) {
+                    console.log(response);
+                    if (response === "true") {
+                        isPasswordChecked = true;
+                        document.getElementById('password').disabled = true;
+                        alert("중복되지 않은 비밀번호입니다. 회원가입을 진행해주세요");
+                    } else {
+                        alert("중복되는 비밀번호입니다. 다시 입력해주세요.");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert("비밀번호 중복 확인에 실패했습니다.");
                 }
-                else {
-                    alert("중복되는 비밀번호입니다. 다시 입력해주세요.");
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("비밀번호 중복 확인에 실패했습니다.");
-            }
-        })}
-        else {
+            })
+        } else {
             alert("이메일 인증을 먼저 진행해주세요.");
         }
     });
 
-    document.getElementById('signUp').addEventListener('submit', function(event) {
+    document.getElementById('signUp').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = {
             email: document.getElementById('id').value,

@@ -3,7 +3,6 @@ package com.nhnacademy.store99.front.signup.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.store99.front.signup.dto.SignUpDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +43,7 @@ public class SignUpService {
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
-                 gateway + "/open/bookstore/v1/users/mailConfirm",
+                gateway + "/open/bookstore/v1/users/mailConfirm",
                 requestEntity,
                 String.class);
 
@@ -79,7 +78,6 @@ public class SignUpService {
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
 
-
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
                 gateway + "/open/bookstore/v1/users/duplicateCheck",
                 requestEntity,
@@ -87,7 +85,7 @@ public class SignUpService {
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             System.out.println("중복 확인 요청이 성공적으로 전송되었습니다.");
-            String response =  responseEntity.getBody();
+            String response = responseEntity.getBody();
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response);
