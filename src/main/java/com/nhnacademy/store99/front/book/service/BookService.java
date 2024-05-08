@@ -6,9 +6,12 @@ import com.nhnacademy.store99.front.common.response.CustomPageImpl;
 import org.springframework.data.domain.Pageable;
 
 public interface BookService {
-    public BookResponse getBook(Long id);
+    BookResponse getBook(Long id);
 
-    public BookResponse postBook();
+    BookResponse postBook();
 
-    public CustomPageImpl<BookPageResponse> getBooks(Pageable pageable);
+    CustomPageImpl<BookPageResponse> getBooks(Pageable pageable);
+
+    CustomPageImpl<BookPageResponse> getBooksByCategory(Long categoryId, Pageable pageable);
+
 }
