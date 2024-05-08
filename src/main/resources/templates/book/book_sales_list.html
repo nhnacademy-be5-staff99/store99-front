@@ -56,12 +56,15 @@
                         </div>
 
                         <div class="page-size-selector">
+
+                            <!--여기에다가 th:selected 넣어서 request의 size에 맞춰 선택하게 하기-->
                             <select class="form-select form-select-sm"
                                     onchange="window.location.href='?size=' + this.value">
-                                <option value="0">조회 개수 선택</option>
-                                <option value="10">10개씩 보기</option>
-                                <option value="20">20개씩 보기</option>
-                                <option value="50">50개씩 보기</option>
+                                <option th:selected="${#request.getParameter('size')=='10'}" value="10">10개씩 보기
+                                </option>
+                                <option th:selected="${#request.getParameter('size')=='20'}" value="20">20개씩 보기
+                                </option>
+                                <option th:selected="${#request.getParameter('size')=='50'}" value="50">50개씩 보기</option>
                             </select>
                         </div>
                     </div>
