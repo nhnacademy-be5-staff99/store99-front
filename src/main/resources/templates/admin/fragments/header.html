@@ -27,6 +27,10 @@
                         <a class="nav-link" href="/admin/categories"
                            th:classappend="${#httpServletRequest.requestURI eq '/admin/categories'} ? 'active'">Category</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tags"
+                           th:classappend="${#httpServletRequest.requestURI eq '/admin/tags'} ? 'active'">Tag</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                            id="navbarDropdown" role="button">
@@ -35,6 +39,9 @@
                         <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
                             <li><a class="dropdown-item" href="/admin/categories"
                                    th:classappend="${#httpServletRequest.requestURI eq '/admin/categories'} ? 'active'">Category</a>
+                            </li>
+                            <li><a class="dropdown-item" href="/admin/tags"
+                                   th:classappend="${#httpServletRequest.requestURI eq '/admin/tags'} ? 'active'">Tag</a>
                             </li>
                         </ul>
                     </li>

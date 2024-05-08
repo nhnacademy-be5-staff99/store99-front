@@ -1,5 +1,6 @@
 var isEmailVerified = false;
 var isPasswordChecked = false;
+var isPhoneNumberValid = false;
 $(document).ready(function () {
     var confirmationCode;
     $("#sendConfirmationCode").click(function () {
@@ -12,8 +13,12 @@ $(document).ready(function () {
                 "email": email
             }),
             success: function (response) {
+                if(response === "duplicateEmail"){
+                    alert("이미 가입된 이메일입니다. 다른 이메일로 시도해주세요")
+                }
+                else{
                 confirmationCode = response;
-                alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+                alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");}
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.error("오류: " + xhr.responseText);
@@ -29,43 +34,83 @@ $(document).ready(function () {
             isEmailVerified = true;
             document.getElementById('id').disabled = true;
             document.getElementById('sendConfirmationCode').disabled = true;
+            document.getElementById('emailConfirmationCode').disabled = true;
+            document.getElementById('password').disabled = false;
+            document.getElementById('validateCheck').disabled = false;
         } else {
             alert("인증번호가 일치하지 않습니다. 다시 확인해주세요.");
             isEmailVerified = false;
         }
     });
 
-    $("#duplicateCheck").click(function () {
+    $("#validateCheck").click(function () {
         var password = $("#password").val();
         if(isEmailVerified == true){
-        $.ajax({
-            type: "POST",
-            url: "/duplicateCheck",
-            contentType: "application/json",
-            data: JSON.stringify({
-                "password": password
-            }),
-            success: function (response) {
-                console.log(response);
-                if(response === "true"){
+            var passwordReg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
+            if (!passwordReg.test(password)) {
+                alert("비밀번호는 8~16자리의 영문과 숫자를 포함해야합니다.");
+                isPasswordChecked = false;
+            } else {
+                alert("사용 가능한 비밀번호입니다.");
                 isPasswordChecked = true;
                 document.getElementById('password').disabled = true;
-                alert("중복되지 않은 비밀번호입니다. 회원가입을 진행해주세요");
-                }
-                else {
-                    alert("중복되는 비밀번호입니다. 다시 입력해주세요.");
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("비밀번호 중복 확인에 실패했습니다.");
+                document.getElementById('validateCheck').disabled = true;
+                document.getElementById('username').disabled = false;
+                document.getElementById('address_detail').disabled = false;
+                document.getElementById('address_alias').disabled = false;
+                document.getElementById('addressCodeSearch').disabled = false;
+                document.getElementById('phoneNumber').disabled = false;
+                document.getElementById('birthday').disabled = false;
             }
-        })}
+        }
         else {
             alert("이메일 인증을 먼저 진행해주세요.");
         }
     });
 
+    $("#addressCodeSearch").click(function() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                var fullRoadAddr = data.roadAddress;
+                var extraRoadAddr = '';
+
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+
+                $("#address_code").val(data.zonecode);
+                $("#address_general").val(fullRoadAddr);
+            }
+        }).open();
+    });
+
+    function validateInput(input) {
+        if (input.length !== 11) {
+            return false;
+        }
+        for (let i = 0; i < input.length; i++) {
+            if (isNaN(parseInt(input[i])) || parseInt(input[i]) < 0 || parseInt(input[i]) > 9) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     document.getElementById('signUp').addEventListener('submit', function(event) {
+        isPhoneNumberValid = validateInput(document.getElementById('phoneNumber').value);
         event.preventDefault();
         const formData = {
             email: document.getElementById('id').value,
@@ -82,6 +127,10 @@ $(document).ready(function () {
             }
         };
         if (isEmailVerified == true && isPasswordChecked == true) {
+            if(isPhoneNumberValid == false){
+                alert("휴대폰 번호 형식이 올바르지 않습니다.");
+            }
+            else{
             fetch('/sign-up', {
                 method: 'POST',
                 headers: {
@@ -106,7 +155,7 @@ $(document).ready(function () {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        } else {
+        }} else {
             alert("이메일 인증과 비밀번호 중복 확인을 먼저 진행해주세요");
         }
     });

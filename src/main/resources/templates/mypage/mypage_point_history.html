@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}"
+      xmlns:layout="http:www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content"><!-- ==== fragment:content === -->
+
+    <main id="main">
+        <section class="contact mb-5" id="contact">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-lg-12 text-center mt-2 mb-5">
+                        <h1 class="page-title">마이페이지</h1>
+                    </div>
+                </div>
+
+                <!-- ======= New Layout Start ======= -->
+                <div class="d-flex align-items-start mx-3 row g-5">
+                    <!-- ======= Sidebar Start ======= -->
+                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col-lg-3 col-md-auto"
+                         style="width: 230px;">
+                        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+                           href="/">
+                            <span class="fs-4">Sidebar</span>
+                        </a>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a class="nav-link link-dark" href="/mypage">회원 정보</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-current="page" class="nav-link active" href="#">주소 관리</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="/my_grade_title">나의 등급</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="/point/my_point">나의 포인트</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">나의 찜 목록</a>
+                            </li>
+                            <li>
+                                <a class="nav-link link-dark" href="#">주문 내역</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <script>
+                        // Siderbar 에서 마우스가 올라가 있는 요소의 색을 변경
+                        var navLinks = document.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(function (navLink) {
+                            navLink.addEventListener('mouseover', function () {
+                                navLinks.forEach(function (link) {
+                                    link.classList.remove('active');
+                                    link.classList.add('link-dark');
+                                });
+
+                                this.classList.add('active');
+                                this.classList.remove('link-dark');
+                            })
+                        })
+                    </script>
+                    <!-- ======= Sidebar End ======= -->
+
+                    <!-- ======= Point History Start ======= -->
+                    <div class="my-info col-lg-9 col-md-auto col-sm-auto">
+                        <div class="form login-form ml-5">
+                            <h2>나의 포인트 내역</h2>
+                            <hr>
+
+                            <div class="table">
+                                <div class="row border-bottom py-2" style="--bs-bg-opacity: .5;">
+                                    <span class="fw-bold text-center col-2">No</span>
+                                    <span class="fw-bold text-center col-2">적립 포인트</span>
+                                    <span class="fw-bold text-center col-4">변경 사유</span>
+                                    <span class="fw-bold text-center col-4">변경 일시</span>
+                                </div>
+                                <!-- ======= Point History List Start ======= -->
+                                <div class="user-point-history">
+                                    <th:block th:each="pointHistory, status : ${userPointHistories}">
+                                        <div class="row py-2">
+                                            <span class="col-2 text-center" th:text="${status.count}"></span>
+                                            <span class="col-2 text-end"
+                                                  th:text="${#numbers.formatInteger(pointHistory.pointHistoryValue, 1, 'COMMA')} + ' p'"></span>
+                                            <span class="col-4 text-center"
+                                                  th:text="${pointHistory.pointHistoryType}"></span>
+                                            <span class="col-4 text-center"
+                                                  th:text="${#temporals.format(pointHistory.createdAt, 'yyyy-MM-dd hh시 mm분')}"></span>
+                                        </div>
+
+
+                                    </th:block>
+
+                                </div><!-- ======= Point History List End ======= -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ======= Point History End ======= -->
+                </div>
+                <!-- ======= New Layout End ======= -->
+
+            </div>
+        </section>
+    </main>
+
+</div><!-- ==== End fragment:content === -->
+</html>
