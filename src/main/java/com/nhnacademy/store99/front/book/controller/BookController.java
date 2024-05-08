@@ -52,7 +52,8 @@ public class BookController {
                 categoryService.getChildrenListAndRoute(categoryId);
         model.addAttribute("categoryChildrenListAndRoute", categoryChildrenListAndRoute);
 
-        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooksByCategory(categoryId, pageable);
+        // 여기에 카테고리로 도서목록 검색하는거 넣으면 된다.
+        CustomPageImpl<BookPageResponse> booksDTOPage = bookService.getBooks(pageable);
         model.addAttribute("booksDTOPage", booksDTOPage);
         model.addAttribute("url", "/categories");
         return "book/book_sales_list";

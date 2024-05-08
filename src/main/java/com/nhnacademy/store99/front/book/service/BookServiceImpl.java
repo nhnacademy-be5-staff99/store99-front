@@ -41,9 +41,4 @@ public class BookServiceImpl implements BookService {
     public CustomPageImpl<BookPageResponse> getBooks(Pageable pageable) {
         return Objects.requireNonNull(bookAdaptor.getBooks(pageable)).getResult();
     }
-
-    @Override
-    public CustomPageImpl<BookPageResponse> getBooksByCategory(Long categoryId, Pageable pageable) {
-        return bookAdaptor.getBooksByCategory(categoryId, pageable).getResult();
-    }
 }
