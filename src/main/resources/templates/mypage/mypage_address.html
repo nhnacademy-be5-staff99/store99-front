@@ -39,7 +39,7 @@
                                 <a class="nav-link link-dark" href="/my_grade_title">나의 등급</a>
                             </li>
                             <li>
-                                <a class="nav-link link-dark" href="/my_point_title">나의 포인트</a>
+                                <a class="nav-link link-dark" href="/point/my_point">나의 포인트</a>
                             </li>
                             <li>
                                 <a class="nav-link link-dark" href="#">나의 찜 목록</a>
@@ -132,7 +132,8 @@
                                          style="display: flex; justify-content: space-between; align-items: center;">
                                         <p th:text="${userAddress.addressCode}"></p>
                                         <div>
-                                            <button class="btn btn-outline-dark address-update-btn" data-bs-target="#addressUpdateModal"
+                                            <button class="btn btn-outline-dark address-update-btn"
+                                                    data-bs-target="#addressUpdateModal"
                                                     data-bs-toggle="modal"
                                                     th:id="${userAddress.addressId}"
                                                     type="button">수정
@@ -182,7 +183,8 @@
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기
                                             </button>
-                                            <button class="btn btn-primary" id="updateAddress" type="button">수정하기</button>
+                                            <button class="btn btn-primary" id="updateAddress" type="button">수정하기
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
