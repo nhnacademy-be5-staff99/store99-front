@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/checkout.css}"/>
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-3">
+        <main id="main">
+            <h3>비회원 주문/결제</h3>
+            <div class="row g-5">
+                <div class="col-md-12 col-lg-12">
+                    <h4 class="mb-3">구매자 정보</h4>
+                    <form class="needs-validation" novalidate="">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" for="buyer_name">이름</label>
+                                <input class="form-control" id="buyer_name" name="buyerName" placeholder="" required=""
+                                       type="text"
+                                       value="">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="buyer_phone">전화번호</label>
+                                <input class="form-control" id="buyer_phone" name="buyerPhone"
+                                       placeholder="휴대폰 번호를 ‘-’없이 입력해주세요"
+                                       required="" type="text"
+                                       value="">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="buyer_email">Email</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">@</span>
+                                    <input class="form-control" id="buyer_email" name="buyerEmail"
+                                           placeholder="you@example.com"
+                                           type="email">
+                                    <div class="invalid-feedback">
+                                        필수 입력 값입니다.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="buyer_password">주문 조회 비밀번호 입력</label>
+                                <input class="form-control" id="buyer_password" name="buyerPassword" placeholder=""
+                                       required=""
+                                       type="password"
+                                       value="">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">받는 사람 정보</h4>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label" for="recipient_name">이름</label>
+                                <input class="form-control" id="recipient_name" name="recipientName" placeholder=""
+                                       required="" type="text"
+                                       value="">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="recipient_phone">전화번호</label>
+                                <input class="form-control" id="recipient_phone" name="recipientPhone"
+                                       placeholder="휴대폰 번호를 ‘-’없이 입력해주세요"
+                                       required="" type="text"
+                                       value="">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <input class="btn btn-primary" onclick="recipient_execDaumPostcode()" type="button"
+                                   value="우편번호 찾기"><br>
+
+                            <div class="col-9">
+                                <label class="form-label" for="recipient_address">주소</label>
+                                <input class="form-control" id="recipient_address" name="recipientAddress"
+                                       placeholder="" readonly="readonly"
+                                       required="" type="text">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label" for="recipient_postcode">우편번호</label>
+                                <input class="form-control" id="recipient_postcode" name="recipientPostcode"
+                                       placeholder="" readonly="readonly"
+                                       required="" type="text">
+                                <div class="invalid-feedback">
+                                    필수 입력 값입니다.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="recipient_detailAddress">상세주소<span
+                                        class="text-body-secondary">(Optional)</span></label>
+                                <input class="form-control" id="recipient_detailAddress" name="recipientDetailAddress"
+                                       placeholder="" type="text">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4>배송일 선택</h4>
+
+                        <p class="text-muted">도착 예상일</p>
+                        <div>
+                            <input autocomplete="off" checked class="btn-check" id="option1" name="options"
+                                   type="radio">
+                            <label class="btn btn-outline-primary" for="option1"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(1), '내일 (M/d)')}">Checked</label>
+
+                            <input autocomplete="off" class="btn-check" id="option2" name="options" type="radio">
+                            <label class="btn btn-outline-primary" for="option2"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(2), 'E (M/d)')}">Radio</label>
+
+                            <input autocomplete="off" class="btn-check" id="option3" name="options"
+                                   type="radio">
+                            <label class="btn btn-outline-primary" for="option3"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(3), 'E (M/d)')}">Radio</label>
+
+                            <input autocomplete="off" class="btn-check" id="option4" name="options" type="radio">
+                            <label class="btn btn-outline-primary" for="option4"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(4), 'E (M/d)')}">Radio</label>
+
+                            <input autocomplete="off" class="btn-check" id="option5" name="options" type="radio">
+                            <label class="btn btn-outline-primary" for="option5"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(5), 'E (M/d)')}">Radio</label>
+
+                            <input autocomplete="off" class="btn-check" id="option6" name="options" type="radio">
+                            <label class="btn btn-outline-primary" for="option6"
+                                   th:text="${#temporals.format(#temporals.createNow().plusDays(6), 'E (M/d)')}">Radio</label>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">주문 상품</h4>
+
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-2">
+                                <img alt="Book Thumbnail" class="img-thumbnail"
+                                     src="https://via.placeholder.com/63x96">
+                            </div>
+                            <div class="col-md">
+                                <p th:text="'비전공자도 이해할 수 있는 AI 지식 (챗GPT 수록 개정판) - 챗GPT부터 유튜브 추천, 파파고 번역과 내비게이션까지 일상을 움직이는 인공지능 이해하기'"/>
+                            </div>
+                            <div class="col-md-1">
+                                <p th:text="'1개'"/>
+                            </div>
+                            <div class="col-md-2">
+                                <p th:text="'21,600원'"/>
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-md-2">
+                                <img alt="Book Thumbnail" class="img-thumbnail"
+                                     src="https://via.placeholder.com/63x96">
+                            </div>
+                            <div class="col-md">
+                                <p th:text="'비전공자도 이해할 수 있는 AI 지식 (챗GPT 수록 개정판) - 챗GPT부터 유튜브 추천, 파파고 번역과 내비게이션까지 일상을 움직이는 인공지능 이해하기'"/>
+                            </div>
+                            <div class="col-md-1">
+                                <p th:text="'1개'"/>
+                            </div>
+                            <div class="col-md-2">
+                                <p th:text="'21,600원'"/>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">결제 정보</h4>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p>총 상품 가격</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p id="totalProductPrice">0원</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p>배송비</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p id="shippingFee">0원</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p>쿠폰</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p id="coupon">회원만 사용 가능합니다.</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p>포인트</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p id="point">회원만 사용 가능합니다.</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <p>총 결제 금액</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p id="totalPayment">0원</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <!-- 결제 UI, 이용약관 UI 영역 -->
+                                <div id="payment-method"></div>
+                                <div id="agreement"></div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" disabled="disabled" id="payment-button"
+                                type="submit">결제하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+            <div id="layer"
+                 style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+                <img alt="닫기 버튼" id="btnCloseLayer"
+                     onclick="closeDaumPostcode()"
+                     src="//t1.daumcdn.net/postcode/resource/images/close.png"
+                     style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1">
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<th:block layout:fragment="script">
+    <script src="/static/assets/js/checkout.js" type="text/javascript"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/static/assets/js/order_main_address.js"></script>
+    <script>
+        const button = document.getElementById("payment-button");
+        // const coupon = document.getElementById("coupon-box");
+        const generateRandomString = () =>
+            window.btoa(Math.random()).slice(0, 20);
+        var amount = 5000;
+        // ------  결제위젯 초기화 ------
+        // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
+        // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
+        // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
+        const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+        const customerKey = generateRandomString();
+        // const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+        const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
+
+        // ------  결제 UI 렌더링 ------
+        // @docs https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods선택자-결제-금액-옵션
+        paymentMethodWidget = paymentWidget.renderPaymentMethods(
+            "#payment-method",
+            {value: amount},
+            // 렌더링하고 싶은 결제 UI의 variantKey
+            // 결제 수단 및 스타일이 다른 멀티 UI를 직접 만들고 싶다면 계약이 필요해요.
+            // @docs https://docs.tosspayments.com/guides/payment-widget/admin#멀티-결제-ui
+            {variantKey: "DEFAULT"}
+        );
+
+        paymentMethodWidget.on('ready', () => {
+            // 결제 버튼 활성화
+            button.disabled = false;
+        })
+
+        // ------  이용약관 UI 렌더링 ------
+        // @docs https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자-옵션
+        paymentWidget.renderAgreement("#agreement", {variantKey: "AGREEMENT"});
+
+        // ------  결제 금액 업데이트 ------
+        // @docs https://docs.tosspayments.com/reference/widget-sdk#updateamount결제-금액
+        // coupon.addEventListener("change", function () {
+        //     if (coupon.checked) {
+        //         paymentMethodWidget.updateAmount(amount - 5000);
+        //     } else {
+        //         paymentMethodWidget.updateAmount(amount);
+        //     }
+        // });
+
+        // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+        // @docs https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
+        button.addEventListener("click", function () {
+            // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
+            // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+            paymentWidget.requestPayment({
+                orderId: generateRandomString(),
+                orderName: "토스 티셔츠 외 2건",
+                successUrl: window.location.origin + "/success",
+                failUrl: window.location.origin + "/fail",
+                customerEmail: "customer123@gmail.com",
+                customerName: "김토스",
+                customerMobilePhone: "01012341234",
+            });
+        });
+    </script>
+</th:block>
+
+</html>
