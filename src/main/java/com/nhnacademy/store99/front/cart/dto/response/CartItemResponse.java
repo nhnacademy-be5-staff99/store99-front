@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 /**
- * @author seunggyu-kimpost
+ * @author seunggyu-kim
  */
 @Getter
 @Builder

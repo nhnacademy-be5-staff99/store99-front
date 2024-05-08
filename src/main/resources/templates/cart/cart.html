@@ -31,7 +31,7 @@
                         <thead>
                         <tr>
                             <th class="col-1" scope="col">선택</th>
-                            <th class="col" scope="col">상품정보</th>
+                            <th class="col" colspan="2" scope="col">상품정보</th>
                             <th class="col-1" scope="col">수량</th>
                             <th class="col-1" scope="col">상품금액</th>
                             <th class="col-1" scope="col">배송 정보</th>
@@ -41,11 +41,14 @@
                         <tbody>
                         <!-- 각 책의 정보를 표시하는 행을 추가합니다. -->
                         <tr th:each="cartItem, status: ${cartItems}" th:object="${cartItem}">
+                            <td class="col-1">
+                                <!-- 체크박스 추가 -->
+                                <input name="select" th:disabled="*{bookStock <= 0}" th:id="'select-' + *{bookId}"
+                                       type="checkbox"/>
+                            </td>
                             <td class="col-1"><img alt="책 이미지" th:src="*{bookThumbnailUrl}"></td>
-                            <td style="text-align: left;" th:text="*{bookTitle}">
-                                책 제목<br>
-                                <del th:text="*{bookPrice}">15000원</del>
-                                <span th:text="*{bookSalePrice}">10000원</span>
+                            <td style="text-align: left;">
+                                <a th:href="@{/books/{bookId}(bookId= *{bookId})}" th:text="*{bookTitle}"/>
                             </td>
                             <td>
                                 <form action="/cart/books" th:method="put">
@@ -63,7 +66,7 @@
                             <td th:if="*{bookStock > 0}">
                                 <strong>내일</strong>
                                 <br>
-                                [[${#temporals.format(#temporals.createNow(), '(M/d, E)')}]]
+                                [[${#temporals.format(#temporals.createNow().plusDays(1), '(M/d, E)')}]]
                                 <br>
                                 도착예정
                             </td>
@@ -79,8 +82,7 @@
                         <!-- 추가적인 책 정보 행을 필요한 만큼 더 추가할 수 있습니다. -->
                         <tr class="table-secondary" style="text-align: right;">
                             <td colspan="7">
-                                <span>총 금액 : </span><strong id="order-total-price"></strong><span
-                                    th:text="${totalPrice}">0원</span>
+                                <span>총 금액 : </span><strong id="order-total-price"></strong>
                             </td>
                         </tr>
                         </tbody>
@@ -99,6 +101,26 @@
 
 <th:block layout:fragment="script">
     <script th:src="@{/assets/js/cart.js}" type="text/javascript"></script>
+    <script>
+        // 각 도서의 가격과 수량을 가져와서 총 금액을 계산
+        function calculateTotal() {
+            let total = 0;
+            document.querySelectorAll('input[name="select"]:checked').forEach(function (checkbox) {
+                let row = checkbox.closest('tr');
+                let price = parseInt(row.querySelector('.order-per-price').innerText);
+                total += price;
+            });
+            document.getElementById('order-total-price').innerText = total + '원';
+        }
+
+        // 체크박스가 변경될 때마다 총 금액을 다시 계산
+        document.querySelectorAll('input[name="select"]').forEach(function (checkbox) {
+            checkbox.addEventListener('change', calculateTotal);
+        });
+
+        // 페이지 로드 시 총 금액 계산
+        calculateTotal();
+    </script>
 </th:block>
 
 </html>
