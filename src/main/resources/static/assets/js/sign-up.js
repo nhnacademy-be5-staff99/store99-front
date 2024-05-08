@@ -68,7 +68,6 @@ $(document).ready(function () {
         }
     });
 
-
     $("#addressCodeSearch").click(function() {
         new daum.Postcode({
             oncomplete: function(data) {
