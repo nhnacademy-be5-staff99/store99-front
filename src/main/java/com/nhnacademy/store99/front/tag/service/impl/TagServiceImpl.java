@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * tag 서비스 구현
  *
- * @Author rosin23
+ * @author rosin23
  */
 
 @Service
@@ -27,13 +27,6 @@ public class TagServiceImpl implements TagService {
     public List<TagResponse> findAllTags() {
         return tagAdapter.getAllTags().getResult();
     }
-
-    /*
-    @Override
-    public TagResponse findTagById(Long id) {
-        return tagAdapter.getTagById(id).getResult();
-    }
-    */
 
     @Override
     public void createTag(CreateTagRequest request) {
