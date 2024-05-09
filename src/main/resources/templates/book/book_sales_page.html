@@ -89,10 +89,12 @@
                                     <form action="/carts" method="post">
                                         <input disabled hidden="hidden" name="bookId" th:value="*{bookId}"
                                                type="number">
-                                        <button class="btn btn-primary mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
+                                        <button class="btn btn-primary mb-2"
+                                                onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')" th:classappend="*{bookStock <= 1} ? 'disabled'"
                                                 type="submit">카트에 넣기
                                         </button>
-                                        <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
+                                        <button class="btn btn-success mb-2"
+                                                onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')" th:classappend="*{bookStock <= 1} ? 'disabled'"
                                                 type="submit">바로구매
                                     </form>
                                 </div>
