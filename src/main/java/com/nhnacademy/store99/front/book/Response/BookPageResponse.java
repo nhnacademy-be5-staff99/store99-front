@@ -40,13 +40,7 @@ public class BookPageResponse {
 
     private Long BookId;
 
-    private String BookIsbn13;
-
-    private String BookIsbn10;
-
     private String BookTitle;
-
-    private String BookContents;
 
     private String BookPublisher;
 
@@ -56,19 +50,15 @@ public class BookPageResponse {
 
     private Integer BookSalePrice;
 
-    private Boolean BookIsPacked;
-
     private String BookThumbnailUrl;
-
-    private Integer BookStock;
 
     private Integer BookCntOfReview;
 
+    private Integer BookViewCount;
+
+    private Integer BookStock;
+
     private Double BookAvgOfRate;
-
-    private LocalDateTime CreatedAt;
-
-    private LocalDateTime UpdatedAt;
 
     private List<AuthorDTO> authorsDTOList;
 

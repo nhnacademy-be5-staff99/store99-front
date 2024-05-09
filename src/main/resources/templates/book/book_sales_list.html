@@ -156,10 +156,13 @@
                             </div>
                             <div class="col-md-2 d-flex flex-column">
                                 <button class="btn btn-primary mb-2 add-to-cart-button"
+                                        th:classappend="${bookDto.bookStock <= 1} ? 'disabled'"
                                         data-bs-target="#add-to-cart-button-modal"
                                         data-bs-toggle="modal" th:data-book-id="${bookDto.bookId}">카트에 넣기
                                 </button>
-                                <button class="btn btn-success mb-2" onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')">바로구매
+                                <button class="btn btn-success mb-2"
+                                        onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
+                                        th:classappend="${bookDto.bookStock <= 1} ? 'disabled'">바로구매
                                 </button>
                             </div>
                         </div>
