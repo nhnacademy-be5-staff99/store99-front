@@ -8,13 +8,11 @@ import java.util.List;
 /**
  * 프론트 태그 서비스
  *
- * @Author rosin23
+ * @author rosin23
  */
 
 public interface TagService {
     List<TagResponse> findAllTags();
-
-//    TagResponse findTagById(Long id);
 
     void createTag(CreateTagRequest request);
 

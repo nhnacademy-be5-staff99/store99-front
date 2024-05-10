@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * 태그 컨트롤러, Model 사용
  *
- * @Author rosin23
+ * @author rosin23
  */
 
 @Controller
