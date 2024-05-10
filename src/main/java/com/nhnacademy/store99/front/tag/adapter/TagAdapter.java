@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * OpenFeign으로 백엔드 서버와 통신
  *
- * @Author rosin23
+ * @author rosin23
  */
 
 @FeignClient(value = "tagAdapter", url = "${gateway.url}/api/bookstore/admin/v1/tags")

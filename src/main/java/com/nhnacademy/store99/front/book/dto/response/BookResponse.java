@@ -1,13 +1,17 @@
 package com.nhnacademy.store99.front.book.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class BookResponse {
     private Long BookId;
     private String BookIsbn13;
@@ -25,6 +29,7 @@ public class BookResponse {
     private String BookImageURL;
     private String BookImageName;
     private List<BookResponse.AuthorDTO> authorsDTOList;
+    private List<BookResponse.TagDTO> tagDTOList;
 
     @Getter
     @Setter
@@ -38,4 +43,18 @@ public class BookResponse {
             AuthorType = authorType;
         }
     }
+
+    @Getter
+    @Setter
+    @Builder
+    public static class TagDTO {
+        @JsonProperty
+        private String TagName;
+
+        @JsonCreator
+        public TagDTO(@JsonProperty("tagName") String tagName) {
+            TagName = tagName;
+        }
+    }
+
 }
