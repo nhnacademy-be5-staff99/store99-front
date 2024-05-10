@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.book.Request;
+package com.nhnacademy.store99.front.book.dto.request;
 
 import java.time.LocalDateTime;
 import lombok.Getter;

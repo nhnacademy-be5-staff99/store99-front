@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.book.Response;
+package com.nhnacademy.store99.front.book.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
