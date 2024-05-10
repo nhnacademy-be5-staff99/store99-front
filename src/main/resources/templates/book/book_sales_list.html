@@ -153,6 +153,11 @@
                                          th:src="@{/static/assets/img/like/store99-unLike.svg}"/>
                                     <div id="likeCnt" th:text="${cnt}"></div>
                                 </button>
+                                <div>
+                                    <button class="btn btn-outline-primary"
+                                            th:each="TagDTO : ${bookDto.tagDTOList}" style='letter-spacing:1px'>
+                                        <span th:text="${TagDTO.tagName}"></span></button>
+                                </div>
                             </div>
                             <div class="col-md-2 d-flex flex-column">
                                 <div class="color-red align-content-center btn fw-bold disabled mb-2"
