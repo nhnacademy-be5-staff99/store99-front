@@ -63,7 +63,7 @@ public class LikeServiceImpl implements LikeService {
         } catch (Exception ex) {
             log.error("error of deleteLike: ", ex);
         }
-        log.debug("cnt= " + cnt);
         return cnt;
     }
+
 }
