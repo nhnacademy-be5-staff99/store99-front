@@ -9,4 +9,5 @@ public interface LikeService {
     String deleteLike(Long likeId);
 
     Long getLikeCnt(Long bookId);
+
 }
