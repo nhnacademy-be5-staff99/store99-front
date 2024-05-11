@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.nhnacademy.store99.front.book.Response.BookPageResponse;
-import com.nhnacademy.store99.front.book.Response.BookResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookPageResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
 import com.nhnacademy.store99.front.category.dto.response.CategoryChildrenListAndRouteResponse;
 import com.nhnacademy.store99.front.category.service.CategoryService;

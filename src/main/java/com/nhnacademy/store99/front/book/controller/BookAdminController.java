@@ -1,6 +1,6 @@
 package com.nhnacademy.store99.front.book.controller;
 
-import com.nhnacademy.store99.front.book.Request.BookRequest;
+import com.nhnacademy.store99.front.book.dto.request.BookRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
