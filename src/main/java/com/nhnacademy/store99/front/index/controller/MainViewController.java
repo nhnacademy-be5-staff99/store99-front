@@ -17,9 +17,14 @@ public class MainViewController {
     public String getIndex(Model model) {
         List<IndexBookResponse> bestBooks = bookService.getBestBooks();
         List<IndexBookResponse> latestBooks = bookService.getLatestBooks();
-        List science = bookService.getBooksByCategory(2L);
+        List<IndexBookResponse> science = bookService.getBooksByCategory(2L);
+        List<IndexBookResponse> computer = bookService.getBooksByCategory(3L);
+        List<IndexBookResponse> economy = bookService.getBooksByCategory(4L);
         model.addAttribute("bestBooks", bestBooks);
         model.addAttribute("latestBooks", latestBooks);
+        model.addAttribute("science", science);
+        model.addAttribute("computer", computer);
+        model.addAttribute("economy", economy);
 
 
         return "index";
