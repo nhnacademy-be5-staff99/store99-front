@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface LikeAdapter {
 
     @PostMapping("/api/bookstore/v1/likes")
-    CommonResponse<Void> addLike(final LikeRequest req);
+    CommonResponse<Void> addLike(@RequestHeader("X-USER-TOKEN") String userToken, @RequestBody final LikeRequest req);
 
     @DeleteMapping("/api/bookstore/v1/likes/{likeId}")
     CommonResponse<String> deleteLike(@PathVariable final Long likeId);
