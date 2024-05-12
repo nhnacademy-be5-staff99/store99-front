@@ -2,10 +2,10 @@ package com.nhnacademy.store99.front.book.adapter;
 
 import com.nhnacademy.store99.front.book.dto.response.BookPageResponse;
 import com.nhnacademy.store99.front.book.dto.response.BookResponse;
-import com.nhnacademy.store99.front.book.dto.response.IndexBookResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
+import com.nhnacademy.store99.front.index.dto.response.IndexBookResponse;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;

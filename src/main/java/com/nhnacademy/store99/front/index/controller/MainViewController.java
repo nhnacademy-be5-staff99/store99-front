@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.index.controller;
 
-import com.nhnacademy.store99.front.book.dto.response.IndexBookResponse;
 import com.nhnacademy.store99.front.book.service.BookService;
+import com.nhnacademy.store99.front.index.dto.response.IndexBookResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

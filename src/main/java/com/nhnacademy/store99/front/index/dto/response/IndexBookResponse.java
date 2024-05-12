@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.book.dto.response;
+package com.nhnacademy.store99.front.index.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
