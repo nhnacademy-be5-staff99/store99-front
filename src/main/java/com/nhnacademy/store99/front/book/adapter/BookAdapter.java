@@ -40,6 +40,12 @@ public interface BookAdapter {
     CommonResponse<CustomPageImpl<BookPageResponse>> getBooksByCategory(@PathVariable("categoryId") Long categoryId,
                                                                         Pageable pageable);
 
+    @GetMapping("/categories/index")
+    CommonResponse<List<IndexBookResponse>> getBooksByCategory(@RequestParam("categoryId") Long categoryId);
+
     @GetMapping("/best")
     CommonResponse<List<IndexBookResponse>> getBestBooks();
+
+    @GetMapping("/latest")
+    CommonResponse<List<IndexBookResponse>> getLatestBooks();
 }

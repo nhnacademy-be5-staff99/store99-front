@@ -44,6 +44,15 @@ public class BookServiceImpl implements BookService {
         return bestBooksResponse.getResult();
     }
 
+    @Override
+    public List<IndexBookResponse> getLatestBooks() {
+        CommonResponse<List<IndexBookResponse>> latestBooksResponse = bookAdaptor.getLatestBooks();
+        if (!latestBooksResponse.getHeader().isSuccessful()) {
+            return List.of();
+        }
+        return latestBooksResponse.getResult();
+    }
+
     /**
      * book 목록 조회
      *
@@ -57,5 +66,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public CustomPageImpl<BookPageResponse> getBooksByCategory(Long categoryId, Pageable pageable) {
         return bookAdaptor.getBooksByCategory(categoryId, pageable).getResult();
+    }
+
+    @Override
+    public List<IndexBookResponse> getBooksByCategory(Long categoryId) {
+        return bookAdaptor.getBooksByCategory(categoryId).getResult();
     }
 }

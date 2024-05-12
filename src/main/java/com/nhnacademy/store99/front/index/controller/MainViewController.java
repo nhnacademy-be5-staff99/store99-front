@@ -16,7 +16,12 @@ public class MainViewController {
     @GetMapping({"/", "/index"})
     public String getIndex(Model model) {
         List<IndexBookResponse> bestBooks = bookService.getBestBooks();
+        List<IndexBookResponse> latestBooks = bookService.getLatestBooks();
+        List science = bookService.getBooksByCategory(2L);
         model.addAttribute("bestBooks", bestBooks);
+        model.addAttribute("latestBooks", latestBooks);
+
+
         return "index";
     }
 }

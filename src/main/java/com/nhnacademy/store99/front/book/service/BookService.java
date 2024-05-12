@@ -14,8 +14,12 @@ public interface BookService {
 
     List<IndexBookResponse> getBestBooks();
 
+    List<IndexBookResponse> getLatestBooks();
+
     CustomPageImpl<BookPageResponse> getBooks(Pageable pageable);
 
     CustomPageImpl<BookPageResponse> getBooksByCategory(Long categoryId, Pageable pageable);
+
+    List<IndexBookResponse> getBooksByCategory(Long categoryId);
 
 }
