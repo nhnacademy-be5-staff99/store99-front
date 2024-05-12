@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.like.service.impl;
 
 import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.like.adapter.LikeAdapter;
 import com.nhnacademy.store99.front.like.dto.request.LikeRequest;
 import com.nhnacademy.store99.front.like.exception.LikeCountNotAvailableException;
@@ -26,7 +27,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public void addLike(final LikeRequest likeRequest) {
         try {
-            likeAdapter.addLike(likeRequest);
+            likeAdapter.addLike(XUserTokenThreadLocal.getXUserToken(), likeRequest);
         } catch (FeignException.Forbidden ex) {
             throw new LikeProcessingFaildException();
         } catch (Exception ex) {
