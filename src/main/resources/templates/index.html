@@ -15,43 +15,57 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="swiper sliderFeaturedPosts">
+
+                            <!--베스트 - 과학 - 컴퓨터 - 경제. 최신도서 3개씩 굿-->
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/resilience_book.jpg');">
+                                <div class="swiper-slide" th:object="${bestBooks[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{bookThumbnailUrl}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>The Best Seller</h2>
-                                            <p>국내 최고의 인기도서</p>
+                                            <h2>Latest Science Book</h2>
+                                            <p>최신 과학 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/franzkafka.jpg');">
+                                <div class="swiper-slide" th:object="${science[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{bookThumbnailUrl}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>The Essential'프란츠 카프카'</h2>
-                                            <p>드디어 단독 ebook 출시!</p>
+                                            <h2>Latest Science Book</h2>
+                                            <p>최신 과학 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/post-slide-3.jpg');">
+                                <div class="swiper-slide" th:object="${computer[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{bookThumbnailUrl}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h2>
-                                            <p></p>
+                                            <h2>Latest Computer Book</h2>
+                                            <p>최신 컴퓨터 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/post-slide-4.jpg');">
+                                <div class="swiper-slide" th:object="${economy[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{bookThumbnailUrl}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>9 Half-up/half-down Hairstyles for Long and Medium Hair</h2>
-                                            <p></p>
+                                            <h2>Latest Economy Book</h2>
+                                            <p>최신 경제/금융 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
