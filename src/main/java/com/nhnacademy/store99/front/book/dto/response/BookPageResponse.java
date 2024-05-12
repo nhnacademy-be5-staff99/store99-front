@@ -1,5 +1,7 @@
-package com.nhnacademy.store99.front.book.Response;
+package com.nhnacademy.store99.front.book.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -64,6 +66,8 @@ public class BookPageResponse {
 
     private Integer BookCntOfReview;
 
+    private Integer BookViewCount;
+
     private Double BookAvgOfRate;
 
     private LocalDateTime CreatedAt;
@@ -72,8 +76,10 @@ public class BookPageResponse {
 
     private List<AuthorDTO> authorsDTOList;
 
+    private List<TagDTO> tagDTOList;
+
     @Getter
-    @Setter
+
     @Builder
     public static class AuthorDTO {
         private String AuthorName;
@@ -85,4 +91,21 @@ public class BookPageResponse {
         }
     }
 
+    @Getter
+    @Setter
+    @Builder
+    public static class TagDTO {
+        @JsonProperty
+        private String TagName;
+
+        @JsonCreator
+        public TagDTO(@JsonProperty("tagName") String tagName) {
+            TagName = tagName;
+        }
+    }
+
+    public void setTagDTOList(List<TagDTO> tagDTOList) {
+        this.tagDTOList = tagDTOList;
+        System.out.println("Tags received: " + tagDTOList);  // Log to check what is being set
+    }
 }

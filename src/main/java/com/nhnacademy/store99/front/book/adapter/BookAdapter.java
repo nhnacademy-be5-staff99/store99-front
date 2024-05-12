@@ -1,7 +1,7 @@
 package com.nhnacademy.store99.front.book.adapter;
 
-import com.nhnacademy.store99.front.book.Response.BookPageResponse;
-import com.nhnacademy.store99.front.book.Response.BookResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookPageResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
