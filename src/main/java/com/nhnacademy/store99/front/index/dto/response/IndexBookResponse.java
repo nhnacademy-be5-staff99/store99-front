@@ -16,4 +16,5 @@ public class IndexBookResponse {
     private LocalDateTime BookDate;
     private String BookDescription;
     private String BookThumbnailUrl;
+    private String BookDetailURL;
 }
