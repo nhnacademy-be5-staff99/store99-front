@@ -159,34 +159,19 @@
 
                         <h4 class="mb-3">주문 상품</h4>
 
-                        <div class="row d-flex align-items-center">
+                        <div class="row d-flex align-items-center" th:each="orderBook, status: ${orderBookList}">
                             <div class="col-md-2">
                                 <img alt="Book Thumbnail" class="img-thumbnail"
                                      src="https://via.placeholder.com/63x96">
                             </div>
                             <div class="col-md">
-                                <p th:text="'비전공자도 이해할 수 있는 AI 지식 (챗GPT 수록 개정판) - 챗GPT부터 유튜브 추천, 파파고 번역과 내비게이션까지 일상을 움직이는 인공지능 이해하기'"/>
+                                <p th:text="${orderBook.bookTitle}"/>
                             </div>
                             <div class="col-md-1">
-                                <p th:text="'1개'"/>
+                                <p th:text="${orderBook.quantity}"/>
                             </div>
                             <div class="col-md-2">
-                                <p th:text="'21,600원'"/>
-                            </div>
-                        </div>
-                        <div class="row d-flex align-items-center">
-                            <div class="col-md-2">
-                                <img alt="Book Thumbnail" class="img-thumbnail"
-                                     src="https://via.placeholder.com/63x96">
-                            </div>
-                            <div class="col-md">
-                                <p th:text="'비전공자도 이해할 수 있는 AI 지식 (챗GPT 수록 개정판) - 챗GPT부터 유튜브 추천, 파파고 번역과 내비게이션까지 일상을 움직이는 인공지능 이해하기'"/>
-                            </div>
-                            <div class="col-md-1">
-                                <p th:text="'1개'"/>
-                            </div>
-                            <div class="col-md-2">
-                                <p th:text="'21,600원'"/>
+                                <p th:text="${orderBook.bookSalePrice}"/>
                             </div>
                         </div>
 
@@ -199,7 +184,7 @@
                                 <p>총 상품 가격</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalProductPrice">0원</p>
+                                <p id="totalProductPrice" th:text="${totalProductPrice} + 원">/p>
                             </div>
                         </div>
 
@@ -241,8 +226,9 @@
 
                         <div class="row mb-3">
                             <div class="col-12">
-                                <!-- 결제 UI, 이용약관 UI 영역 -->
+                                <!-- 결제 UI -->
                                 <div id="payment-method"></div>
+                                <!-- 이용약관 UI -->
                                 <div id="agreement"></div>
                             </div>
                         </div>
@@ -273,20 +259,21 @@
     <script src="/static/assets/js/checkout.js" type="text/javascript"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/static/assets/js/order_main_address.js"></script>
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
         const button = document.getElementById("payment-button");
         // const coupon = document.getElementById("coupon-box");
         const generateRandomString = () =>
             window.btoa(Math.random()).slice(0, 20);
-        var amount = 5000;
+        var amount = 50000;
         // ------  결제위젯 초기화 ------
         // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
         // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
         // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
         const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
         const customerKey = generateRandomString();
-        // const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
-        const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
+        const paymentWidget = PaymentWidget(clientKey, customerKey); // 회원 결제
+        // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
 
         // ------  결제 UI 렌더링 ------
         // @docs https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods선택자-결제-금액-옵션
@@ -298,10 +285,9 @@
             // @docs https://docs.tosspayments.com/guides/payment-widget/admin#멀티-결제-ui
             {variantKey: "DEFAULT"}
         );
-
         paymentMethodWidget.on('ready', () => {
             // 결제 버튼 활성화
-            button.disabled = false;
+            document.getElementById("payment-button").removeAttribute("disabled");
         })
 
         // ------  이용약관 UI 렌더링 ------
@@ -333,6 +319,7 @@
                 customerMobilePhone: "01012341234",
             });
         });
+        /*]]>*/
     </script>
 </th:block>
 

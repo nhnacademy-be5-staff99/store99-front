@@ -2,6 +2,9 @@ package com.nhnacademy.store99.front.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.nhnacademy.store99.front.order.dto.request.OrderBookRequest;
+import com.nhnacademy.store99.front.order.dto.response.BookInOrderResponse;
+import com.nhnacademy.store99.front.order.service.OrderQueryService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,24 +14,39 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * @author seunggyu-kim
+ */
 @Controller
+@RequiredArgsConstructor
 public class OrderViewController {
-    @GetMapping("/order")
-    public String getOrderIndex(@RequestAttribute boolean isLogin, Model model) {
+    private final OrderQueryService orderQueryService;
+
+    @PostMapping("/checkout")
+    public String getOrderIndex(@RequestAttribute boolean isLogin, Model model,
+                                @ModelAttribute OrderBookRequest orderBookRequest) {
         model.addAttribute("orderId", UUID.randomUUID().toString());
-        return isLogin ? "order/order_main_member" : "order/order_main_guest";
+        List<BookInOrderResponse> orderBookList =
+                orderQueryService.getOrderBookList(orderBookRequest.getOrderBookRequestList());
+        model.addAttribute("orderBookList", orderBookList);
+        model.addAttribute("totalProductPrice",
+                orderBookList.stream().mapToInt(BookInOrderResponse::getBookPrice).sum());
+        return isLogin ? "order/checkout_main_member" : "order/checkout_main_guest";
     }
 
     /**
