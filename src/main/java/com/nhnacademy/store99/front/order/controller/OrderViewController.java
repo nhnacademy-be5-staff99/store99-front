@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,13 +41,28 @@ public class OrderViewController {
     @PostMapping("/checkout")
     public String getOrderIndex(@RequestAttribute boolean isLogin, Model model,
                                 @ModelAttribute OrderBookRequest orderBookRequest) {
-        model.addAttribute("orderId", UUID.randomUUID().toString());
         List<BookInOrderResponse> orderBookList =
                 orderQueryService.getOrderBookList(orderBookRequest.getOrderBookRequestList());
+        model.addAttribute("orderId", UUID.randomUUID().toString());
         model.addAttribute("orderBookList", orderBookList);
         model.addAttribute("totalProductPrice",
                 orderBookList.stream().mapToInt(BookInOrderResponse::getBookPrice).sum());
+        model.addAttribute("orderName", getOrderName(orderBookList));
         return isLogin ? "order/checkout_main_member" : "order/checkout_main_guest";
+    }
+
+    /**
+     * 주문 도서 리스트로 받아서 주문명 반환
+     * 주문 도서 외 n권 형식으로 반환
+     *
+     * @param orderBookList 주문 도서 리스트
+     * @return 주문명
+     */
+    private @NotNull String getOrderName(final List<BookInOrderResponse> orderBookList) {
+        if (orderBookList.size() == 1) {
+            return orderBookList.get(0).getBookTitle();
+        }
+        return orderBookList.get(0).getBookTitle() + " 외 " + (orderBookList.size() - 1) + "권";
     }
 
     /**
