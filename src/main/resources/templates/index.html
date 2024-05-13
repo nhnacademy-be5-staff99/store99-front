@@ -279,28 +279,29 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="post-entry-1 border-bottom">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-5.jpg"></a>
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">11 Work From Home Part-Time Jobs You Can
-                                        Do Now</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
+                                    <a th:href="@{books/{bookId}(bookId=${computer[1].getBookId()})}"><img alt=""
+                                                                                                           class="img-fluid"
+                                                                                                           th:src="${computer[1].getBookThumbnailUrl()}"></a>
+                                    <div class="post-meta"><span class="date">Computer</span> <span class="mx-1">&bullet;</span>
+                                        <span th:text="${#temporals.format(computer[1].getBookDate(), 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <h2 class="mb-2"><a th:href="@{books/{bookId}(bookId=${computer[1].getBookId()})}"
+                                                        th:text="${computer[1].getBookTitle()}"></a></h2>
+                                    <p class="mb-4 d-block" th:text="${computer[1].getBookDescription()}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-8">
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-7.jpg"></a>
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay
-                                        Focused During Video Calls?</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
+                                    <a th:href="@{books/{bookId}(bookId=${computer[2].getBookId()})}"
+                                    ><img alt=""
+                                          class="img-fluid thumbnail " th:src="${computer[2].getBookThumbnailUrl()}"
+                                    ></a>
+                                    <div class="post-meta"><span class="date">Computer</span> <span class="mx-1">&bullet;</span>
+                                        <span th:text="${#temporals.format(computer[2].getBookDate(), 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <h2 class="mb-2"><a th:href="@{books/{bookId}(bookId=${computer[2].getBookId()})}"
+                                                        th:text="${computer[2].getBookTitle()}"></a></h2>
+                                    <p class="mb-4 d-block" th:text="${computer[2].getBookDescription()}"></p>
                                 </div>
                             </div>
                         </div>
