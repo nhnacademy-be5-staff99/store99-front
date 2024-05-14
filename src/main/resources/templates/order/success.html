@@ -1,75 +1,92 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="utf-8"/>
-    <link
-            href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
-            rel="icon"
-    />
-    <link href="/static/assets/css/toss_style.css" rel="stylesheet" type="text/css"/>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>토스페이먼츠 샘플 프로젝트</title>
-</head>
-<body>
-<div class="result wrapper">
-    <div class="box_section">
-        <h2 style="padding: 20px 0px 10px 0px">
-            <img
-                    src="https://static.toss.im/3d-emojis/u1F389_apng.png"
-                    width="35px"
-            />
-            결제 성공
-        </h2>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 
-        <p id="paymentKey"></p>
-        <p id="orderId"></p>
-        <p id="amount"></p>
+<meta charset="UTF-8">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/toss_style.css}"/>
+
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-3">
+        <main id="main">
+            <th:block th:if="${#strings.equals(isSuccess, 'true')}">
+                <div class="box_section" style="width: 600px">
+                    <img src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png" width="100px"/>
+                    <h2>결제를 완료했어요</h2>
+
+                    <div class="p-grid typography--p" style="margin-top: 50px">
+                        <div class="p-grid-col text--left"><b>결제금액</b></div>
+                        <div class="p-grid-col text--right" id="amount"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>주문번호</b></div>
+                        <div class="p-grid-col text--right" id="orderId"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>주문명</b></div>
+                        <div class="p-grid-col text--right" th:text="${orderName}"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>결제 수단</b></div>
+                        <div class="p-grid-col text--right" th:text="${method}"></div>
+                    </div>
+
+                    <tr th:if="${#strings.equals(method, '카드')}">cardNumber
+                        <td th:text="${cardNumber}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '가상계좌')}">accountNumber
+                        <td th:text="${accountNumber}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '계좌이체')}">bank
+                        <td th:text="${bank}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '휴대폰')}">customerMobilePhone
+                        <td th:text="${customerMobilePhone}"></td>
+                    </tr>
+                </div>
+
+                <div class="box_section" style="width: 600px; text-align: left">
+                    <b>Response Data :</b>
+                    <div id="response" style="white-space: initial"></div>
+                </div>
+            </th:block>
+            <th:block th:if="${#strings.equals(isSuccess, 'false')}">
+                <div class="box_section" id="info" style="width: 600px">
+                    <img src="https://static.toss.im/lotties/error-spot-no-loop-space-apng.png" width="100px"/>
+                    <h2>결제를 실패했어요</h2>
+
+                    <div class="p-grid typography--p" style="margin-top: 50px">
+                        <div class="p-grid-col text--left"><b>에러메시지</b></div>
+                        <div class="p-grid-col text--right" id="message" th:text="${message}"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>에러코드</b></div>
+                        <div class="p-grid-col text--right" id="code" th:text="${code}"></div>
+                    </div>
+                </div>
+            </th:block>
+        </main>
     </div>
 </div>
-<script>
-    // 쿼리 파라미터 값이 결제 요청할 때 보낸 데이터와 동일한지 반드시 확인하세요.
-    // 클라이언트에서 결제 금액을 조작하는 행위를 방지할 수 있습니다.
-    const urlParams = new URLSearchParams(window.location.search);
 
-    // 서버로 결제 승인에 필요한 결제 정보를 보내세요.
-    async function confirm() {
-        var requestData = {
-            paymentKey: urlParams.get("paymentKey"),
-            orderId: urlParams.get("orderId"),
-            amount: urlParams.get("amount"),
-        };
 
-        const response = await fetch("/confirm", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
-        });
+<th:block layout:fragment="script">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
 
-        const json = await response.json();
+        const paymentKeyElement = document.getElementById("paymentKey");
+        const orderIdElement = document.getElementById("orderId");
+        const amountElement = document.getElementById("amount");
 
-        if (!response.ok) {
-            // TODO: 결제 실패 비즈니스 로직을 구현하세요.
-            console.log(json);
-            window.location.href = `/fail?message=${json.message}&code=${json.code}`;
-        }
+        orderIdElement.textContent = urlParams.get("orderId");
+        amountElement.textContent = urlParams.get("amount") + "원";
+        paymentKeyElement.textContent = urlParams.get("paymentKey");
+    </script>
+</th:block>
 
-        // TODO: 결제 성공 비즈니스 로직을 구현하세요.
-        console.log(json);
-    }
-
-    confirm();
-
-    const paymentKeyElement = document.getElementById("paymentKey");
-    const orderIdElement = document.getElementById("orderId");
-    const amountElement = document.getElementById("amount");
-
-    orderIdElement.textContent = "주문번호: " + urlParams.get("orderId");
-    amountElement.textContent = "결제 금액: " + urlParams.get("amount");
-    paymentKeyElement.textContent =
-        "paymentKey: " + urlParams.get("paymentKey");
-</script>
-</body>
 </html>
