@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</th:block>
+
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <main id="main">
+
+        <div class="container py-3">
+            <section class="book-sales-list col-md-12 col-lg-12 py-0" id="book-sales-list">
+
+
+                <div class="d-flex justify-content-between align-items-center border p-3 mb-3">
+                    <div>
+                        <th:block>
+                            <button class="btn btn-primary">
+
+                            </button>
+                        </th:block>
+                    </div>
+                    <div class="page-size-selector">
+                        <select class="form-select form-select-sm"
+                                onchange="window.location.href='?size=' + this.value">
+                            <option th:selected="${#request.getParameter('size')=='10'}" value="10">10개씩 보기
+                            </option>
+                            <option th:selected="${#request.getParameter('size')=='20'}" value="20">20개씩 보기
+                            </option>
+                            <option th:selected="${#request.getParameter('size')=='50'}" value="50">50개씩 보기</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--pagination-->
+                <div class="d-flex gap-2 justify-content-center">
+                    <nav aria-label="Page navigation example"
+                         th:with="link = ${#request.getRequestURI()}, items = ${books},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                <a aria-label="Previous" class="page-link"
+                                   th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                <a class="page-link"
+                                   th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                   th:text="${pageNumber+1}">
+                                </a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                <a aria-label="Next" class="page-link"
+                                   th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!--book list-->
+                <div th:each="bookDto, status : ${books.content}">
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img alt="Book Thumbnail" class="img-thumbnail"
+                                 style="width: 200px; height: 260px;" th:src="${bookDto.BookThumbnailUrl}">
+                        </div>
+
+                        <div class="col-md-7">
+                            <h5>
+                                <a th:href="@{/books/{bookId}(bookId= ${bookDto.bookId})}"
+                                   th:text="${bookDto.BookTitle}"> </a>
+                            </h5>
+                            <small class="my-1">
+                                <th:block th:each="authorDTO : ${bookDto.authorsDTOList}">
+                                    <span th:text="${authorDTO.AuthorName}"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'AUTHOR')}"
+                                          th:text="|(지은이)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'PAINTER')}"
+                                          th:text="|(그림)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'TRANSLATOR')}"
+                                          th:text="|(옮긴이)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'SUPERVISION')}"
+                                          th:text="|(감수)|"></span>
+                                    <span th:if="${#strings.equals(authorDTO.AuthorType,'ETC')}"
+                                          th:text="|(기타)|"></span>
+                                </th:block>
+                                |
+                                <th:block th:text="${bookDto.BookPublisher}"></th:block>
+                                |
+                                <th:block
+                                        th:text="${#temporals.format(bookDto.BookDate, 'yyyy년-MM월-dd일')}"></th:block>
+                            </small>
+                            <div>
+                                <button class="btn btn-outline-primary"
+                                        style='letter-spacing:1px' th:each="TagDTO : ${bookDto.tagDTOList}">
+                                    <span th:text="${TagDTO.tagName}"></span></button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <th:block th:if="*{deletedAt}">
+                                <button class="btn btn-success restore-button">
+                                    복구
+                                </button>
+                            </th:block>
+                            <th:block th:unless="*{deletedAt}">
+                                <button class="btn btn-secondary">수정</button>
+                                <button class="btn btn-danger delete-btn">
+                                    삭제
+                                </button>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+                <!--pagination-->
+                <div class="d-flex gap-2 justify-content-center">
+                    <nav aria-label="Page navigation example"
+                         th:with="link = ${#request.getRequestURI()}, items = ${books},
+                             pageRange = 10,startPage=${(items.number / pageRange) * pageRange},
+                             endPage=(${
+                                startPage + pageRange <= items.totalPages ?
+                                startPage + pageRange - 1 : items.totalPages - 1
+                             })
+                        ">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${startPage <= 1} ? 'disabled'">
+                                <a aria-label="Previous" class="page-link"
+                                   th:href="@{${link}(page=${startPage - 1},
+                                        size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageNumber eq items.number} ? 'active'"
+                                th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                                <a class="page-link"
+                                   th:href="@{${link}(page=${pageNumber}, size=${#request.getParameter('size')})}"
+                                   th:text="${pageNumber + 1}">
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${endPage >= items.totalPages - 1} ? 'disabled'">
+                                <a aria-label="Next" class="page-link"
+                                   th:href="@{${link}(page=${endPage + 1}, size=${#request.getParameter('size')})}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </section> <!-- End Search Result -->
+        </div>
+    </main>
+</div>
+</html>

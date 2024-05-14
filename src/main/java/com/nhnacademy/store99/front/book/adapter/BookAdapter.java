@@ -5,6 +5,8 @@ import com.nhnacademy.store99.front.book.dto.response.BookResponse;
 import com.nhnacademy.store99.front.book_author.response.BookAuthorResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
+import com.nhnacademy.store99.front.index.dto.response.IndexBookResponse;
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +40,12 @@ public interface BookAdapter {
     CommonResponse<CustomPageImpl<BookPageResponse>> getBooksByCategory(@PathVariable("categoryId") Long categoryId,
                                                                         Pageable pageable);
 
+    @GetMapping("/categories/index")
+    CommonResponse<List<IndexBookResponse>> getBooksByCategory(@RequestParam("categoryId") Long categoryId);
+
+    @GetMapping("/best")
+    CommonResponse<List<IndexBookResponse>> getBestBooks();
+
+    @GetMapping("/latest")
+    CommonResponse<List<IndexBookResponse>> getLatestBooks();
 }
