@@ -122,8 +122,7 @@
                             </th:block>
                             <th:block th:unless="${bookDto.deletedAt}">
                                 <!--수정버튼은 모달창 ㄱㄱ-->
-                                <button class="btn btn-secondary"
-                                        th:text="${#temporals.format(bookDto.deletedAt, 'yyyy-MM-dd HH:mm:ss')}">수정
+                                <button class="btn btn-secondary">수정
                                 </button>
                                 <button class="btn btn-danger delete-button"
                                         th:data-url="@{/admin/books/{bookId}(bookId=${bookDto.bookId})}">
