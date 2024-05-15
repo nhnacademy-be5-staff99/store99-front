@@ -2,6 +2,7 @@ package com.nhnacademy.store99.front.book.service;
 
 
 import com.nhnacademy.store99.front.book.adapter.BookAdapter;
+import com.nhnacademy.store99.front.book.adapter.BookOpenAdapter;
 import com.nhnacademy.store99.front.book.dto.response.BookPageResponse;
 import com.nhnacademy.store99.front.book.dto.response.BookResponse;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
@@ -23,7 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class BookServiceImpl implements BookService {
-    private final BookAdapter bookAdaptor;
+    private final BookOpenAdapter bookAdaptor;
+    private final BookAdapter bookAdminAdaptor;
 
     @Override
     public BookResponse getBook(Long bookId) {
@@ -71,5 +73,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<IndexBookResponse> getBooksByCategory(Long categoryId) {
         return bookAdaptor.getBooksByCategory(categoryId).getResult();
+    }
+
+    @Override
+    public void deleteBook(Long bookId) {
+        bookAdminAdaptor.deleteBook(bookId);
+    }
+
+    @Override
+    public void restoreBook(Long bookId) {
+        bookAdminAdaptor.restoreBook(bookId);
     }
 }

@@ -114,14 +114,18 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <th:block th:if="*{deletedAt}">
-                                <button class="btn btn-success restore-button">
+                            <th:block th:if="${bookDto.deletedAt}">
+                                <button class="btn btn-success restore-button"
+                                        th:data-url="@{/admin/books/{bookId}/restore(bookId=${bookDto.bookId})}">
                                     복구
                                 </button>
                             </th:block>
-                            <th:block th:unless="*{deletedAt}">
-                                <button class="btn btn-secondary">수정</button>
-                                <button class="btn btn-danger delete-btn">
+                            <th:block th:unless="${bookDto.deletedAt}">
+                                <!--수정버튼은 모달창 ㄱㄱ-->
+                                <button class="btn btn-secondary">수정
+                                </button>
+                                <button class="btn btn-danger delete-button"
+                                        th:data-url="@{/admin/books/{bookId}(bookId=${bookDto.bookId})}">
                                     삭제
                                 </button>
                             </th:block>
@@ -165,6 +169,34 @@
                 </div>
             </section> <!-- End Search Result -->
         </div>
+        <th:block layout:fragment="script">
+            <script>
+                document.querySelectorAll('.delete-button').forEach(button => {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        fetch(button.dataset.url, {method: 'DELETE'})
+                            .then(response => location.reload())
+                            .catch(error => {
+                                console.error(error);
+                                location.reload();
+                            });
+                    });
+                });
+
+                document.querySelectorAll('.restore-button').forEach(button => {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        fetch(button.dataset.url, {method: 'PUT'})
+                            .then(response => location.reload())
+                            .catch(error => {
+                                console.error(error);
+                                location.reload();
+                            })
+                    });
+                });
+            </script>
+
+        </th:block>
     </main>
 </div>
 </html>
