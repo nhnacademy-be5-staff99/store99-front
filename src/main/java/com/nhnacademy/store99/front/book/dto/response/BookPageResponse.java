@@ -74,9 +74,16 @@ public class BookPageResponse {
 
     private LocalDateTime UpdatedAt;
 
+    private LocalDateTime DeletedAt;
+
     private List<AuthorDTO> authorsDTOList;
 
     private List<TagDTO> tagDTOList;
+
+    public void setTagDTOList(List<TagDTO> tagDTOList) {
+        this.tagDTOList = tagDTOList;
+        System.out.println("Tags received: " + tagDTOList);  // Log to check what is being set
+    }
 
     @Getter
 
@@ -102,10 +109,5 @@ public class BookPageResponse {
         public TagDTO(@JsonProperty("tagName") String tagName) {
             TagName = tagName;
         }
-    }
-
-    public void setTagDTOList(List<TagDTO> tagDTOList) {
-        this.tagDTOList = tagDTOList;
-        System.out.println("Tags received: " + tagDTOList);  // Log to check what is being set
     }
 }

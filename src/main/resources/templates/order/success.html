@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/toss_style.css}"/>
+    <style>
+        .wrap-text {
+            white-space: pre-wrap;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-3">
+        <main id="main">
+            <th:block th:if="${#strings.equals(isSuccess, 'true')}">
+                <div class="box_section" style="width: 600px">
+                    <img src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png" width="100px"/>
+                    <h2>결제를 완료했어요</h2>
+
+                    <div class="p-grid typography--p" style="margin-top: 50px">
+                        <div class="p-grid-col text--left"><b>결제금액</b></div>
+                        <div class="p-grid-col text--right" id="amount"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>주문번호</b></div>
+                        <div class="p-grid-col text--right" id="orderId"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>주문명</b></div>
+                        <div class="p-grid-col text--right wrap-text" th:text="${orderName}"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>결제 수단</b></div>
+                        <div class="p-grid-col text--right" th:text="${method}"></div>
+                    </div>
+
+                    <tr th:if="${#strings.equals(method, '카드')}">cardNumber
+                        <td th:text="${cardNumber}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '가상계좌')}">accountNumber
+                        <td th:text="${accountNumber}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '계좌이체')}">bank
+                        <td th:text="${bank}"></td>
+                    </tr>
+                    <tr th:if="${#strings.equals(method, '휴대폰')}">customerMobilePhone
+                        <td th:text="${customerMobilePhone}"></td>
+                    </tr>
+                </div>
+            </th:block>
+            <th:block th:if="${#strings.equals(isSuccess, 'false')}">
+                <div class="box_section" id="info" style="width: 600px">
+                    <img src="https://static.toss.im/lotties/error-spot-no-loop-space-apng.png" width="100px"/>
+                    <h2>결제를 실패했어요</h2>
+
+                    <div class="p-grid typography--p" style="margin-top: 50px">
+                        <div class="p-grid-col text--left"><b>에러메시지</b></div>
+                        <div class="p-grid-col text--right wrap-text" id="message" th:text="${message}"></div>
+                    </div>
+                    <div class="p-grid typography--p" style="margin-top: 10px">
+                        <div class="p-grid-col text--left"><b>에러코드</b></div>
+                        <div class="p-grid-col text--right" id="code" th:text="${code}"></div>
+                    </div>
+                </div>
+            </th:block>
+        </main>
+    </div>
+</div>
+
+
+<th:block layout:fragment="script">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const paymentKeyElement = document.getElementById("paymentKey");
+        const orderIdElement = document.getElementById("orderId");
+        const amountElement = document.getElementById("amount");
+
+        orderIdElement.textContent = urlParams.get("orderId");
+        amountElement.textContent = urlParams.get("amount") + "원";
+        paymentKeyElement.textContent = urlParams.get("paymentKey");
+    </script>
+</th:block>
+
+</html>

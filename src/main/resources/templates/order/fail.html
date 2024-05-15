@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/toss_style.css}"/>
+    <style>
+        .wrap-text {
+            white-space: pre-wrap;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-3">
+        <main id="main">
+            <div class="box_section" style="width: 600px">
+                <img src="https://static.toss.im/lotties/error-spot-no-loop-space-apng.png" width="100px"/>
+                <h2>결제를 실패했어요</h2>
+
+                <div class="p-grid typography--p" style="margin-top: 50px">
+                    <div class="p-grid-col text--left"><b>에러메시지</b></div>
+                    <div class="p-grid-col text--right wrap-text" id="message" th:text="${message}"></div>
+                </div>
+                <div class="p-grid typography--p" style="margin-top: 10px">
+                    <div class="p-grid-col text--left"><b>에러코드</b></div>
+                    <div class="p-grid-col text--right" id="code" th:text="${code}"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

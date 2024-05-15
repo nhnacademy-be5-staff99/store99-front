@@ -87,7 +87,7 @@ public class CommonControllerAdvice {
         return mv;
     }
 
-    @ExceptionHandler(FailedException.class)
+    @ExceptionHandler({FailedException.class})
     public ModelAndView defaultExceptionHandler(FailedException ex) {
         ModelAndView mv = new ModelAndView();
         mv.addObject("message", ex.getMessage());
