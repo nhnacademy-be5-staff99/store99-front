@@ -235,7 +235,7 @@
                                 <p>총 결제 금액</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalPayment" th:text="${totalPayment} + 원">0원</p>
+                                <p id="totalCost" th:text="${totalCost} + 원">0원</p>
                             </div>
                         </div>
 
@@ -276,7 +276,10 @@
         /*<![CDATA[*/
         let totalProductPrice = /*[[${totalProductPrice}]]*/ 0;
         let shippingFee = /*[[${shippingFee}]]*/ 0;
-        let amount = /*[[${totalPayment}]]*/ 0;
+        let totalCost = /*[[${totalCost}]]*/ 0;
+        let usePoint = 0;
+        let couponDiscount = 0;
+        let amount = totalCost - usePoint - couponDiscount;
 
         let path = "/";
         let successUrl = window.location.origin + path + "success";
@@ -320,9 +323,9 @@
                 cardInstallmentPlan: null,
                 maxCardInstallmentPlan: null,
                 useCardPoint: false,
-                customerName: "박토스",
-                customerEmail: null,
-                customerMobilePhone: null,
+                customerName: document.getElementById('buyer_name').value,
+                customerEmail: document.getElementById('buyer_email').value,
+                customerMobilePhone: document.getElementById('buyer_phone').value,
                 taxFreeAmount: null,
                 useInternationalCardOnly: false,
                 flowMode: "DEFAULT",
@@ -341,6 +344,7 @@
                 },
                 order: {
                     orderId: orderId,
+                    orderName: /*[[${orderName}]]*/ "책 주문",
                     orderType: 'NON_USER',
                     orderTransitAt: document.querySelector('input[name="orderTransitAt"]:checked').dataset.date,
                     orderReceiverName: document.getElementById('recipient_name').value,
@@ -350,6 +354,7 @@
                     orderAddressCode: parseInt(document.getElementById('recipient_postcode').value),
                     orderDeliveryCost: shippingFee,
                     orderTotalCost: amount,
+                    orderFinalCost: amount,
                 },
                 orderBooks: Array.from(document.querySelectorAll('.order-book')).map(row => {
                     let orderBookId = row.querySelector('.order-book-id').innerText;

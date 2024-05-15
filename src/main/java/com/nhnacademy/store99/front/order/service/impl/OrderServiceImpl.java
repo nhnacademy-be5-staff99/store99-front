@@ -63,24 +63,29 @@ public class OrderServiceImpl implements OrderService {
         int code = connection.getResponseCode();
         boolean isSuccess = code == 200;
 
-        if (isSuccess) {
-            // 결제 정보 성공으로 저장
-            orderOpenAdapter.successPendingPayment(orderId, new PaymentKeyRequest(paymentKey));
-        } else {
-            try {
-                // 결제 정보 실패로 저장
-                orderOpenAdapter.failPendingPayment(orderId, new PaymentKeyRequest(paymentKey));
-            } catch (Exception ex) {
-
-            }
-        }
-
         InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
 
         Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         responseStream.close();
+
+        if (isSuccess) {
+            // 결제 정보 성공으로 저장
+            PaymentKeyRequest paymentKeyRequest =
+                    PaymentKeyRequest.builder().paymentKey(paymentKey).response(jsonObject.toJSONString())
+                            .method(jsonObject.get("method").toString())
+                            .paymentCost(amount).build();
+            orderOpenAdapter.successPendingPayment(orderId, paymentKeyRequest);
+        } else {
+            try {
+                // 결제 정보 실패로 저장
+                orderOpenAdapter.failPendingPayment(orderId,
+                        PaymentKeyRequest.builder().paymentKey(paymentKey).build());
+            } catch (Exception ex) {
+
+            }
+        }
 
         ConfirmPaymentResponse confirmPaymentResponse = new ConfirmPaymentResponse();
         confirmPaymentResponse.setSuccess(isSuccess);

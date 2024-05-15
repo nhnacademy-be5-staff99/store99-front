@@ -46,7 +46,7 @@ public class OrderController {
         model.addAttribute("orderBookList", orderBookList);
         model.addAttribute("totalProductPrice", totalProductPrice);
         model.addAttribute("shippingFee", shippingFee);
-        model.addAttribute("totalPayment", totalProductPrice + shippingFee);
+        model.addAttribute("totalCost", totalProductPrice + shippingFee);
         model.addAttribute("orderName", getOrderName(orderBookList));
         model.addAttribute("gatewayUrl", gatewayUrl);
         return isLogin ? "order/checkout_main_member" : "order/checkout_main_guest";

@@ -53,3 +53,13 @@ document.getElementById('order-button').addEventListener('click', function (even
     // form을 제출합니다.
     form.submit();
 });
+
+// 전체선택
+document.getElementById('selectAll').addEventListener('change', function () {
+    var checkboxes = document.querySelectorAll('.order-check');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+
+    calculateTotal();
+});
