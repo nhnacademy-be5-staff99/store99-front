@@ -55,6 +55,7 @@ $(document).ready(function () {
                 isPasswordChecked = true;
                 document.getElementById('password').disabled = true;
                 document.getElementById('validateCheck').disabled = true;
+                document.getElementById('checkEmail').disabled = true;
                 document.getElementById('username').disabled = false;
                 document.getElementById('address_detail').disabled = false;
                 document.getElementById('address_alias').disabled = false;
