@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"
+      layout:decorate="~{layouts/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+
+<th:block layout:fragment="css">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container py-3">
+        <main id="main">
+            <h3>비회원 주문조회</h3>
+            <div class="row g-5">
+                <div class="col-md-12 col-lg-12" th:object="${orderForm}">
+                    <hr class="my-4">
+                    <h4 class="mb-3">주문 정보</h4>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>주문 상태</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="order-state" th:text="*{orderState}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>출고 일시</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="order-release-at" th:text="*{orderReleaseAt}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>총 상품 가격</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="order-total-cost" th:text="*{orderTotalCost} + 원"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>배송비</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="order-delivery-cost" th:text="*{orderDeliveryCost} + 원"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>쿠폰 할인</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="coupon">회원만 사용 가능합니다.</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>포인트</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="point">회원만 사용 가능합니다.</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>총 결제 금액</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="order-final-cost" th:text="*{orderFinalCost} + 원">0원</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <h4 class="mb-3">주문 상품</h4>
+
+                    <div class="row d-flex align-items-center order-book"
+                         th:each="orderBook, status: ${orderForm.orderBookList}">
+                        <div class="order-book-id" hidden="hidden" th:text="${orderBook.bookId}"></div>
+                        <div class="col-md order-book-title">
+                            <p th:text="${orderBook.bookTitle}"/>
+                        </div>
+                        <div class="col-md-1 order-book-quantity">
+                            <p th:text="${orderBook.quantity}"/>
+                        </div>
+                        <div class="col-md-2 order-book-price">
+                            <p th:text="${orderBook.bookSalePrice * orderBook.quantity}"/>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <h4 class="mb-3"> 구매자 정보</h4>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>이름</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="buyer-name" th:text="*{buyerName}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>전화번호</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="buyer-phone" th:text="*{buyerPhone}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>이메일</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="buyer-email" th:text="*{buyerEmail}"></p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h4 class="mb-3">받는 사람 정보</h4>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>이름</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="recipient-name" th:text="*{recipientName}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>전화번호</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="recipient-phone" th:text="*{recipientPhone}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>주소</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="recipient-address" th:text="*{recipientAddress}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>우편번호</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="recipient-postcode" th:text="*{recipientPostcode}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <p>상세주소</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p id="recipient-detailAddress" th:text="*{recipientDetailAddress}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

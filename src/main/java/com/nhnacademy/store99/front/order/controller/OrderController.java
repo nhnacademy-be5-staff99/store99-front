@@ -4,6 +4,7 @@ import com.nhnacademy.store99.front.order.dto.request.OrderBookRequest;
 import com.nhnacademy.store99.front.order.dto.request.OrderInquiryByGuestRequest;
 import com.nhnacademy.store99.front.order.dto.response.BookInOrderResponse;
 import com.nhnacademy.store99.front.order.dto.response.ConfirmPaymentResponse;
+import com.nhnacademy.store99.front.order.dto.response.OrderInquiryResponse;
 import com.nhnacademy.store99.front.order.service.OrderQueryService;
 import com.nhnacademy.store99.front.order.service.OrderService;
 import java.util.List;
@@ -122,11 +123,14 @@ public class OrderController {
 
     @PostMapping("/order/guest")
     private String viewOrderByGuest(@RequestAttribute boolean isLogin,
-                                    @ModelAttribute OrderInquiryByGuestRequest orderInquiryByGuestRequest) {
+                                    @ModelAttribute OrderInquiryByGuestRequest orderInquiryByGuestRequest,
+                                    Model model) {
         if (isLogin) {
             return "redirect:/";
         }
 
+        OrderInquiryResponse orderByGuest = orderQueryService.getOrderByGuest(orderInquiryByGuestRequest);
+        model.addAttribute("orderForm", orderByGuest);
         return "order/order_page_guest";
     }
 }

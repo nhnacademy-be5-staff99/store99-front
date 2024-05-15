@@ -2,9 +2,13 @@ package com.nhnacademy.store99.front.order.service.impl;
 
 import com.nhnacademy.store99.front.book.adapter.BookOpenAdapter;
 import com.nhnacademy.store99.front.book.dto.response.SimpleBookResponse;
+import com.nhnacademy.store99.front.common.exception.FailedException;
 import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.order.adapter.OrderOpenAdapter;
 import com.nhnacademy.store99.front.order.dto.request.OrderBookRequest;
+import com.nhnacademy.store99.front.order.dto.request.OrderInquiryByGuestRequest;
 import com.nhnacademy.store99.front.order.dto.response.BookInOrderResponse;
+import com.nhnacademy.store99.front.order.dto.response.OrderInquiryResponse;
 import com.nhnacademy.store99.front.order.exception.CheckoutViewFailedException;
 import com.nhnacademy.store99.front.order.service.OrderQueryService;
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderQueryServiceImpl implements OrderQueryService {
     private final BookOpenAdapter bookOpenAdapter;
+    private final OrderOpenAdapter orderOpenAdapter;
 
     @Override
     public List<BookInOrderResponse> getOrderBookList(final List<OrderBookRequest> orderBookRequestList) {
@@ -90,5 +95,14 @@ public class OrderQueryServiceImpl implements OrderQueryService {
         }
         List<SimpleBookResponse> simpleBooks = getSimpleBooksResponse.getResult();
         return simpleBooks;
+    }
+
+    @Override
+    public OrderInquiryResponse getOrderByGuest(final OrderInquiryByGuestRequest orderInquiryRequest) {
+        CommonResponse<OrderInquiryResponse> response = orderOpenAdapter.getOrderByGuest(orderInquiryRequest);
+        if (!response.getHeader().isSuccessful()) {
+            throw new FailedException("주문 내역을 가져오는데 실패하였습니다.");
+        }
+        return response.getResult();
     }
 }
