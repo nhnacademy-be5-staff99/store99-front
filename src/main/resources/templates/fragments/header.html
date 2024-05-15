@@ -76,6 +76,9 @@
                         <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}">
                             <a href="/cart" style="font-size: 12px">장바구니</a>
                         </li>
+                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}">
+                            <a href="/order/guest" style="font-size: 12px">주문조회</a>
+                        </li>
                         <!--                        <li class="grid gap-1" th:if="${#request.getAttribute('isLogin') == false}"><a href="../contact.html" style="font-size: 12px">찜목록</a></li>-->
 
                         <!-- 로그인 상태 (USER) -->
