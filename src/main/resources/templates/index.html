@@ -15,43 +15,58 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="swiper sliderFeaturedPosts">
+
+                            <!--가능하다면 도서 상세 이미지를,,?-->
+                            <!--베스트 - 과학 - 컴퓨터 - 경제. 최신도서 3개씩 굿-->
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/resilience_book.jpg');">
+                                <div class="swiper-slide" th:object="${bestBooks[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{BookDetailURL}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>The Best Seller</h2>
-                                            <p>국내 최고의 인기도서</p>
+                                            <h2>Latest Science Book</h2>
+                                            <p>최신 과학 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/franzkafka.jpg');">
+                                <div class="swiper-slide" th:object="${science[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{BookDetailURL}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>The Essential'프란츠 카프카'</h2>
-                                            <p>드디어 단독 ebook 출시!</p>
+                                            <h2>Latest Science Book</h2>
+                                            <p>최신 과학 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/post-slide-3.jpg');">
+                                <div class="swiper-slide" th:object="${computer[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{BookDetailURL}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h2>
-                                            <p></p>
+                                            <h2>Latest Computer Book</h2>
+                                            <p>최신 컴퓨터 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
 
-                                <div class="swiper-slide">
-                                    <a class="img-bg d-flex align-items-end" href="../single-post.html"
-                                       style="background-image: url('/static/assets/img/post-slide-4.jpg');">
+                                <div class="swiper-slide" th:object="${economy[0]}">
+                                    <a class="img-bg d-flex align-items-end"
+                                       th:href="@{/books/{bookId}(bookId=*{bookId})}"
+                                       th:style="'background-image:url('+*{BookDetailURL}+');'"
+                                    >
                                         <div class="img-bg-inner">
-                                            <h2>9 Half-up/half-down Hairstyles for Long and Medium Hair</h2>
-                                            <p></p>
+                                            <h2>Latest Economy Book</h2>
+                                            <p>최신 경제/금융 도서</p>
+                                            <p th:text="*{bookTitle}"></p>
                                         </div>
                                     </a>
                                 </div>
@@ -77,19 +92,13 @@
                 <div class="row g-5">
                     <div class="col-lg-4">
                         <div class="post-entry-1 lg">
-                            <a href="../single-post.html"><img alt="" class="img-fluid"
-                                                               src="/static/assets/img/sameasever.jpg"></a>
-                            <div class="post-meta"><span class="date">경제경영</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2><a href="../single-post.html">도를 아십니까?</a></h2>
-                            <p class="mb-4 d-block">변하지 않는 법칙이 있다는 걸 아시나요? 여기 그 질문에 대한 갈증을 해소해줄 책을 소개합니다!</p>
+                            <a th:href="@{/books/{bookId}(bookId=${bestBooks[0].getBookId()})}">
+                                <img th:src="${bestBooks[0].getBookThumbnailUrl()}">
+                            </a>
+                            <h2><a th:href="@{/books/{bookId}(bookId=${bestBooks[0].getBookId()})}"
+                                   th:text="|Store99 모든분야 최고 베스트 셀러|"></a></h2>
+                            <p class="mb-4 d-block" th:text="${bestBooks[0].getBookDescription()}"></p>
 
-                            <div class="d-flex align-items-center author">
-                                <div class="photo"><img alt="" class="img-fluid" src="../assets/img/person-1.jpg"></div>
-                                <div class="name">
-                                    <h3 class="m-0 p-0">Cameron Williamson</h3>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -98,52 +107,72 @@
                         <div class="row g-5">
                             <div class="col-lg-4 border-start custom-border">
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/sayno.jpg"></a>
-                                    <div class="post-meta"><span class="date">자기계발</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">Do you know SayNo?Do you know Son-Heung-Min?</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${bestBooks[1].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${bestBooks[1].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(bestBooks[1].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${bestBooks[1].getBookId()})}"
+                                           th:text="${bestBooks[1].getBookTitle()}"></a></h2>
                                 </div>
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-5.jpg"></a>
-                                    <div class="post-meta"><span class="date">Food</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 17th '22</span></div>
-                                    <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During
-                                        Video Calls?</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${bestBooks[2].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${bestBooks[2].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(bestBooks[2].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${bestBooks[2].getBookId()})}"
+                                           th:text="${bestBooks[2].getBookTitle()}"></a></h2>
                                 </div>
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-7.jpg"></a>
-                                    <div class="post-meta"><span class="date">Design</span> <span
-                                            class="mx-1">&bullet;</span> <span>Mar 15th '22</span></div>
-                                    <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting
-                                        Places On the Web?</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${bestBooks[3].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${bestBooks[3].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(bestBooks[3].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${bestBooks[3].getBookId()})}"
+                                           th:text="${bestBooks[3].getBookTitle()}"></a></h2>
                                 </div>
                             </div>
                             <div class="col-lg-4 border-start custom-border">
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-3.jpg"></a>
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">6 Easy Steps To Create Your Own Cute Merch For
-                                        Instagram</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${latestBooks[1].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${latestBooks[1].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(latestBooks[1].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${latestBooks[1].getBookId()})}"
+                                           th:text="${latestBooks[1].getBookTitle()}"></a></h2>
                                 </div>
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-6.jpg"></a>
-                                    <div class="post-meta"><span class="date">Tech</span> <span
-                                            class="mx-1">&bullet;</span> <span>Mar 1st '22</span></div>
-                                    <h2><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should
-                                        Know</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${latestBooks[2].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${latestBooks[2].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(latestBooks[2].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${latestBooks[2].getBookId()})}"
+                                           th:text="${latestBooks[2].getBookTitle()}"></a></h2>
                                 </div>
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-8.jpg"></a>
-                                    <div class="post-meta"><span class="date">Travel</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">5 Great Startup Tips for Female Founders</a></h2>
+                                    <a th:href="@{/books/{bookId}(bookId=${latestBooks[3].getBookId()})}">
+                                        <img alt="" class="img-fluid"
+                                             th:src="${latestBooks[3].getBookThumbnailUrl()}"
+                                        ></a>
+                                    <div class="post-meta">
+                                        <span th:text="${#temporals.format(latestBooks[3].BookDate, 'yyyy MM dd')}"></span>
+                                    </div>
+                                    <h2><a th:href="@{/books/{bookId}(bookId=${latestBooks[3].getBookId()})}"
+                                           th:text="${latestBooks[3].getBookTitle()}"></a></h2>
                                 </div>
                             </div>
 
@@ -152,42 +181,13 @@
 
                                 <div class="trending">
                                     <h3>bestsellers TOP5</h3>
-                                    <ul class="trending-post">
-                                        <li>
-                                            <a href="single-post.html">
-                                                <span class="number">1</span>
-                                                <h3>The Best Homemade Masks for Face (keep the Pimples Away)</h3>
-                                                <span class="author">Jane Cooper</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="single-post.html">
-                                                <span class="number">2</span>
-                                                <h3>17 Pictures of Medium Length Hair in Layers That Will Inspire Your
-                                                    New Haircut</h3>
-                                                <span class="author">Wade Warren</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="single-post.html">
-                                                <span class="number">3</span>
-                                                <h3>13 Amazing Poems from Shel Silverstein with Valuable Life
-                                                    Lessons</h3>
-                                                <span class="author">Esther Howard</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="single-post.html">
-                                                <span class="number">4</span>
-                                                <h3>9 Half-up/half-down Hairstyles for Long and Medium Hair</h3>
-                                                <span class="author">Cameron Williamson</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="single-post.html">
-                                                <span class="number">5</span>
-                                                <h3>Life Insurance And Pregnancy: A Working Mom’s Guide</h3>
-                                                <span class="author">Jenny Wilson</span>
+                                    <ul class="trending-post" th:each="bestBook, stat : ${bestBooks}">
+                                        <li th:if="${stat.index}<6">
+                                            <a th:href="@{/books/{bookId}(bookId=${bestBook.getBookId()})}">
+                                                <span class="number" th:text="${stat.count}"></span>
+                                                <h3 th:text="${bestBook.getBookTitle()}"></h3>
+                                                <span class="author"
+                                                      th:text="${#temporals.format(bestBooks[2].BookDate, 'yyyy MM dd')}"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -211,421 +211,113 @@
             바로밑에 post grid에 전체 최신 도서 몇개와
             제일 잘나가는거 몇개.
         -->
-
-        <!-- ======= Culture Category Section ======= -->
         <section class="category-section">
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header d-flex justify-content-between align-items-center mb-5">
-                    <h2>Culture</h2>
-                    <div><a class="more" href="category.html">See All Culture</a></div>
+                    <h2>Science</h2>
+                    <div><a class="more" th:href="@{categories/2/books}">See All Science</a></div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-9">
-
-                        <div class="d-lg-flex post-entry-2">
-                            <a class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block" href="single-post.html">
-                                <img alt="" class="img-fluid" src="../assets/img/post-landscape-6.jpg">
+                        <div class="d-lg-flex ">
+                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
+                               th:href="@{books/{bookId}(bookId=${science[0].getBookId()})}">
+                                <img alt="" class="img-fluid" th:src="${science[0].getBookThumbnailUrl()}">
                             </a>
-                            <div>
-                                <div class="post-meta"><span class="date">Culture</span> <span
-                                        class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce
-                                    Gruden doing Now?</a></h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
-                                    exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error
-                                    deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos
-                                    deleniti?</p>
-                                <div class="d-flex align-items-center author">
-                                    <div class="photo"><img alt="" class="img-fluid"
-                                                            src="/static/assets/img/person-2.jpg"></div>
-                                    <div class="name">
-                                        <h3 class="m-0 p-0">Wade Warren</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="post-entry-1 border-bottom">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-1.jpg"></a>
-                                    <div class="post-meta"><span class="date">Culture</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">11 Work From Home Part-Time Jobs You Can
-                                        Do Now</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
-                                </div>
-
-                                <div class="post-entry-1">
-                                    <div class="post-meta"><span class="date">Culture</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">5 Great Startup Tips for Female
-                                        Founders</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="../assets/img/post-landscape-2.jpg"></a>
-                                    <div class="post-meta"><span class="date">Culture</span> <span
-                                            class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay
-                                        Focused During Video Calls?</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
-                                </div>
-                            </div>
+                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
+                               th:href="@{books/{bookId}(bookId=${science[1].getBookId()})}">
+                                <img alt="" class="img-fluid" th:src="${science[1].getBookThumbnailUrl()}">
+                            </a>
+                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
+                               th:href="@{books/{bookId}(bookId=${science[2].getBookId()})}">
+                                <img alt="" class="img-fluid" th:src="${science[2].getBookThumbnailUrl()}">
+                            </a>
                         </div>
                     </div>
-
                     <div class="col-md-3">
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay Focused During
-                                Video Calls?</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
+                        <div class="post-entry-1 border-bottom" th:each="scienceBook : ${science}">
+                            <div class="post-meta"><span class="date">Science</span> <span class="mx-1">&bullet;</span>
+                                <span th:text="${#temporals.format(scienceBook.getBookDate(), 'yyyy-MM-dd')}"></span>
+                            </div>
+                            <h2 class="mb-2"><a th:href="@{/books/{bookId}(bookId=${scienceBook.getBookId()})}"
+                                                th:text="${scienceBook.getBookTitle()}"></a></h2>
                         </div>
 
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">17 Pictures of Medium Length Hair in Layers That
-                                Will Inspire Your New Haircut</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">9 Half-up/half-down Hairstyles for Long and
-                                Medium Hair</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">Life Insurance And Pregnancy: A Working Mom’s
-                                Guide</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">The Best Homemade Masks for Face (keep the
-                                Pimples Away)</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should
-                                Know</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End Culture Category Section -->
-
-        <!-- ======= Business Category Section ======= -->
         <section class="category-section">
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header d-flex justify-content-between align-items-center mb-5">
-                    <h2>Business</h2>
-                    <div><a class="more" href="category.html">See All Business</a></div>
+                    <h2>Computer</h2>
+                    <div><a class="more" href="category.html">See All Computer</a></div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-9 order-md-2">
 
-                        <div class="d-lg-flex post-entry-2">
-                            <a class="me-4 thumbnail d-inline-block mb-4 mb-lg-0" href="single-post.html">
-                                <img alt="" class="img-fluid" src="/static/assets/img/post-landscape-3.jpg">
+                        <div class=" d-lg-flex ">
+                            <a class="col-lg-3 thumbnail mb-lg-0 d-inline-block"
+                               th:href="@{/books/{bookId}(bookId=${computer[0].getBookId()})}">
+                                <img alt="" class=" img-fluid" th:src="${computer[0].getBookThumbnailUrl()}">
                             </a>
-                            <div>
-                                <div class="post-meta"><span class="date">Business</span> <span
-                                        class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                                <h3><a href="single-post.html">What is the son of Football Coach John Gruden, Deuce
-                                    Gruden doing Now?</a></h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio placeat
-                                    exercitationem magni voluptates dolore. Tenetur fugiat voluptates quas, nobis error
-                                    deserunt aliquam temporibus sapiente, laudantium dolorum itaque libero eos
-                                    deleniti?</p>
-                                <div class="d-flex align-items-center author">
-                                    <div class="photo"><img alt="" class="img-fluid"
-                                                            src="/static/assets/img/person-4.jpg"></div>
-                                    <div class="name">
-                                        <h3 class="m-0 p-0">Wade Warren</h3>
-                                    </div>
+                            <div class="col-lg-9">
+                                <div class="post-meta "><span class="date">Computer</span> <span
+                                        class="mx-1">&bullet;</span> <span
+                                        th:text="${#temporals.format(computer[0].getBookDate(), 'yyyy-MM-dd')}"></span>
                                 </div>
+                                <h3><a th:href="@{/books/{bookId}(bookId=${computer[0].getBookId()})}"
+                                       th:text="${computer[0].getBookTitle()}"></a></h3>
+                                <p th:text="${computer[0].getBookDescription()}"></p>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="post-entry-1 border-bottom">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-5.jpg"></a>
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">11 Work From Home Part-Time Jobs You Can
-                                        Do Now</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
-                                </div>
-
-                                <div class="post-entry-1">
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">5 Great Startup Tips for Female
-                                        Founders</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
+                                    <a th:href="@{books/{bookId}(bookId=${computer[1].getBookId()})}"><img alt=""
+                                                                                                           class="img-fluid"
+                                                                                                           th:src="${computer[1].getBookThumbnailUrl()}"></a>
+                                    <div class="post-meta"><span class="date">Computer</span> <span class="mx-1">&bullet;</span>
+                                        <span th:text="${#temporals.format(computer[1].getBookDate(), 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <h2 class="mb-2"><a th:href="@{books/{bookId}(bookId=${computer[1].getBookId()})}"
+                                                        th:text="${computer[1].getBookTitle()}"></a></h2>
+                                    <p class="mb-4 d-block" th:text="${computer[1].getBookDescription()}"></p>
                                 </div>
                             </div>
                             <div class="col-lg-8">
                                 <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-7.jpg"></a>
-                                    <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay
-                                        Focused During Video Calls?</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                    <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                        Vero temporibus repudiandae, inventore pariatur numquam cumque possimus</p>
+                                    <a th:href="@{books/{bookId}(bookId=${computer[2].getBookId()})}"
+                                    ><img alt=""
+                                          class="img-fluid thumbnail " th:src="${computer[2].getBookThumbnailUrl()}"
+                                    ></a>
+                                    <div class="post-meta"><span class="date">Computer</span> <span class="mx-1">&bullet;</span>
+                                        <span th:text="${#temporals.format(computer[2].getBookDate(), 'yyyy-MM-dd')}"></span>
+                                    </div>
+                                    <h2 class="mb-2"><a th:href="@{books/{bookId}(bookId=${computer[2].getBookId()})}"
+                                                        th:text="${computer[2].getBookTitle()}"></a></h2>
+                                    <p class="mb-4 d-block" th:text="${computer[2].getBookDescription()}"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay Focused During
-                                Video Calls?</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">17 Pictures of Medium Length Hair in Layers That
-                                Will Inspire Your New Haircut</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">9 Half-up/half-down Hairstyles for Long and
-                                Medium Hair</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">Life Insurance And Pregnancy: A Working Mom’s
-                                Guide</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">The Best Homemade Masks for Face (keep the
-                                Pimples Away)</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span>
-                                <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should
-                                Know</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
+                        <div class="post-entry-1 border-bottom" th:each="computerBook : ${computer}">
+                            <div class="post-meta"><span class="date">Computer</span> <span class="mx-1">&bullet;</span>
+                                <span th:text="${#temporals.format(computerBook.getBookDate(), 'yyyy-MM-dd')}"></span>
+                            </div>
+                            <h2 class="mb-2"><a th:href="@{/books/{bookId}(bookId=${computerBook.getBookId()})}"
+                                                th:text="${computerBook.getBookTitle()}"></a></h2>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End Business Category Section -->
-
-        <!-- ======= Lifestyle Category Section ======= -->
-        <section class="category-section">
-            <div class="container" data-aos="fade-up">
-
-                <div class="section-header d-flex justify-content-between align-items-center mb-5">
-                    <h2>Lifestyle</h2>
-                    <div><a class="more" href="category.html">See All Lifestyle</a></div>
-                </div>
-
-                <div class="row g-5">
-                    <div class="col-lg-4">
-                        <div class="post-entry-1 lg">
-                            <a href="single-post.html"><img alt="" class="img-fluid"
-                                                            src="/static/assets/img/post-landscape-8.jpg"></a>
-                            <div class="post-meta"><span class="date">Lifestyle</span> <span
-                                    class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                            <h2><a href="single-post.html">11 Work From Home Part-Time Jobs You Can Do Now</a></h2>
-                            <p class="mb-4 d-block">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero
-                                temporibus repudiandae, inventore pariatur numquam cumque possimus exercitationem? Nihil
-                                tempore odit ab minus eveniet praesentium, similique blanditiis molestiae ut saepe
-                                perspiciatis officia nemo, eos quae cumque. Accusamus fugiat architecto rerum animi
-                                atque eveniet, quo, praesentium dignissimos</p>
-
-                            <div class="d-flex align-items-center author">
-                                <div class="photo"><img alt="" class="img-fluid" src="../assets/img/person-7.jpg"></div>
-                                <div class="name">
-                                    <h3 class="m-0 p-0">Esther Howard</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="post-entry-1 border-bottom">
-                            <div class="post-meta"><span class="date">Lifestyle</span> <span
-                                    class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">The Best Homemade Masks for Face (keep the
-                                Pimples Away)</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                        <div class="post-entry-1">
-                            <div class="post-meta"><span class="date">Lifestyle</span> <span
-                                    class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                            <h2 class="mb-2"><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should
-                                Know</a></h2>
-                            <span class="author mb-3 d-block">Jenny Wilson</span>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-8">
-                        <div class="row g-5">
-                            <div class="col-lg-4 border-start custom-border">
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-6.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">Let’s Get Back to Work, New York</a></h2>
-                                </div>
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-5.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 17th '22</span></div>
-                                    <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During
-                                        Video Calls?</a></h2>
-                                </div>
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-4.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Mar 15th '22</span></div>
-                                    <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting
-                                        Places On the Web?</a></h2>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 border-start custom-border">
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-3.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">6 Easy Steps To Create Your Own Cute Merch For
-                                        Instagram</a></h2>
-                                </div>
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-2.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Mar 1st '22</span></div>
-                                    <h2><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should
-                                        Know</a></h2>
-                                </div>
-                                <div class="post-entry-1">
-                                    <a href="single-post.html"><img alt="" class="img-fluid"
-                                                                    src="/static/assets/img/post-landscape-1.jpg"></a>
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2><a href="single-post.html">5 Great Startup Tips for Female Founders</a></h2>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">How to Avoid Distraction and Stay
-                                        Focused During Video Calls?</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">17 Pictures of Medium Length Hair in
-                                        Layers That Will Inspire Your New Haircut</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">9 Half-up/half-down Hairstyles for Long
-                                        and Medium Hair</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">Life Insurance And Pregnancy: A Working
-                                        Mom’s Guide</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">The Best Homemade Masks for Face (keep
-                                        the Pimples Away)</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                                <div class="post-entry-1 border-bottom">
-                                    <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-                                        <span>Jul 5th '22</span></div>
-                                    <h2 class="mb-2"><a href="single-post.html">10 Life-Changing Hacks Every Working Mom
-                                        Should Know</a></h2>
-                                    <span class="author mb-3 d-block">Jenny Wilson</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- End .row -->
-            </div>
-        </section>
-        <!-- End Lifestyle Category Section -->
-
     </main>
     <!-- End #main -->
 
