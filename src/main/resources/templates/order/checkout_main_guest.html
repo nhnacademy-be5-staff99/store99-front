@@ -24,7 +24,7 @@
                                 <label class="form-label" for="buyer_name">이름</label>
                                 <input class="form-control" id="buyer_name" name="buyerName" placeholder="" required=""
                                        type="text"
-                                       value="테스트">
+                                       value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -35,7 +35,7 @@
                                 <input class="form-control" id="buyer_phone" name="buyerPhone"
                                        placeholder="휴대폰 번호를 ‘-’없이 입력해주세요"
                                        required="" type="text"
-                                       value="01011112222">
+                                       value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -47,7 +47,7 @@
                                     <span class="input-group-text">@</span>
                                     <input class="form-control" id="buyer_email" name="buyerEmail"
                                            placeholder="you@example.com"
-                                           type="email" value="d@d.com">
+                                           type="email" value="">
                                     <div class="invalid-feedback">
                                         필수 입력 값입니다.
                                     </div>
@@ -59,7 +59,7 @@
                                 <input class="form-control" id="buyer_password" name="buyerPassword" placeholder=""
                                        required=""
                                        type="password"
-                                       value="1234">
+                                       value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -78,7 +78,7 @@
                             <div class="col-12">
                                 <label class="form-label" for="recipient_name">이름</label>
                                 <input class="form-control" id="recipient_name" name="recipientName" placeholder=""
-                                       required="" type="text" value="테스트">
+                                       required="" type="text" value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -88,7 +88,7 @@
                                 <label class="form-label" for="recipient_phone">전화번호</label>
                                 <input class="form-control" id="recipient_phone" name="recipientPhone"
                                        placeholder="휴대폰 번호를 ‘-’없이 입력해주세요"
-                                       required="" type="text" value="01011112222">
+                                       required="" type="text" value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -101,7 +101,7 @@
                                 <label class="form-label" for="recipient_address">주소</label>
                                 <input class="form-control" id="recipient_address" name="recipientAddress"
                                        onclick="recipient_execDaumPostcode()" placeholder="" required="" type="text"
-                                       value="주소">
+                                       value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -111,7 +111,7 @@
                                 <label class="form-label" for="recipient_postcode">우편번호</label>
                                 <input class="form-control" id="recipient_postcode" name="recipientPostcode"
                                        onclick="recipient_execDaumPostcode()" placeholder="" required="" type="text"
-                                       value="12345">
+                                       value="">
                                 <div class="invalid-feedback">
                                     필수 입력 값입니다.
                                 </div>
@@ -397,6 +397,17 @@
                 event.stopPropagation();
             }
         }, false);
+
+        // 구매자와 동일
+        document.getElementById('sameAsBuyer').addEventListener('click', function () {
+            // 구매자의 이름과 전화번호를 가져옵니다.
+            var buyerName = document.getElementById('buyer_name').value;
+            var buyerPhone = document.getElementById('buyer_phone').value;
+
+            // 받는 사람의 이름과 전화번호 필드에 구매자의 정보를 설정합니다.
+            document.getElementById('recipient_name').value = buyerName;
+            document.getElementById('recipient_phone').value = buyerPhone;
+        });
         /*]]>*/
     </script>
 </th:block>
