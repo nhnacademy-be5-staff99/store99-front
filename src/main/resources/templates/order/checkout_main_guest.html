@@ -199,7 +199,7 @@
                                 <p>총 상품 가격</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalProductPrice" th:text="${totalProductPrice} + 원"></p>
+                                <p id="orderTotalCost" th:text="${orderTotalCost} + 원"></p>
                             </div>
                         </div>
 
@@ -208,7 +208,7 @@
                                 <p>배송비</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="shippingFee" th:text="${shippingFee} + 원"></p>
+                                <p id="orderDeliveryCost" th:text="${orderDeliveryCost} + 원"></p>
                             </div>
                         </div>
 
@@ -235,7 +235,7 @@
                                 <p>총 결제 금액</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalCost" th:text="${totalCost} + 원">0원</p>
+                                <p id="orderFinalCost" th:text="${orderTotalCost + orderDeliveryCost} + 원">0원</p>
                             </div>
                         </div>
 
@@ -274,12 +274,11 @@
     <script src="/static/assets/js/order_main_address.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        let totalProductPrice = /*[[${totalProductPrice}]]*/ 0;
-        let shippingFee = /*[[${shippingFee}]]*/ 0;
-        let totalCost = /*[[${totalCost}]]*/ 0;
+        let orderTotalCost = /*[[${orderTotalCost}]]*/ 0;
+        let orderDeliveryCost = /*[[${orderDeliveryCost}]]*/ 0;
         let usePoint = 0;
         let couponDiscount = 0;
-        let amount = totalCost - usePoint - couponDiscount;
+        let orderFinalCost = orderTotalCost + orderDeliveryCost - usePoint - couponDiscount;
 
         let path = "/";
         let successUrl = window.location.origin + path + "success";
@@ -314,7 +313,7 @@
 
         let jsons = {
             card: {
-                amount: amount,
+                amount: orderFinalCost,
                 orderId: orderId,
                 orderName: /*[[${orderName}]]*/ "책 주문",
                 successUrl: successUrl,
@@ -352,9 +351,9 @@
                     orderAddress: document.getElementById('recipient_address').value,
                     orderAddressDetail: document.getElementById('recipient_detailAddress').value,
                     orderAddressCode: parseInt(document.getElementById('recipient_postcode').value),
-                    orderDeliveryCost: shippingFee,
-                    orderTotalCost: amount,
-                    orderFinalCost: amount,
+                    orderDeliveryCost: orderDeliveryCost,
+                    orderTotalCost: orderTotalCost,
+                    orderFinalCost: orderFinalCost,
                 },
                 orderBooks: Array.from(document.querySelectorAll('.order-book')).map(row => {
                     let orderBookId = row.querySelector('.order-book-id').innerText;

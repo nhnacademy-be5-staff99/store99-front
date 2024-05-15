@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.order.controller;
 
 import com.nhnacademy.store99.front.order.dto.request.OrderBookRequest;
+import com.nhnacademy.store99.front.order.dto.request.OrderInquiryByGuestRequest;
 import com.nhnacademy.store99.front.order.dto.response.BookInOrderResponse;
 import com.nhnacademy.store99.front.order.dto.response.ConfirmPaymentResponse;
 import com.nhnacademy.store99.front.order.service.OrderQueryService;
@@ -39,14 +40,13 @@ public class OrderController {
         List<BookInOrderResponse> orderBookList =
                 orderQueryService.getOrderBookList(orderBookRequest.getOrderBookRequestList());
 
-        int totalProductPrice = orderBookList.stream().mapToInt(o -> o.getBookSalePrice() * o.getQuantity()).sum();
-        int shippingFee = 5000;
+        int orderTotalCost = orderBookList.stream().mapToInt(o -> o.getBookSalePrice() * o.getQuantity()).sum();
+        int orderDeliveryCost = 5000;
 
         model.addAttribute("orderId", UUID.randomUUID().toString());
         model.addAttribute("orderBookList", orderBookList);
-        model.addAttribute("totalProductPrice", totalProductPrice);
-        model.addAttribute("shippingFee", shippingFee);
-        model.addAttribute("totalCost", totalProductPrice + shippingFee);
+        model.addAttribute("orderTotalCost", orderTotalCost);
+        model.addAttribute("orderDeliveryCost", orderDeliveryCost);
         model.addAttribute("orderName", getOrderName(orderBookList));
         model.addAttribute("gatewayUrl", gatewayUrl);
         return isLogin ? "order/checkout_main_member" : "order/checkout_main_guest";
@@ -110,5 +110,23 @@ public class OrderController {
         model.addAttribute("message", message);
 
         return "order/fail";
+    }
+
+    @GetMapping("/order/guest")
+    private String viewOrderInquiryFormByGuest(@RequestAttribute boolean isLogin) {
+        if (isLogin) {
+            return "redirect:/";
+        }
+        return "order/order_inquiry_guest";
+    }
+
+    @PostMapping("/order/guest")
+    private String viewOrderByGuest(@RequestAttribute boolean isLogin,
+                                    @ModelAttribute OrderInquiryByGuestRequest orderInquiryByGuestRequest) {
+        if (isLogin) {
+            return "redirect:/";
+        }
+
+        return "order/order_page_guest";
     }
 }
