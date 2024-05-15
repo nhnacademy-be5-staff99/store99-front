@@ -1,5 +1,7 @@
 package com.nhnacademy.store99.front.auth.controller;
 
+import static com.nhnacademy.store99.front.auth.service.LoginService.isDeleted;
+
 import com.nhnacademy.store99.front.auth.cookie.CookieSecurityProperties;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.service.LoginService;
@@ -61,6 +63,20 @@ public class LoginController {
                                                           HttpServletResponse servletResponse,
                                                           @CookieValue(value = "cartItem", required = false)
                                                           Cookie cartItemCookie) {
+        loginService.deletedCheck(request);
+        if(isDeleted) {
+            CommonHeader header = CommonHeader.builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .resultMessage("deleted user")
+                    .build();
+
+            CommonResponse<String> commonResponse = CommonResponse.<String>builder()
+                    .header(header)
+                    .result("deleted user")
+                    .build();
+
+            return new ResponseEntity<>(commonResponse, HttpStatus.BAD_REQUEST);
+        }
         String accessToken = loginService.doLogin(request);
         accessToken = accessToken.replace(" ", "");
 

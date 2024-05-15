@@ -1,5 +1,7 @@
 package com.nhnacademy.store99.front.auth.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.store99.front.auth.adapter.LoginAdapter;
 import com.nhnacademy.store99.front.auth.dto.LoginRequest;
 import com.nhnacademy.store99.front.auth.dto.LoginResponse;
@@ -11,9 +13,14 @@ import com.nhnacademy.store99.front.common.util.CookieUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Ahyeon Song
@@ -22,9 +29,15 @@ import org.springframework.web.client.HttpClientErrorException;
 @Slf4j
 public class LoginService {
     private final LoginAdapter loginAdapter;
+    private final RestTemplate restTemplate;
 
-    public LoginService(LoginAdapter loginAdapter) {
+    @Value("${gateway.url}")
+    private String gateway;
+    public static boolean isDeleted;
+
+    public LoginService(LoginAdapter loginAdapter, RestTemplate restTemplate) {
         this.loginAdapter = loginAdapter;
+        this.restTemplate = restTemplate;
     }
 
     /**
@@ -42,6 +55,8 @@ public class LoginService {
         } catch (HttpClientErrorException e) {
             throw new LoginFailException("로그인 실패", e);
         }
+
+        String resultMessage = loginResponse.getBody().getHeader().getResultMessage();
 
         log.debug("token 가져오기 성공");
         return loginResponse.getHeaders().getFirst("X-USER-TOKEN");
@@ -72,5 +87,33 @@ public class LoginService {
 
         XUserTokenThreadLocal.reset();
         log.debug("ThreadLocal 에서 X-USER-TOKEN 삭제 성공");
+    }
+
+    public void deletedCheck(LoginRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestBody = "{\"email\":\"" + request.getEmail() + "\"}";
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(
+                gateway + "/open/bookstore/v1/user/deletedCheck",
+                requestEntity,
+                String.class);
+
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            System.out.println("삭제 확인 요청이 성공적으로 전송되었습니다.");
+            String response = responseEntity.getBody();
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(response);
+                Boolean result = jsonNode.get("result").asBoolean();
+                isDeleted = result;
+            } catch (Exception e) {
+                System.out.println("응답 데이터 처리 중 오류 발생: " + e.getMessage());
+            }
+        } else {
+            System.out.println("삭제 확인 요청을 보내는 중 오류가 발생하였습니다. 응답 코드: " + responseEntity.getStatusCodeValue());
+        }
     }
 }
