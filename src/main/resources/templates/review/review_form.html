@@ -4,9 +4,7 @@
 >
 
 <div layout:fragment="content"><!-- ==== fragment:content === -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    
     <main id="main">
         <!-- Start Contact Area -->
         <section class="contact-us section" id="contact-us">
@@ -31,7 +29,7 @@
                                             <li>리뷰 작성시 자동으로 구매가 확정되며 환불이 불가합니다.<br><br> 리뷰 : 200포인트 적립<br>리뷰 + 사진
                                                 첨부 :
                                                 500포인트 적립
-                                                <br>별점을 선택해주세요.
+                                                <br>별점을 선택하지 않을 경우 5점으로 설정됩니다.
                                             </li>
                                         </ul>
                                     </div>
@@ -41,7 +39,7 @@
                             <div class="col-lg-8 col-md-12 col-12">
                                 <div class="contact-form-head">
                                     <div class="form-main">
-                                        <form action="/review/register" class="form" enctype="multipart/form-data"
+                                        <form action="/review/text/register" class="form" enctype="multipart/form-data"
                                               method="post">
 
                                             <div class="col-lg-6 col-md-6 col-12">
@@ -61,13 +59,6 @@
                                             </div>
 
                                             <div class="row">
-                                                <div class="my-2 col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <input name="title" placeholder="제목" required="required"
-                                                               type="text">
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-12">
                                                     <div class="form-group message">
                                                         <textarea name="content" placeholder="내용"
@@ -83,8 +74,6 @@
 
                                                 <div class="col-12">
                                                     <div class="form-group button">
-                                                        <!--                                                        <input name="orderDetailId" th:value="${orderDetailId}"-->
-                                                        <!--                                                               type="hidden">-->
                                                         <!--                                                        <input name="orderId" th:value="${orderId}" type="hidden">-->
                                                         <button class="btn btn-primary btn-block"
                                                                 style="background: black; color: white;"
