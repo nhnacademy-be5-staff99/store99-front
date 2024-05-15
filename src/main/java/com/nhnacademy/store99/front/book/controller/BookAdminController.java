@@ -8,11 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,20 +29,9 @@ public class BookAdminController {
     }
 
 
-    @DeleteMapping("/admin/books/{bookId}")
-    public ModelAndView deleteBook(@PathVariable("bookId") Long bookId) {
-        bookService.deleteBook(bookId);
-        return new ModelAndView("redirect:/admin/books");
-    }
-
-    @PutMapping("/admin/books/{bookId}/restore")
-    public ModelAndView restoreBook(@PathVariable("bookId") Long bookId) {
-        bookService.restoreBook(bookId);
-        return new ModelAndView("redirect:/admin/books");
-    }
-
     @PostMapping(value = "/admin/books")
     public String postBook(@RequestBody BookRequest bookRequest) {
+        System.out.println(bookRequest);
         return "index";
     }
 }
