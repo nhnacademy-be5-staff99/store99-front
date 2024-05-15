@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.order.service.impl;
 
 import com.nhnacademy.store99.front.order.adapter.OrderOpenAdapter;
+import com.nhnacademy.store99.front.order.dto.request.ConfirmPaymentRequest;
 import com.nhnacademy.store99.front.order.dto.request.PaymentKeyRequest;
 import com.nhnacademy.store99.front.order.dto.response.ConfirmPaymentResponse;
 import com.nhnacademy.store99.front.order.service.OrderService;
@@ -100,5 +101,10 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception ex) {
 
         }
+    }
+
+    @Override
+    public void confirmPayment(final ConfirmPaymentRequest confirmPaymentRequest) {
+        orderOpenAdapter.confirmPayment(confirmPaymentRequest);
     }
 }
