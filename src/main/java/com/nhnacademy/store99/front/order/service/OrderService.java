@@ -7,4 +7,6 @@ import com.nhnacademy.store99.front.order.dto.response.ConfirmPaymentResponse;
  */
 public interface OrderService {
     ConfirmPaymentResponse confirmPayment(String orderId, Integer amount, String paymentKey) throws Exception;
+
+    void undoPayment(String orderId);
 }

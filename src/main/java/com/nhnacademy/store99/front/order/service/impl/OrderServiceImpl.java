@@ -92,4 +92,13 @@ public class OrderServiceImpl implements OrderService {
         confirmPaymentResponse.setJsonObject(jsonObject);
         return confirmPaymentResponse;
     }
+
+    @Override
+    public void undoPayment(final String orderId) {
+        try {
+            orderOpenAdapter.undoPendingPayment(orderId);
+        } catch (Exception ex) {
+
+        }
+    }
 }
