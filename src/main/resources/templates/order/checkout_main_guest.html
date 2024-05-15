@@ -383,15 +383,11 @@
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(request),
-                    success: function (response) {
-                        if (response.ok) {  // Check if the request was successful
-                            pay('카드', jsons.card);
-                        } else {
-                            console.error('Payment initiation failed:', response.statusText);
-                        }
+                    success: function () {
+                        pay('카드', jsons.card);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('Payment initiation failed:', textStatus, errorThrown);
+                        console.error('Payment initiation failed 2:', textStatus, errorThrown);
                     }
                 });
             } else {
