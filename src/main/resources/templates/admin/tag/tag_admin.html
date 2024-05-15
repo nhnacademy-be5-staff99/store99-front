@@ -21,17 +21,17 @@
                 <td class="align-middle" th:text="${tag.id}"></td>
                 <form th:action="@{/admin/tags/{id}(id=${tag.id})}" th:method="put">
                     <td>
-                        <input type="hidden" th:name="id" th:value="${tag.id}"/>
-                        <input type="text" th:name="tagName" th:value="${tag.tagName}" class="form-control"
-                               required/>
+                        <input th:name="id" th:value="${tag.id}" type="hidden"/>
+                        <input class="form-control" required th:name="tagName" th:value="${tag.tagName}"
+                               type="text"/>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-outline-info">Update</button>
+                        <button class="btn btn-outline-info" type="submit">Update</button>
                     </td>
                 </form>
                 <td>
                     <form th:action="@{/admin/tags/{id}(id=${tag.id})}" th:method="delete">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -40,14 +40,14 @@
 
         <div th:if="${message}" th:text="${message}"></div>
 
-        <form id="createTagForm" th:action="@{/admin/tags}" method="post">
+        <form id="createTagForm" method="post" th:action="@{/admin/tags}">
             <div class="row g-3 mt-4">
                 <div class="col-6">
-                    <input type="text" class="form-control" placeholder="newTagName" aria-label="Tag name"
-                           name="tagName">
+                    <input aria-label="Tag name" class="form-control" name="tagName" placeholder="newTagName"
+                           type="text">
                 </div>
                 <div class="col-lg-4">
-                    <button type="submit" class="btn btn-outline-primary">Create</button>
+                    <button class="btn btn-outline-primary" type="submit">Create</button>
                 </div>
             </div>
         </form>

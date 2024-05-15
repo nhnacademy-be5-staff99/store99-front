@@ -27,9 +27,7 @@
 
 <div layout:fragment="content">
 
-
     <main id="main" th:object="${bookData}">
-
         <div class="container-xxl py-3">
             <div class="row g-5">
                 <div class=""></div>
@@ -86,30 +84,34 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="row d-flex flex-column">
-                                    <form action="/carts" method="post">
-                                        <input disabled hidden="hidden" name="bookId" th:value="*{bookId}"
-                                               type="number">
-                                        <div class="color-red align-content-center btn fw-bold disabled mb-2"
-                                             th:if="*{bookStock <= 0}">
-                                            품절
-                                        </div>
-                                        <button class="btn btn-primary mb-2"
-                                                onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
-                                                th:if="*{bookStock >= 1}"
-                                                type="submit">카트에 넣기
-                                        </button>
+                                    <input disabled hidden="hidden" name="bookId" th:value="*{bookId}"
+                                           type="number">
+                                    <div class="color-red align-content-center btn fw-bold disabled mb-2"
+                                         th:if="*{bookStock <= 0}">
+                                        품절
+                                    </div>
+                                    <button class="btn btn-primary mb-2 add-to-cart-button"
+                                            data-bs-target="#add-to-cart-button-modal"
+                                            data-bs-toggle="modal"
+                                            th:data-book-id="*{bookId}" th:if="*{bookStock >= 1}">카트에 넣기
+                                    </button>
+                                    <form action="/checkout" class="d-flex flex-column p-0" method="post">
+                                        <input hidden="hidden" name="orderBookRequestList[0].bookId"
+                                               th:value="*{bookId}" type="number">
+                                        <input hidden="hidden" name="orderBookRequestList[0].quantity" type="number"
+                                               value="1">
+
                                         <button class="btn btn-success mb-2"
-                                                onclick="alert('죄송합니다! 아직 지원되지 않는 기능입니다.')"
-                                                th:if="*{bookStock >= 1}"
-                                                type="submit">바로구매
+                                                th:if="*{bookStock >= 1}" type="submit">바로구매
+                                        </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <div>
-                                <button class="btn btn-outline-primary"
-                                        th:each="TagDTO : ${bookData.tagDTOList}">
-                                    <span th:text="${TagDTO.tagName}"></span></button>
+                            <button class="btn btn-outline-primary"
+                                    th:each="TagDTO : ${bookData.tagDTOList}">
+                                <span th:text="${TagDTO.tagName}"></span></button>
                         </div>
                     </div>
                 </div>
@@ -155,6 +157,32 @@
             class="bi bi-arrow-up-short"></i></a>
     <link href="/static/assets/css/book_sale_page.css" rel="stylesheet">
 
+
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="add-to-cart-button-modal"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    장바구니에 추가되었습니다.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+                    <a href="/cart">
+                        <button class="btn btn-primary" type="button">장바구니로 이동</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script src="/static/assets/js/book_sales_page.js"></script>
+</th:block>
 
 </html>

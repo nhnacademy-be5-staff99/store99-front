@@ -32,8 +32,6 @@ public class CartViewController {
             cartItems = cartQueryService.getCartItemsWhenNotLogin(cartItem);
         }
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("totalPrice",
-                cartItems.stream().map(o -> o.getBookSalePrice() * o.getQuantity()).reduce(0, Integer::sum));
         return "cart/cart";
     }
 }

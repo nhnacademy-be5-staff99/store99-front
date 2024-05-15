@@ -1,8 +1,10 @@
 package com.nhnacademy.store99.front.book.service;
 
-import com.nhnacademy.store99.front.book.Response.BookPageResponse;
-import com.nhnacademy.store99.front.book.Response.BookResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookPageResponse;
+import com.nhnacademy.store99.front.book.dto.response.BookResponse;
 import com.nhnacademy.store99.front.common.response.CustomPageImpl;
+import com.nhnacademy.store99.front.index.dto.response.IndexBookResponse;
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 public interface BookService {
@@ -10,8 +12,14 @@ public interface BookService {
 
     BookResponse postBook();
 
+    List<IndexBookResponse> getBestBooks();
+
+    List<IndexBookResponse> getLatestBooks();
+
     CustomPageImpl<BookPageResponse> getBooks(Pageable pageable);
 
     CustomPageImpl<BookPageResponse> getBooksByCategory(Long categoryId, Pageable pageable);
+
+    List<IndexBookResponse> getBooksByCategory(Long categoryId);
 
 }

@@ -1,4 +1,4 @@
-package com.nhnacademy.store99.front.cart.dto.response;
+package com.nhnacademy.store99.front.order.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class CartItemResponse {
+public class BookInOrderResponse {
     private Long bookId;
 
     private String bookTitle;

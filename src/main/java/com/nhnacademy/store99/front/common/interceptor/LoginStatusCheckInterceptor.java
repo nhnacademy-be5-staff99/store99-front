@@ -44,7 +44,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
                 isAdmin = adminCheckService.checkAdmin();
 
-            } catch (FeignException.BadRequest | FeignException.Unauthorized ex) {
+            } catch (FeignException.BadRequest | FeignException.Unauthorized | FeignException.FeignServerException ex) {
                 log.debug("로그인 상태 확인 에러 : 토큰은 존재하나 Gateway 에서 {} Error 받음 (Token 문제)", ex.status());
                 request.setAttribute("isLogin", false);
 
@@ -56,6 +56,13 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
                 request.setAttribute("isLogin", false);
                 request.setAttribute("isAdmin", false);
+
+                return HandlerInterceptor.super.preHandle(request, response, handler);
+            } catch (Exception ex) {
+                log.debug("서버 오류 : {}", ex.getMessage());
+                request.setAttribute("isLogin", false);
+                request.setAttribute("isAdmin", false);
+                XUserTokenThreadLocal.reset();
 
                 return HandlerInterceptor.super.preHandle(request, response, handler);
             }
