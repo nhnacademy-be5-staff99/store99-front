@@ -103,12 +103,18 @@ public class OrderController {
     }
 
     @GetMapping(value = "fail")
-    public String paymentResult(Model model, @RequestParam(value = "message") String message,
-                                @RequestParam(value = "code") Integer code) throws Exception {
+    public String paymentResultFail(Model model, @RequestParam(value = "message") String message,
+                                    @RequestParam(value = "code") String code,
+                                    @RequestParam(value = "orderId", required = false) String orderId)
+            throws Exception {
         log.error("결제 실패: code={}, message={}", code, message);
 
         model.addAttribute("code", code);
         model.addAttribute("message", message);
+
+        if (orderId != null) {
+            orderService.undoPayment(orderId);
+        }
 
         return "order/fail";
     }

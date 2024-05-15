@@ -1,6 +1,7 @@
 package com.nhnacademy.store99.front.order.adapter;
 
 import com.nhnacademy.store99.front.common.response.CommonResponse;
+import com.nhnacademy.store99.front.order.dto.request.ConfirmPaymentRequest;
 import com.nhnacademy.store99.front.order.dto.request.OrderInquiryByGuestRequest;
 import com.nhnacademy.store99.front.order.dto.request.PaymentKeyRequest;
 import com.nhnacademy.store99.front.order.dto.response.OrderInquiryResponse;
@@ -26,4 +27,7 @@ public interface OrderOpenAdapter {
 
     @PostMapping("/guest")
     CommonResponse<OrderInquiryResponse> getOrderByGuest(@RequestBody OrderInquiryByGuestRequest orderInquiryRequest);
+
+    @PostMapping
+    void confirmPayment(@RequestBody ConfirmPaymentRequest confirmPaymentRequest);
 }

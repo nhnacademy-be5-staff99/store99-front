@@ -7,8 +7,10 @@
 <meta charset="UTF-8">
 
 <th:block layout:fragment="css">
+    <meta content="upgrade-insecure-requests" http-equiv="Content-Security-Policy">
     <link rel="stylesheet" th:href="@{/static/assets/css/checkout.css}"/>
     <script src="https://js.tosspayments.com/v1"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </th:block>
 
 <div layout:fragment="content">
@@ -259,7 +261,7 @@
             <div id="layer"
                  style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
                 <img alt="닫기 버튼" id="btnCloseLayer"
-                     onclick="pay('카드',jsons.card);"
+                     onclick="closeDaumPostcode()"
                      src="//t1.daumcdn.net/postcode/resource/images/close.png"
                      style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1">
             </div>
@@ -303,7 +305,7 @@
                     alert(error.message);
                 }
 
-                fetch(gatewayUrl + '/open/bookstore/v1/orders/' + orderId, {
+                fetch('/orders/' + orderId, {
                     method: 'DELETE'
                 }).catch((error) => {
                     console.error('Error:', error);
@@ -377,20 +379,17 @@
                 let request = createInitiatePaymentRequest();
                 console.log("request: ", request);
 
-                fetch(gatewayUrl + '/open/bookstore/v1/orders', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(request)
-                }).then(response => {
-                    if (response.ok) {  // Check if the request was successful
+                $.ajax({
+                    url: '/orders',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(request),
+                    success: function () {
                         pay('카드', jsons.card);
-                    } else {
-                        console.error('Payment initiation failed:', response.statusText);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Payment initiation failed 2:', textStatus, errorThrown);
                     }
-                }).catch((error) => {
-                    console.error('Error:', error);
                 });
             } else {
                 event.stopPropagation();
