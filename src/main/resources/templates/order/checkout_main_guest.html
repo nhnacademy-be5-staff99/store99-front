@@ -305,7 +305,7 @@
                     alert(error.message);
                 }
 
-                fetch(gatewayUrl + '/open/bookstore/v1/orders/' + orderId, {
+                fetch('/orders/' + orderId, {
                     method: 'DELETE'
                 }).catch((error) => {
                     console.error('Error:', error);
@@ -380,7 +380,7 @@
                 console.log("request: ", request);
 
                 $.ajax({
-                    url: gatewayUrl + '/open/bookstore/v1/orders',
+                    url: '/orders',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(request),
