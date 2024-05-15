@@ -67,7 +67,13 @@
                                                     window.location.href = request.getResponseHeader('Location');
                                                 },
                                                 error: function (jqXHR, textStatus, errorThrown) {
-                                                    window.alert("로그인에 실패하였습니다.\n이메일과 비밀번호를 다시 확인해주세요!")
+                                                    if (jqXHR.status === 400) {
+                                                        // 탈퇴한 회원에 대한 처리
+                                                        window.alert("탈퇴한 회원입니다.");
+                                                    } else {
+                                                        // 일반 로그인 실패 처리
+                                                        window.alert("로그인에 실패하였습니다.\n이메일과 비밀번호를 다시 확인해주세요!");
+                                                    }
                                                 }
                                             });
                                         });
