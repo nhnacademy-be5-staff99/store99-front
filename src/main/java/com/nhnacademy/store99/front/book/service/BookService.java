@@ -22,8 +22,4 @@ public interface BookService {
 
     List<IndexBookResponse> getBooksByCategory(Long categoryId);
 
-    void deleteBook(Long bookId);
-
-    void restoreBook(Long bookId);
-
 }

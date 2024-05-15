@@ -74,8 +74,6 @@ public class BookPageResponse {
 
     private LocalDateTime UpdatedAt;
 
-    private LocalDateTime DeletedAt;
-
     private List<AuthorDTO> authorsDTOList;
 
     private List<TagDTO> tagDTOList;
