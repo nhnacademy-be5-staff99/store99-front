@@ -8,7 +8,11 @@
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/static/assets/css/toss_style.css}"/>
-
+    <style>
+        .wrap-text {
+            white-space: pre-wrap;
+        }
+    </style>
 </th:block>
 
 <div layout:fragment="content">
@@ -29,7 +33,7 @@
                     </div>
                     <div class="p-grid typography--p" style="margin-top: 10px">
                         <div class="p-grid-col text--left"><b>주문명</b></div>
-                        <div class="p-grid-col text--right" th:text="${orderName}"></div>
+                        <div class="p-grid-col text--right wrap-text" th:text="${orderName}"></div>
                     </div>
                     <div class="p-grid typography--p" style="margin-top: 10px">
                         <div class="p-grid-col text--left"><b>결제 수단</b></div>
@@ -57,7 +61,7 @@
 
                     <div class="p-grid typography--p" style="margin-top: 50px">
                         <div class="p-grid-col text--left"><b>에러메시지</b></div>
-                        <div class="p-grid-col text--right" id="message" th:text="${message}"></div>
+                        <div class="p-grid-col text--right wrap-text" id="message" th:text="${message}"></div>
                     </div>
                     <div class="p-grid typography--p" style="margin-top: 10px">
                         <div class="p-grid-col text--left"><b>에러코드</b></div>

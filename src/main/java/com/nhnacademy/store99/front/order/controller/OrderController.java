@@ -2,21 +2,16 @@ package com.nhnacademy.store99.front.order.controller;
 
 import com.nhnacademy.store99.front.order.dto.request.OrderBookRequest;
 import com.nhnacademy.store99.front.order.dto.response.BookInOrderResponse;
+import com.nhnacademy.store99.front.order.dto.response.ConfirmPaymentResponse;
 import com.nhnacademy.store99.front.order.service.OrderQueryService;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import com.nhnacademy.store99.front.order.service.OrderService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,21 +23,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author seunggyu-kim
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-public class OrderViewController {
+public class OrderController {
     private final OrderQueryService orderQueryService;
+    private final OrderService orderService;
+
+    @Value("${gateway.url}")
+    private String gatewayUrl;
 
     @PostMapping("/checkout")
     public String getOrderIndex(@RequestAttribute boolean isLogin, Model model,
                                 @ModelAttribute OrderBookRequest orderBookRequest) {
         List<BookInOrderResponse> orderBookList =
                 orderQueryService.getOrderBookList(orderBookRequest.getOrderBookRequestList());
+
+        int totalProductPrice = orderBookList.stream().mapToInt(o -> o.getBookSalePrice() * o.getQuantity()).sum();
+        int shippingFee = 5000;
+
         model.addAttribute("orderId", UUID.randomUUID().toString());
         model.addAttribute("orderBookList", orderBookList);
-        model.addAttribute("totalProductPrice",
-                orderBookList.stream().mapToInt(BookInOrderResponse::getBookSalePrice).sum());
+        model.addAttribute("totalProductPrice", totalProductPrice);
+        model.addAttribute("shippingFee", shippingFee);
+        model.addAttribute("totalPayment", totalProductPrice + shippingFee);
         model.addAttribute("orderName", getOrderName(orderBookList));
+        model.addAttribute("gatewayUrl", gatewayUrl);
         return isLogin ? "order/checkout_main_member" : "order/checkout_main_guest";
     }
 
@@ -64,39 +70,13 @@ public class OrderViewController {
     public String paymentResult(Model model, @RequestParam(value = "orderId") String orderId,
                                 @RequestParam(value = "amount") Integer amount,
                                 @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
-
-        String secretKey = "test_sk_Z1aOwX7K8m12DZ9omOOq8yQxzvNP:";
-
-        Base64.Encoder encoder = Base64.getEncoder();
-        byte[] encodedBytes = encoder.encode(secretKey.getBytes(StandardCharsets.UTF_8));
-        String authorizations = "Basic " + new String(encodedBytes);
-
-        URL url = new URL("https://api.tosspayments.com/v1/payments/" + paymentKey);
-
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("Authorization", authorizations);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        JSONObject obj = new JSONObject();
-        obj.put("orderId", orderId);
-        obj.put("amount", amount);
-
-        OutputStream outputStream = connection.getOutputStream();
-        outputStream.write(obj.toString().getBytes(StandardCharsets.UTF_8));
-
-        int code = connection.getResponseCode();
-        boolean isSuccess = code == 200;
+        log.info("결제 시도: orderId={}, amount={}, paymentKey={}", orderId, amount, paymentKey);
+        ConfirmPaymentResponse confirmPaymentResponse = orderService.confirmPayment(orderId, amount, paymentKey);
+        boolean isSuccess = confirmPaymentResponse.isSuccess();
         model.addAttribute("isSuccess", isSuccess);
 
-        InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
-
-        Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(reader);
-        responseStream.close();
+        JSONObject jsonObject = confirmPaymentResponse.getJsonObject();
         model.addAttribute("responseStr", jsonObject.toJSONString());
-        System.out.println(jsonObject.toJSONString());
 
         model.addAttribute("method", jsonObject.get("method"));
         model.addAttribute("orderName", jsonObject.get("orderName"));
@@ -124,6 +104,7 @@ public class OrderViewController {
     @GetMapping(value = "fail")
     public String paymentResult(Model model, @RequestParam(value = "message") String message,
                                 @RequestParam(value = "code") Integer code) throws Exception {
+        log.error("결제 실패: code={}, message={}", code, message);
 
         model.addAttribute("code", code);
         model.addAttribute("message", message);

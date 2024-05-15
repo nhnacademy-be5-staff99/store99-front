@@ -131,29 +131,39 @@
 
                         <p class="text-muted">도착 예상일</p>
                         <div>
-                            <input autocomplete="off" checked class="btn-check" id="option1" name="options"
+                            <input autocomplete="off" checked class="btn-check" id="option1" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(1), 'yyyy-MM-dd')}"
                                    type="radio">
                             <label class="btn btn-outline-primary" for="option1"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(1), '내일 (M/d)')}">Checked</label>
 
-                            <input autocomplete="off" class="btn-check" id="option2" name="options" type="radio">
+                            <input autocomplete="off" class="btn-check" id="option2" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(2), 'yyyy-MM-dd')}"
+                                   type="radio">
                             <label class="btn btn-outline-primary" for="option2"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(2), 'E (M/d)')}">Radio</label>
 
-                            <input autocomplete="off" class="btn-check" id="option3" name="options"
+                            <input autocomplete="off" class="btn-check" id="option3" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(3), 'yyyy-MM-dd')}"
                                    type="radio">
                             <label class="btn btn-outline-primary" for="option3"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(3), 'E (M/d)')}">Radio</label>
 
-                            <input autocomplete="off" class="btn-check" id="option4" name="options" type="radio">
+                            <input autocomplete="off" class="btn-check" id="option4" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(4), 'yyyy-MM-dd')}"
+                                   type="radio">
                             <label class="btn btn-outline-primary" for="option4"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(4), 'E (M/d)')}">Radio</label>
 
-                            <input autocomplete="off" class="btn-check" id="option5" name="options" type="radio">
+                            <input autocomplete="off" class="btn-check" id="option5" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(5), 'yyyy-MM-dd')}"
+                                   type="radio">
                             <label class="btn btn-outline-primary" for="option5"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(5), 'E (M/d)')}">Radio</label>
 
-                            <input autocomplete="off" class="btn-check" id="option6" name="options" type="radio">
+                            <input autocomplete="off" class="btn-check" id="option6" name="orderTransitAt"
+                                   th:data-date="${#temporals.format(#temporals.createNow().plusDays(6), 'yyyy-MM-dd')}"
+                                   type="radio">
                             <label class="btn btn-outline-primary" for="option6"
                                    th:text="${#temporals.format(#temporals.createNow().plusDays(6), 'E (M/d)')}">Radio</label>
                         </div>
@@ -162,19 +172,21 @@
 
                         <h4 class="mb-3">주문 상품</h4>
 
-                        <div class="row d-flex align-items-center" th:each="orderBook, status: ${orderBookList}">
+                        <div class="row d-flex align-items-center order-book"
+                             th:each="orderBook, status: ${orderBookList}">
+                            <div class="order-book-id" hidden="hidden" th:text="${orderBook.bookId}"></div>
                             <div class="col-md-2">
                                 <img alt="Book Thumbnail" class="img-thumbnail"
                                      th:src="${orderBook.bookThumbnailUrl}">
                             </div>
-                            <div class="col-md">
+                            <div class="col-md order-book-title">
                                 <p th:text="${orderBook.bookTitle}"/>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-1 order-book-quantity">
                                 <p th:text="${orderBook.quantity}"/>
                             </div>
-                            <div class="col-md-2">
-                                <p th:text="${orderBook.bookSalePrice}"/>
+                            <div class="col-md-2 order-book-price">
+                                <p th:text="${orderBook.bookSalePrice * orderBook.quantity}"/>
                             </div>
                         </div>
 
@@ -187,7 +199,7 @@
                                 <p>총 상품 가격</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalProductPrice" th:text="${totalProductPrice} + 원">/p>
+                                <p id="totalProductPrice" th:text="${totalProductPrice} + 원"></p>
                             </div>
                         </div>
 
@@ -196,7 +208,7 @@
                                 <p>배송비</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="shippingFee">5000원</p>
+                                <p id="shippingFee" th:text="${shippingFee} + 원"></p>
                             </div>
                         </div>
 
@@ -223,7 +235,7 @@
                                 <p>총 결제 금액</p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="totalPayment" th:text="${totalProductPrice} - 5000 + 원">0원</p>
+                                <p id="totalPayment" th:text="${totalPayment} + 원">0원</p>
                             </div>
                         </div>
 
@@ -262,41 +274,24 @@
     <script src="/static/assets/js/order_main_address.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        window.onload = function () {
-            let totalProductPrice = document.getElementById('totalProductPrice').innerText;
-            let shippingFee = document.getElementById('shippingFee').innerText;
+        let totalProductPrice = /*[[${totalProductPrice}]]*/ 0;
+        let shippingFee = /*[[${shippingFee}]]*/ 0;
+        let amount = /*[[${totalPayment}]]*/ 0;
 
-            // 숫자만 추출
-            totalProductPrice = parseInt(totalProductPrice.replace(/[^0-9]/g, ''));
-            shippingFee = parseInt(shippingFee.replace(/[^0-9]/g, ''));
+        let path = "/";
+        let successUrl = window.location.origin + path + "success";
+        let failUrl = window.location.origin + path + "fail";
+        let sampleOrderId = "sample-" + new Date().getTime();
+        let orderId = /*[[${orderId}]]*/ sampleOrderId;
 
-            let totalPayment = totalProductPrice - shippingFee;
-
-            document.getElementById('totalPayment').innerText = totalPayment + '원';
-        }
-
-        let amount = /*[[${totalProductPrice} - 5000]]*/ 500;
+        let gatewayUrl = /*[[${gatewayUrl}]]*/ "http://localhost:8760";
 
         let tossPayments = TossPayments("test_ck_ALnQvDd2VJdOYqKbPLYv8Mj7X41m");
 
-        function getCustomerInfo() {
-            let buyerName = document.getElementById('buyer_name').value;
-            let buyerEmail = document.getElementById('buyer_email').value;
-            let buyerPhone = document.getElementById('buyer_phone').value;
-
-            return {
-                name: buyerName,
-                email: buyerEmail,
-                phone: buyerPhone
-            };
-        }
-
         function pay(method, requestJson) {
-            let customerInfo = getCustomerInfo();
-
-            requestJson.customerName = customerInfo.name;
-            requestJson.customerEmail = customerInfo.email;
-            requestJson.customerMobilePhone = customerInfo.phone;
+            requestJson.customerName = document.getElementById('buyer_name').value;
+            requestJson.customerEmail = document.getElementById('buyer_email').value;
+            requestJson.customerMobilePhone = document.getElementById('buyer_phone').value;
 
             console.log(requestJson);
             tossPayments.requestPayment(method, requestJson).catch(function (error) {
@@ -305,18 +300,19 @@
                 } else {
                     alert(error.message);
                 }
+
+                fetch(gatewayUrl + '/open/bookstore/v1/orders/' + orderId, {
+                    method: 'DELETE'
+                }).catch((error) => {
+                    console.error('Error:', error);
+                });
             });
         }
-
-        let path = "/";
-        let successUrl = window.location.origin + path + "success";
-        let failUrl = window.location.origin + path + "fail";
-        let orderId = new Date().getTime();
 
         let jsons = {
             card: {
                 amount: amount,
-                orderId: /*[[${orderId}]]*/ "sample-" + orderId,
+                orderId: orderId,
                 orderName: /*[[${orderName}]]*/ "책 주문",
                 successUrl: successUrl,
                 failUrl: failUrl,
@@ -335,10 +331,63 @@
             },
         };
 
+        function createInitiatePaymentRequest() {
+            return {
+                consumer: {
+                    consumerName: document.getElementById('buyer_name').value,
+                    consumerEmail: document.getElementById('buyer_email').value,
+                    consumerPhone: document.getElementById('buyer_phone').value,
+                    consumerPassword: document.getElementById('buyer_password').value
+                },
+                order: {
+                    orderId: orderId,
+                    orderType: 'NON_USER',
+                    orderTransitAt: document.querySelector('input[name="orderTransitAt"]:checked').dataset.date,
+                    orderReceiverName: document.getElementById('recipient_name').value,
+                    orderReceiverNumber: document.getElementById('recipient_phone').value,
+                    orderAddress: document.getElementById('recipient_address').value,
+                    orderAddressDetail: document.getElementById('recipient_detailAddress').value,
+                    orderAddressCode: parseInt(document.getElementById('recipient_postcode').value),
+                    orderDeliveryCost: shippingFee,
+                    orderTotalCost: amount,
+                },
+                orderBooks: Array.from(document.querySelectorAll('.order-book')).map(row => {
+                    let orderBookId = row.querySelector('.order-book-id').innerText;
+                    let orderBookTitle = row.querySelector('.order-book-title').innerText;
+                    let orderBookPrice = parseInt(row.querySelector('.order-book-price').innerText.replace(/[^0-9]/g, ''));
+                    let orderBookQuantity = parseInt(row.querySelector('.order-book-quantity').innerText.replace(/[^0-9]/g, ''));
+
+                    return {
+                        orderBookTitle: orderBookTitle,
+                        orderBookPrice: orderBookPrice,
+                        orderBookQuantity: orderBookQuantity,
+                        bookId: orderBookId
+                    };
+                })
+            };
+        }
+
         document.getElementById('payment-form').addEventListener('submit', function (event) {
             event.preventDefault();
             if (this.checkValidity()) {
-                pay('카드', jsons.card);
+                let request = createInitiatePaymentRequest();
+                console.log("request: ", request);
+
+                fetch(gatewayUrl + '/open/bookstore/v1/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(request)
+                }).then(response => {
+                    if (response.ok) {  // Check if the request was successful
+                        pay('카드', jsons.card);
+                    } else {
+                        console.error('Payment initiation failed:', response.statusText);
+                    }
+                }).catch((error) => {
+                    console.error('Error:', error);
+                });
             } else {
                 event.stopPropagation();
             }
