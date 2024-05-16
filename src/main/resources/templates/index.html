@@ -220,21 +220,11 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-9">
-                        <div class="d-lg-flex ">
-                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
-                               th:href="@{books/{bookId}(bookId=${science[0].getBookId()})}">
-                                <img alt="" class="img-fluid" th:src="${science[0].getBookThumbnailUrl()}">
-                            </a>
-                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
-                               th:href="@{books/{bookId}(bookId=${science[1].getBookId()})}">
-                                <img alt="" class="img-fluid" th:src="${science[1].getBookThumbnailUrl()}">
-                            </a>
-                            <a class="me-4 col-lg-4 thumbnail mb-4 mb-lg-0 d-inline-block"
-                               th:href="@{books/{bookId}(bookId=${science[2].getBookId()})}">
-                                <img alt="" class="img-fluid" th:src="${science[2].getBookThumbnailUrl()}">
-                            </a>
-                        </div>
+                    <div class="col-md-9 d-lg-flex">
+                        <a class="me-4 thumbnail col-sm-4 mb-4 d-inline-block " th:each="scienceBook : ${science}"
+                           th:href="@{books/{bookId}(bookId=${scienceBook.getBookId()})}">
+                            <img alt="" class="img-fluid" th:src="${scienceBook.getBookThumbnailUrl()}">
+                        </a>
                     </div>
                     <div class="col-md-3">
                         <div class="post-entry-1 border-bottom" th:each="scienceBook : ${science}">
