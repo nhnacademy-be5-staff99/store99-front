@@ -1,7 +1,6 @@
 package com.nhnacademy.store99.front.review.service.impl;
 
 import com.nhnacademy.store99.front.auth.service.LoginService;
-import com.nhnacademy.store99.front.common.thread_local.XUserTokenThreadLocal;
 import com.nhnacademy.store99.front.review.dto.request.TextReviewRegisterRequest;
 import com.nhnacademy.store99.front.review.service.ReviewService;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,11 +28,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void registerTextReview(TextReviewRegisterRequest request) {
-        String token = XUserTokenThreadLocal.getXUserToken();
+    public void registerTextReview(TextReviewRegisterRequest request, String userToken) {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
-        header.setBearerAuth(token);
+        header.set("X-User-Token", userToken);
 
         String requestBody = "{"
                 + "\"reviewDescription\":\"" + request.getReviewDescription() + "\","
@@ -45,6 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
         ResponseEntity<String> responseEntity =
                 restTemplate.postForEntity(gateway + "/api/bookstore/v1/review/text/register", requestEntity,
                         String.class);
+
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             System.out.println("리뷰를 등록 요청이 성공적으로 전송되었습니다.");

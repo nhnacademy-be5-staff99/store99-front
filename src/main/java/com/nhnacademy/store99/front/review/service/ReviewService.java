@@ -4,5 +4,5 @@ import com.nhnacademy.store99.front.review.dto.request.TextReviewRegisterRequest
 
 public interface ReviewService {
 
-    void registerTextReview(TextReviewRegisterRequest request);
+    void registerTextReview(TextReviewRegisterRequest request, String userToken);
 }

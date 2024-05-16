@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -29,9 +30,10 @@ public class ReviewController {
 
 
     @PostMapping("/text/register")
-    public ResponseEntity<CommonResponse<String>> registerTextReview(@RequestBody TextReviewRegisterRequest request) {
+    public ResponseEntity<CommonResponse<String>> registerTextReview(@RequestHeader("X-USER-TOKEN") String userToken,
+                                                                     @RequestBody TextReviewRegisterRequest request) {
         try {
-            reviewService.registerTextReview(request);
+            reviewService.registerTextReview(request, userToken);
             CommonHeader header = CommonHeader.builder()
                     .httpStatus(HttpStatus.OK)
                     .resultMessage("Success")
@@ -48,7 +50,7 @@ public class ReviewController {
                     .build();
             CommonResponse<String> response = CommonResponse.<String>builder()
                     .header(header)
-                    .result(null)
+                    .result("faild to register text review: " + e.getMessage())
                     .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 
