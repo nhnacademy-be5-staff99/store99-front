@@ -1,6 +1,5 @@
 package com.nhnacademy.store99.front.signup.controller;
 
-import static com.nhnacademy.store99.front.signup.service.SignUpService.code;
 import static com.nhnacademy.store99.front.signup.service.SignUpService.isDuplicate;
 
 import com.nhnacademy.store99.front.common.response.CommonHeader;
@@ -9,6 +8,7 @@ import com.nhnacademy.store99.front.signup.dto.EmailDto;
 import com.nhnacademy.store99.front.signup.dto.PasswordDto;
 import com.nhnacademy.store99.front.signup.dto.SignUpDto;
 import com.nhnacademy.store99.front.signup.service.SignUpService;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +45,10 @@ public class SignUpController {
      * @return String
      */
     @PostMapping("/mailConfirm")
-    public ResponseEntity<String> mailConfirm(@RequestBody EmailDto emailDto) {
+    public ResponseEntity<String> mailConfirm(@RequestBody EmailDto emailDto, HttpSession httpSession) {
         try {
-            signUpService.mailConfirm(emailDto.getEmail());
+            String code = signUpService.mailConfirm(emailDto.getEmail());
+            httpSession.setAttribute("code", code);
             return ResponseEntity.ok(code);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());

@@ -16,8 +16,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class SignUpService {
-
-    public static String code;
+    
     public static String isDuplicate;
     private final RestTemplate restTemplate;
 
@@ -36,7 +35,7 @@ public class SignUpService {
      * @param email
      * @return void
      */
-    public void mailConfirm(String email) {
+    public String mailConfirm(String email) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String requestBody = "{\"email\":\"" + email + "\"}";
@@ -54,13 +53,14 @@ public class SignUpService {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response);
                 String result = jsonNode.get("result").asText();
-                code = result;
+                return result;
             } catch (Exception e) {
                 System.out.println("응답 데이터 처리 중 오류 발생: " + e.getMessage());
             }
         } else {
             System.out.println("메일 확인 요청을 보내는 중 오류가 발생하였습니다. 응답 코드: " + responseEntity.getStatusCodeValue());
         }
+        return requestBody;
     }
 
     /**
