@@ -11,6 +11,13 @@
 
 
 <div layout:fragment="content">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 부트스트랩 CSS 포함 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 부트스트랩 아이콘 라이브러리 포함 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <main id="main">
         <div class="container py-3">
             <div class="row g-5">
@@ -145,14 +152,48 @@
                                 </p>
                                 <p>리뷰 수: <span class="reviewCount" th:text="${bookDto.BookCntOfReview}"></span></p>
                                 <!-- 좋아요 버튼 -->
-                                <button onclick="toggleLike()" style="border: none; background: none" th:id="likeButton"
-                                        type="button">
-                                    <img alt="like" th:if="${isLiked}==true"
-                                         th:src="@{/static/assets/img/like/store99-like.svg}"/>
-                                    <img alt="unLike" th:else="${isLiked}==false"
-                                         th:src="@{/static/assets/img/like/store99-unLike.svg}"/>
-                                    <div id="likeCnt" th:text="${cnt}"></div>
-                                </button>
+                                <div>
+                                    <button class="btn btn-primary mb-2 like-button"
+                                            th:data-book-id="${bookDto.bookId}"
+                                            th:data-user-id="${userId}"
+                                            type="button">
+                                        <!-- 채워진 하트 아이콘 -->
+                                        <i aria-hidden="true" class="fas fa-heart" th:if="${isLiked}"></i>
+                                        <!-- 비워진 하트 아이콘 -->
+                                        <i aria-hidden="true" class="far fa-heart" th:unless="${isLiked}"></i>
+                                    </button>
+                                    <div id="likeCnt">좋아요 수: <span th:text="${cnt}"></span></div>
+                                </div>
+                                <script th:inline="javascript">
+                                    document.querySelectorAll('.like-button').forEach(function (button) {
+                                        button.addEventListener('click', function () {
+                                            // 좋아요 상태를 토글합니다.
+                                            var isLiked = this.classList.toggle('liked');
+
+                                            // 좋아요 상태를 서버에 업데이트할 수 있도록 추가 작업을 수행합니다.
+                                            var bookId = this.dataset.bookId;
+                                            var userId = this.dataset.userId;
+                                            // 추가 작업...
+                                            var data = {
+                                                "bookId": bookId,
+                                                "userId": userId
+                                            };
+                                            // fetch("http://localhost:8080/likes", {
+                                            //     method: 'POST',
+                                            //     headers: {
+                                            //         'Content-Type': 'application/json'
+                                            //     },
+                                            //     credentials: "include",
+                                            //     body: JSON.stringify(data) // 보낼 데이터를 JSON 문자열로 변환하여 body에 포함
+                                            // })
+                                            //     .then(response => response.json())
+                                            //     .then(data => console.log(data))
+                                            //     .catch(error => console.error('Fetch Likes Error:', error));
+                                        });
+
+                                    });
+                                </script>
+
                                 <div>
                                     <button class="btn btn-outline-primary"
                                             style='letter-spacing:1px' th:each="TagDTO : ${bookDto.tagDTOList}">
@@ -221,98 +262,6 @@
                 </section> <!-- End Search Result -->
             </div>
         </div>
-
-        <script th:inline="javascript">
-            var isLiked = /*[[${isLiked}]];*/false;
-
-
-            function toggleLike() {
-
-                var bookId = [[${bookId}]];
-                var userId = [[${userId}]];
-                console.log("bookId: " + bookId);
-                console.log("userId: " + userId);
-
-                var apiUrl;
-                // if (window.location.hostname === 'localhost' && window.location.port === '8760') {
-                // IntelliJ 환경 설정에 따라 dev 환경인 경우
-                apiUrl = 'http://localhost:8760';
-                // } else {
-                //     // IntelliJ 환경 설정에 따라 prod 환경인 경우
-                //     apiUrl = 'http://192.168.0.93:8080';
-                // }
-                var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-
-                $.ajax({
-                    type: 'GET',
-                    url: proxyUrl + apiUrl + "/open/bookstore/v1/likes/count",
-                    headers: {
-                        'Content-Type': 'application/json',
-
-                    },
-                    data: {
-                        bookId: bookId
-                    },
-                    success: function (response) {
-                        location.reload()
-                        console.log("cnt:" + "${cnt}");
-                        console.log('getLikeCnt success!');
-                    },
-                    error: function (err) {
-                        console.error('Failed to get LikeCnt', err);
-                    }
-                });
-
-                var imgElement = document.querySelector('#likeButton img');
-                if (isLiked) {
-                    imgElement.src = '/static/assets/img/like/store99-like.svg'; // 좋아요 이미지로 변경
-                    imgElement.alt = 'Like';
-
-                    $.ajax({
-                        type: 'POST',
-                        url: proxyUrl + apiUrl + "/likes",
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        data: {
-                            bookId: bookId,
-                            userId: userId
-                        },
-                        success: function (response) {
-                            location.reload()
-                            console.log('Like status updated successfully');
-                        },
-                        error: function (err) {
-                            console.error('Failed to update like status', err);
-                        }
-                    });
-                } else {
-                    imgElement.src = '/static/assets/img/like/store99-unLike.svg'; // 좋아요 취소 이미지로 변경
-                    imgElement.alt = 'unLike';
-                    var likeId = [[${likeId}]];
-                    console.log("likeId" + likeId);
-
-                    $.ajax({
-                        type: 'DELETE',
-                        url: proxyUrl + apiUrl + '/likes/' + likeId,
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        data: {
-                            likeId: likeId
-                        },
-                        success: function (response) {
-                            location.reload()
-                            console.log('Like status updated successfully');
-                        },
-                        error: function (err) {
-                            console.error('Failed to update like status', err);
-                        }
-                    });
-
-                }
-            }
-        </script>
 
     </main><!-- End #main -->
 
